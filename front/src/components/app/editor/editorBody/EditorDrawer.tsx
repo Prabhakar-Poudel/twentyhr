@@ -16,7 +16,7 @@ const EditorDrawer = ({ open }: EditorDrawerProps) => {
           [`& .MuiDrawer-paper`]: { boxSizing: 'border-box' },
         }}
       >
-        This is the drawer
+        This is the drawer and it belongs here
       </Drawer>
     </>
   )
