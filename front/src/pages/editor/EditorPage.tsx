@@ -24,9 +24,9 @@ const EditorPage = () => {
   return (
     <div className="flex h-screen w-screen">
       <div className="flex flex-col flex-grow">
-        <EditorHeader fontSize={fontSize} setFontSize={onFontSizeChange} />
+        <EditorHeader />
         <EditorBody defaultEditorOptions={{ ...defaultEditorOptions, fontSize }} />
-        <EditorFooter />
+        <EditorFooter fontSize={fontSize} setFontSize={onFontSizeChange} />
       </div>
       <div>
         <EditorSticky onClick={() => setShowDrawer(!showDrawer)}/>

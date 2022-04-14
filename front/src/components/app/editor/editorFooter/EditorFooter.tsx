@@ -1,9 +1,16 @@
+import { AppBar } from '@mui/material'
+import IdeConfiguration from './IdeConfiguration'
 
-const EditorFooter = () => {
+interface EditorFooterProps {
+  fontSize: number
+  setFontSize: (event: any) => void
+}
+
+const EditorFooter = ({ fontSize, setFontSize }: EditorFooterProps) => {
   return (
-    <footer className="footer bg-stone-900">
-      <button tabIndex={0} className="btn btn-outline btn-xs text-neutral-50">|</button>
-    </footer>
+    <AppBar position="relative">
+      <IdeConfiguration fontSize={fontSize} setFontSize={setFontSize} />
+    </AppBar>
   )
 }
 
