@@ -1,4 +1,7 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { Routes, Route } from 'react-router-dom'
+import EditorPage from 'src/pages/editor/EditorPage'
+import LandingPage from 'src/pages/landing/LandingPage'
 import LoginPage from 'src/pages/login/LoginPage'
 
 const App = () => {
@@ -12,7 +15,11 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <LoginPage />
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="editor" element={<EditorPage />} />
+        <Route path="landing" element={<LandingPage />} />
+      </Routes>
     </ThemeProvider>
   )
 }
