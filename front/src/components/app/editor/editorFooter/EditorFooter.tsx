@@ -8,8 +8,8 @@ interface EditorFooterProps {
 
 const EditorFooter = ({ fontSize, setFontSize }: EditorFooterProps) => {
   return (
-    <AppBar position="relative">
-      <IdeConfiguration fontSize={fontSize} setFontSize={setFontSize} />
+    <AppBar position="relative" component="footer">
+        <IdeConfiguration fontSize={fontSize} setFontSize={setFontSize} />
     </AppBar>
   )
 }
