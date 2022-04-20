@@ -7,7 +7,7 @@ import LoginPassword from 'src/components/app/login/Password'
 const LoginPage = () => {
   const navigate = useNavigate()
   const onLogin = () => {
-    navigate("/editor")
+    navigate("/questions")
   }
 
   return (
@@ -19,12 +19,13 @@ const LoginPage = () => {
         <Box>
           <Typography variant="h3">Login</Typography>
           <Box className="mt-2">
-            <TextField fullWidth label="Email" id="email" />
+            <TextField fullWidth label="Email" id="email" type="email" />
             <LoginPassword />
-            <div className="mt-4 mb-4">
-              <Link href="#">Forgot Password?</Link>
+            <div className="mt-4 mb-4 flex justify-between">
+              <Link href="#" color="secondary">Forgot Password?</Link>
+              <Link href="#" color="secondary">Need an account?</Link>
             </div>
-            <Button variant="contained" disableElevation fullWidth onClick={onLogin}>Login</Button>
+            <Button variant="contained" fullWidth onClick={onLogin}>Login</Button>
           </Box>
         </Box>
       </Container>

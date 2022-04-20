@@ -1,24 +1,32 @@
-import { Controller, Get, Post, Param, Body } from '@nestjs/common'
-import { CreateUserDto } from 'src/user/dtos/createUser.dto'
-import { UserService } from 'src/user/service/user.service'
+import { Controller, Get, Post, Param, Body, Put } from '@nestjs/common';
+import {
+  CreateUserRequest,
+  UpdateUserRequest,
+  UserResponse,
+} from 'src/user/dto/user';
+import { UserService } from 'src/user/service/user.service';
 
-@Controller('account')
+@Controller('accounts')
 export class UserController {
   constructor(private usersService: UserService) {}
 
   @Get()
-  index(): string {
-    return `Hello from users -> all users`
+  index(): Promise<{ data: UserResponse[]; total: number }> {
+    return this.usersService.index();
   }
 
-
   @Get(':id')
-  show(@Param() params): string {
-    return `Hello from accounts -> ${params.id}`
+  show(@Param() params): Promise<UserResponse> {
+    return this.usersService.show(params.id);
   }
 
   @Post()
-  create(@Body() accountData: CreateUserDto): CreateUserDto {
-    return this.usersService.create(accountData)
+  create(@Body() accountData: CreateUserRequest): Promise<UserResponse> {
+    return this.usersService.create(accountData);
+  }
+
+  @Put()
+  update(@Body() accountData: UpdateUserRequest): Promise<UserResponse> {
+    return this.usersService.update(accountData);
   }
 }

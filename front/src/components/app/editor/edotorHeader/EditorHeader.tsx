@@ -3,11 +3,11 @@ import Toolbar from '@mui/material/Toolbar'
 import { Link } from 'react-router-dom'
 import logo from 'src/assets/logos/logo192.png'
 
-const EditorHeader = () => {
+const DashboardHeader = () => {
   return (
     <AppBar position="relative">
       <Toolbar variant="dense">
-        <Link to="/landing">
+        <Link to="/">
           <img src={logo} alt="logo" className="w-7 h-7" />
         </Link>
       </Toolbar>
@@ -15,4 +15,4 @@ const EditorHeader = () => {
   )
 }
 
-export default EditorHeader
+export default DashboardHeader
