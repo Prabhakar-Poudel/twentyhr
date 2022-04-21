@@ -22,15 +22,16 @@ export class OrganizationController {
 
   @Post()
   create(
-    @Body() accountData: CreateOrganizationRequest,
+    @Body() params: CreateOrganizationRequest,
   ): Promise<OrganizationResponse> {
-    return this.organizationService.create(accountData);
+    return this.organizationService.create(params);
   }
 
-  @Put()
+  @Put(':id')
   update(
-    @Body() accountData: UpdateOrganizationRequest,
+    @Param('id') id: string,
+    @Body() params: UpdateOrganizationRequest,
   ): Promise<OrganizationResponse> {
-    return this.organizationService.update(accountData);
+    return this.organizationService.update(params);
   }
 }

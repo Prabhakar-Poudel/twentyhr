@@ -1,4 +1,4 @@
-import { isString, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class CreateUserRequest {
   @IsString()
@@ -9,6 +9,12 @@ export class CreateUserRequest {
 
   @IsString()
   organizationId?: string;
+
+  @IsString()
+  firstName?: string;
+
+  @IsString()
+  lastName?: string;
 }
 
 export class UpdateUserRequest {

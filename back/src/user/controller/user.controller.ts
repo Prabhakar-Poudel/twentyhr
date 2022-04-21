@@ -3,10 +3,10 @@ import {
   CreateUserRequest,
   UpdateUserRequest,
   UserResponse,
-} from 'src/user/dto/user';
+} from 'src/user/dto/user.dto';
 import { UserService } from 'src/user/service/user.service';
 
-@Controller('accounts')
+@Controller('users')
 export class UserController {
   constructor(private usersService: UserService) {}
 
@@ -21,12 +21,15 @@ export class UserController {
   }
 
   @Post()
-  create(@Body() accountData: CreateUserRequest): Promise<UserResponse> {
-    return this.usersService.create(accountData);
+  create(@Body() params: CreateUserRequest): Promise<UserResponse> {
+    return this.usersService.create(params);
   }
 
-  @Put()
-  update(@Body() accountData: UpdateUserRequest): Promise<UserResponse> {
-    return this.usersService.update(accountData);
+  @Put(':id')
+  update(
+    @Param('id') id: string,
+    @Body() params: UpdateUserRequest,
+  ): Promise<UserResponse> {
+    return this.usersService.update(params);
   }
 }

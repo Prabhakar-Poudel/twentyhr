@@ -18,9 +18,11 @@ import {
 	UpdateManyResult,
 	UpdateParams,
 	UpdateResult,
+	fetchUtils,
 } from 'react-admin'
 
 const apiUrl = 'http://localhost:3100'
+const httpClient = fetchUtils.fetchJson
 
 const dataProvider: DataProvider = {
 	getList: (
@@ -37,13 +39,12 @@ const dataProvider: DataProvider = {
 		// const url = `${apiUrl}/${resource}?${JSON.stringify(query)}`
 		const url = `${apiUrl}/${resource}`
 
-		return fetch(url).then((response) => response.json())
+		return httpClient(url).then((response) => response.json)
 	},
 
 	getOne: (resource: string, params: GetOneParams): Promise<GetOneResult> => {
-		return fetch(`${apiUrl}/${resource}/${params.id}`).then((response) =>
-			response.json()
-		)
+		const url = `${apiUrl}/${resource}/${params.id}`
+		return httpClient(url).then(({ json }) => json)
 	},
 
 	getMany: (
@@ -54,7 +55,7 @@ const dataProvider: DataProvider = {
 			filter: JSON.stringify({ id: params.ids }),
 		}
 		const url = `${apiUrl}/${resource}?${query}`
-		return fetch(url).then((response) => response.json())
+		return httpClient(url).then((response) => response.json)
 	},
 
 	getManyReference: (
@@ -73,14 +74,15 @@ const dataProvider: DataProvider = {
 		}
 		const url = `${apiUrl}/${resource}?${query}`
 
-		return fetch(url).then((response) => response.json())
+		return httpClient(url).then((response) => response.json)
 	},
 
 	update: (resource: string, params: UpdateParams): Promise<UpdateResult> => {
-		return fetch(`${apiUrl}/${resource}/${params.id}`, {
+		const url = `${apiUrl}/${resource}/${params.id}`
+		return httpClient(url, {
 			method: 'PUT',
 			body: JSON.stringify(params.data),
-		}).then((response) => response.json())
+		}).then((response) => response.json)
 	},
 
 	updateMany: (
@@ -91,20 +93,22 @@ const dataProvider: DataProvider = {
 		return fetch(`${apiUrl}/${resource}?${query}`, {
 			method: 'PUT',
 			body: JSON.stringify(params.data),
-		}).then((response) => response.json())
+		}).then((response) => response.json as UpdateManyResult)
 	},
 
 	create: (resource: string, params: CreateParams): Promise<CreateResult> => {
-		return fetch(`${apiUrl}/${resource}`, {
+		const url = `${apiUrl}/${resource}`
+		return httpClient(url, {
 			method: 'POST',
 			body: JSON.stringify(params.data),
-		}).then((response) => response.json())
+		}).then((response) => response.json)
 	},
 
 	delete: (resource: string, params: DeleteParams): Promise<DeleteResult> => {
-		return fetch(`${apiUrl}/${resource}/${params.id}`, {
+		const url = `${apiUrl}/${resource}/${params.id}`
+		return httpClient(url, {
 			method: 'DELETE',
-		}).then((response) => response.json())
+		}).then((response) => response.json)
 	},
 
 	deleteMany: (
@@ -112,9 +116,10 @@ const dataProvider: DataProvider = {
 		params: DeleteManyParams
 	): Promise<DeleteManyResult> => {
 		const query = { filter: JSON.stringify({ id: params.ids }) }
-		return fetch(`${apiUrl}/${resource}?${query}`, {
+		const url = `${apiUrl}/${resource}?${query}`
+		return httpClient(url, {
 			method: 'DELETE',
-		}).then((response) => response.json())
+		}).then((response) => response.json)
 	},
 }
 

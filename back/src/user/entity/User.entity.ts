@@ -4,16 +4,16 @@ import { Column, Entity, JoinTable, ManyToOne } from 'typeorm';
 
 @Entity()
 export class User extends ApplicationEntity {
-  @Column()
+  @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   firstName: string;
 
-  @Column()
+  @Column({ nullable: true })
   lastName: string;
 
-  @Column()
+  @Column({ nullable: true })
   password: string;
 
   @ManyToOne(() => Organization)
