@@ -39,12 +39,12 @@ const dataProvider: DataProvider = {
 		// const url = `${apiUrl}/${resource}?${JSON.stringify(query)}`
 		const url = `${apiUrl}/${resource}`
 
-		return httpClient(url).then((response) => response.json)
+		return httpClient(url).then(({ json }) => json)
 	},
 
 	getOne: (resource: string, params: GetOneParams): Promise<GetOneResult> => {
 		const url = `${apiUrl}/${resource}/${params.id}`
-		return httpClient(url).then(({ json }) => json)
+		return httpClient(url).then(({ json }) => ({ data: json }))
 	},
 
 	getMany: (
@@ -74,7 +74,7 @@ const dataProvider: DataProvider = {
 		}
 		const url = `${apiUrl}/${resource}?${query}`
 
-		return httpClient(url).then((response) => response.json)
+		return httpClient(url).then(({ json }) => ({ data: json }))
 	},
 
 	update: (resource: string, params: UpdateParams): Promise<UpdateResult> => {
@@ -82,7 +82,7 @@ const dataProvider: DataProvider = {
 		return httpClient(url, {
 			method: 'PUT',
 			body: JSON.stringify(params.data),
-		}).then((response) => response.json)
+		}).then(({ json }) => ({ data: json }))
 	},
 
 	updateMany: (
@@ -93,7 +93,7 @@ const dataProvider: DataProvider = {
 		return fetch(`${apiUrl}/${resource}?${query}`, {
 			method: 'PUT',
 			body: JSON.stringify(params.data),
-		}).then((response) => response.json as UpdateManyResult)
+		}).then(({ json }) => json as UpdateManyResult)
 	},
 
 	create: (resource: string, params: CreateParams): Promise<CreateResult> => {
@@ -101,14 +101,14 @@ const dataProvider: DataProvider = {
 		return httpClient(url, {
 			method: 'POST',
 			body: JSON.stringify(params.data),
-		}).then((response) => response.json)
+		}).then((json) => ({ data: json }))
 	},
 
 	delete: (resource: string, params: DeleteParams): Promise<DeleteResult> => {
 		const url = `${apiUrl}/${resource}/${params.id}`
 		return httpClient(url, {
 			method: 'DELETE',
-		}).then((response) => response.json)
+		}).then(({ json }) => ({ data: json }))
 	},
 
 	deleteMany: (
@@ -119,7 +119,7 @@ const dataProvider: DataProvider = {
 		const url = `${apiUrl}/${resource}?${query}`
 		return httpClient(url, {
 			method: 'DELETE',
-		}).then((response) => response.json)
+		}).then(({ json }) => json)
 	},
 }
 

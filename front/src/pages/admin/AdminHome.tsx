@@ -3,9 +3,14 @@ import { useTheme } from '@mui/material/styles'
 import PersonIcon from '@mui/icons-material/Person'
 import CorporateFareIcon from '@mui/icons-material/CorporateFare'
 import Dashboard from 'src/components/admin/dashboard/Dashboard'
-import { UserCreate, UserList } from 'src/components/admin/resources/User'
+import {
+	UserCreate,
+	UserEdit,
+	UserList,
+} from 'src/components/admin/resources/User'
 import {
 	OrganizationCreate,
+	OrganizationEdit,
 	OrganizationList,
 } from 'src/components/admin/resources/Organization'
 import dataProvider from './dataProvider'
@@ -26,12 +31,14 @@ const AdminHome = () => {
 				name="users"
 				list={UserList}
 				create={UserCreate}
+				edit={UserEdit}
 			/>
 			<Resource
 				icon={CorporateFareIcon}
 				name="organizations"
 				list={OrganizationList}
 				create={OrganizationCreate}
+				edit={OrganizationEdit}
 			/>
 		</Admin>
 	)

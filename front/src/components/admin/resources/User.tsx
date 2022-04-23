@@ -1,12 +1,16 @@
 import {
 	AutocompleteInput,
 	Create,
+	Edit,
 	ReferenceField,
 	ReferenceInput,
 	SimpleForm,
 	TextInput,
+	List,
+	Datagrid,
+	TextField,
+	EmailField,
 } from 'react-admin'
-import { List, Datagrid, TextField, EmailField } from 'react-admin'
 
 export const UserList = () => (
 	<List>
@@ -22,6 +26,8 @@ export const UserList = () => (
 	</List>
 )
 
+const organizationOption = ({ name, id }: any) => `${name} - ${id}`
+
 export const UserCreate = () => (
 	<Create>
 		<SimpleForm>
@@ -33,8 +39,25 @@ export const UserCreate = () => (
 				source="organizationId"
 				reference="organizations"
 			>
-				<AutocompleteInput optionText="name" />
+				<AutocompleteInput optionText={organizationOption} fullWidth />
 			</ReferenceInput>
 		</SimpleForm>
 	</Create>
+)
+
+export const UserEdit = () => (
+	<Edit>
+		<SimpleForm>
+			<TextInput source="firstName" label="First Name" />
+			<TextInput source="lastName" label="Last Name" />
+			<TextInput type="email" source="email" label="Email" required />
+			<ReferenceInput
+				label="Organization"
+				source="organizationId"
+				reference="organizations"
+			>
+				<AutocompleteInput optionText={organizationOption} fullWidth />
+			</ReferenceInput>
+		</SimpleForm>
+	</Edit>
 )
