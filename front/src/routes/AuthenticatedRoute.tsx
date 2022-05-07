@@ -1,21 +1,14 @@
-import {  Route } from 'react-router-dom'
-import EditorPage from 'src/pages/editor/EditorPage'
-import DashboardPage from 'src/pages/dashboard/DashboardPage'
-import NotFoundPage from 'src/pages/NotFoundPage'
-import QuestionsHome from 'src/pages/question/QuestionsHome'
-import AdminHome from 'src/pages/admin/AdminHome'
-
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import PageLoading from 'src/components/shared/PageLoading'
+import { useAuth } from 'src/contexts/AuthContext'
 
 const AuthenticatedRoute = () => {
-  return (
-    <Route>
-      <Route path="/editor" element={<EditorPage />} />
-      <Route path="/questions" element={<QuestionsHome />} />
-      <Route path="/admin/*" element={<AdminHome />} />
-      <Route path="/" element={<DashboardPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Route>
-  )
+  const { user, loading } = useAuth()
+  const location = useLocation()
+
+  if (loading) return <PageLoading />
+  if (!user) return <Navigate to="/login" state={{ from: location }} replace />
+  return <Outlet />
 }
 
 export default AuthenticatedRoute

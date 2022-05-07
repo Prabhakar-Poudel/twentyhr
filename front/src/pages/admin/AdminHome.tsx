@@ -1,4 +1,4 @@
-import { Admin, Resource, ListGuesser, EditGuesser } from 'react-admin'
+import { Admin, Resource } from 'react-admin'
 import { useTheme } from '@mui/material/styles'
 import PersonIcon from '@mui/icons-material/Person'
 import CorporateFareIcon from '@mui/icons-material/CorporateFare'
@@ -7,11 +7,13 @@ import {
 	UserCreate,
 	UserEdit,
 	UserList,
+	UserShow,
 } from 'src/components/admin/resources/User'
 import {
 	OrganizationCreate,
 	OrganizationEdit,
 	OrganizationList,
+	OrganizationShow,
 } from 'src/components/admin/resources/Organization'
 import dataProvider from './dataProvider'
 
@@ -32,6 +34,7 @@ const AdminHome = () => {
 				list={UserList}
 				create={UserCreate}
 				edit={UserEdit}
+				show={UserShow}
 			/>
 			<Resource
 				icon={CorporateFareIcon}
@@ -39,6 +42,7 @@ const AdminHome = () => {
 				list={OrganizationList}
 				create={OrganizationCreate}
 				edit={OrganizationEdit}
+				show={OrganizationShow}
 			/>
 		</Admin>
 	)

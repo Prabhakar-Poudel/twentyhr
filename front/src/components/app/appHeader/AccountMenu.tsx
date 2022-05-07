@@ -7,17 +7,20 @@ import Settings from '@mui/icons-material/Settings'
 import Logout from '@mui/icons-material/Logout'
 import { MouseEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from 'src/contexts/AuthContext'
 
 export default function AccountMenu() {
 	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
 	const open = Boolean(anchorEl)
+	const { logOut } = useAuth()
 
 	const handleClick = (event: MouseEvent<HTMLElement>) =>
 		setAnchorEl(event.currentTarget)
 	const handleClose = () => setAnchorEl(null)
 
 	const navigate = useNavigate()
-	const onLogout = () => {
+	const onLogout = async () => {
+		await logOut()
 		navigate('/login')
 	}
 

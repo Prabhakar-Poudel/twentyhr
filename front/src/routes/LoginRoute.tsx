@@ -1,19 +1,13 @@
-import { ReactNode } from 'react'
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
+import PageLoading from 'src/components/shared/PageLoading'
 import { useAuth } from 'src/contexts/AuthContext'
 
-interface PublicRouteProps {
-  children: ReactNode
-}
+const LoginRoute = () => {
+  const { user, loading } = useAuth()
 
-const PublicRoute = () => {
-  const auth = useAuth()
-  const location = useLocation()
-
-  if (!auth.user) {
-    return <Navigate to="/login" state={{ from: location }} replace/>
-  }
+  if (loading) return <PageLoading />
+  if (user) return <Navigate to="/" replace />
   return <Outlet />
 }
 
-export default PublicRoute
+export default LoginRoute

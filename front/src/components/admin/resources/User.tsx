@@ -10,17 +10,19 @@ import {
 	Datagrid,
 	TextField,
 	EmailField,
+	Show,
+	SimpleShowLayout,
 } from 'react-admin'
 
 export const UserList = () => (
 	<List>
 		<Datagrid rowClick="edit">
 			<TextField source="id" />
-			<ReferenceField source="organization" reference="organizations">
-				<TextField source="id" />
+			<ReferenceField source="organization_id" reference="organizations">
+				<TextField source="Name" />
 			</ReferenceField>
-			<TextField source="firstName" />
-			<TextField source="lastName" />
+			<TextField source="first_name" />
+			<TextField source="last_name" />
 			<EmailField source="email" />
 		</Datagrid>
 	</List>
@@ -29,14 +31,14 @@ export const UserList = () => (
 const organizationOption = ({ name, id }: any) => `${name} - ${id}`
 
 export const UserCreate = () => (
-	<Create>
+	<Create redirect="show">
 		<SimpleForm>
-			<TextInput source="firstName" label="First Name" />
-			<TextInput source="lastName" label="Last Name" />
+			<TextInput source="first_name" label="First Name" />
+			<TextInput source="last_name" label="Last Name" />
 			<TextInput type="email" source="email" label="Email" required />
 			<ReferenceInput
 				label="Organization"
-				source="organizationId"
+				source="organization_id"
 				reference="organizations"
 			>
 				<AutocompleteInput optionText={organizationOption} fullWidth />
@@ -46,18 +48,28 @@ export const UserCreate = () => (
 )
 
 export const UserEdit = () => (
-	<Edit>
+	<Edit redirect="show">
 		<SimpleForm>
-			<TextInput source="firstName" label="First Name" />
-			<TextInput source="lastName" label="Last Name" />
+			<TextInput source="first_name" label="First Name" />
+			<TextInput source="last_name" label="Last Name" />
 			<TextInput type="email" source="email" label="Email" required />
 			<ReferenceInput
 				label="Organization"
-				source="organizationId"
+				source="organization_id"
 				reference="organizations"
 			>
 				<AutocompleteInput optionText={organizationOption} fullWidth />
 			</ReferenceInput>
 		</SimpleForm>
 	</Edit>
+)
+
+export const UserShow = () => (
+	<Show>
+		<SimpleShowLayout>
+			<TextField source="first_name" label="First Name" />
+			<TextField source="last_name" label="Last Name" />
+			<TextField source="email" label="Email" />
+		</SimpleShowLayout>
+	</Show>
 )

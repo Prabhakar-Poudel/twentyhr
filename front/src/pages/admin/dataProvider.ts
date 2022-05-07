@@ -44,7 +44,7 @@ const dataProvider: DataProvider = {
 
 	getOne: (resource: string, params: GetOneParams): Promise<GetOneResult> => {
 		const url = `${apiUrl}/${resource}/${params.id}`
-		return httpClient(url).then(({ json }) => ({ data: json }))
+		return httpClient(url).then(({ json }) => json)
 	},
 
 	getMany: (
@@ -55,7 +55,7 @@ const dataProvider: DataProvider = {
 			filter: JSON.stringify({ id: params.ids }),
 		}
 		const url = `${apiUrl}/${resource}?${query}`
-		return httpClient(url).then((response) => response.json)
+		return httpClient(url).then(({ json }) => json)
 	},
 
 	getManyReference: (
@@ -74,7 +74,7 @@ const dataProvider: DataProvider = {
 		}
 		const url = `${apiUrl}/${resource}?${query}`
 
-		return httpClient(url).then(({ json }) => ({ data: json }))
+		return httpClient(url).then(({ json }) => json)
 	},
 
 	update: (resource: string, params: UpdateParams): Promise<UpdateResult> => {
@@ -82,7 +82,7 @@ const dataProvider: DataProvider = {
 		return httpClient(url, {
 			method: 'PUT',
 			body: JSON.stringify(params.data),
-		}).then(({ json }) => ({ data: json }))
+		}).then(({ json }) => json)
 	},
 
 	updateMany: (
@@ -101,14 +101,14 @@ const dataProvider: DataProvider = {
 		return httpClient(url, {
 			method: 'POST',
 			body: JSON.stringify(params.data),
-		}).then((json) => ({ data: json }))
+		}).then(({ json }) => json)
 	},
 
 	delete: (resource: string, params: DeleteParams): Promise<DeleteResult> => {
 		const url = `${apiUrl}/${resource}/${params.id}`
 		return httpClient(url, {
 			method: 'DELETE',
-		}).then(({ json }) => ({ data: json }))
+		}).then(({ json }) => json)
 	},
 
 	deleteMany: (

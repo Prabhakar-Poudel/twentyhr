@@ -1,25 +1,59 @@
 import { Button, Container, Paper, TextField, Typography, Link } from '@mui/material'
-import { Link as RouterLink } from 'react-router-dom'
+import { AxiosResponse } from 'axios'
+import { FormEventHandler, useState } from 'react'
+import { Link as RouterLink, useNavigate, useLocation  } from 'react-router-dom'
 import { Box } from '@mui/system'
-import { useNavigate } from 'react-router-dom'
 import loginImage from 'src/assets/svg/loginScreen.svg'
-import LoginPassword from 'src/components/app/login/Password'
+import PasswordField from 'src/components/app/account/Password'
+import { useAuth } from 'src/contexts/AuthContext'
+import useToast from 'src/hooks/useToast'
+
+type LocationState = {
+	from?: {
+		pathname: string
+	}
+}
 
 const LoginPage = () => {
 	const navigate = useNavigate()
-	const onLogin = () => {
-		navigate('/questions')
+	const { state: locationState = {} }  = useLocation()
+	const { logIn } = useAuth()
+	const toast = useToast()
+	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
+
+	const redirectTo = (locationState as LocationState)?.from?.pathname || '/'
+
+	const onLogin: FormEventHandler<HTMLDivElement> = async (e) => {
+		e.preventDefault()
+		try {
+			await logIn({ email, password })
+			navigate(redirectTo, { replace: true })
+		} catch ({ response }) {
+			const { data } = response as AxiosResponse
+			toast({ message: data.error, type: 'error' })
+		}
 	}
 
 	return (
 		<Paper square className="h-screen w-screen flex flex-wrap md:flex-nowrap">
 			<Container className="!grid place-content-center">
-				<Box>
+				<Box component="section">
 					<Typography variant="h3">Login</Typography>
-					<Box component="form" className="mt-2">
-						<TextField fullWidth label="Email" id="email" type="email" />
-						<LoginPassword />
-						<div className="mt-4 mb-4 flex justify-between">
+					<Box component="form" onSubmit={onLogin}>
+						<TextField
+							fullWidth
+							required
+							label="Email"
+							id="email"
+							type="email"
+							autoComplete="email"
+							value={email}
+							margin="dense"
+						  onChange={(e) => setEmail(e.target.value)}
+						/>
+						<PasswordField value={password} onChange={(e) => setPassword(e.target.value)}/>
+						<Box className="flex justify-between">
 							<Link
 								component={RouterLink}
 								to="/forgot-password"
@@ -30,10 +64,10 @@ const LoginPage = () => {
 							<Link component={RouterLink} to="/signup" color="secondary">
 								Need an account?
 							</Link>
-						</div>
-						<Button variant="contained" fullWidth onClick={onLogin}>
-							Login
-						</Button>
+						</Box>
+						<Box className="mt-2">
+							<Button type="submit" variant="contained" fullWidth>Login</Button>
+						</Box>
 					</Box>
 				</Box>
 			</Container>
