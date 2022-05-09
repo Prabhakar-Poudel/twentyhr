@@ -3,7 +3,7 @@ import Toolbar from '@mui/material/Toolbar'
 import { Link } from 'react-router-dom'
 import logo from 'src/assets/logos/logo192.png'
 
-const EditordHeader = () => {
+const EditorHeader = () => {
 	return (
 		<AppBar position="relative">
 			<Toolbar variant="dense">
@@ -15,4 +15,4 @@ const EditordHeader = () => {
 	)
 }
 
-export default EditordHeader
+export default EditorHeader
