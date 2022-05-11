@@ -5,7 +5,7 @@ import { loader } from '@monaco-editor/react'
 import EditorHeader from 'src/components/app/editor/edotorHeader/EditorHeader'
 import EditorBody from 'src/components/app/editor/editorBody/EditorBody'
 import EditorFooter from 'src/components/app/editor/editorFooter/EditorFooter'
-import defaultEditorOptions from './editorConfig'
+import defaultEditorOptions, { SUPPORTED_LANGUAGES } from './editorConfig'
 import EditorDrawer from 'src/components/app/editor/editorBody/EditorDrawer'
 import EditorSticky from 'src/components/app/editor/editorBody/EditorSticky'
 
@@ -23,11 +23,15 @@ const EditorPage = () => {
     loader.config({ monaco })
   }, [])
 
+  const onLanguagesFetch = (languages: monaco.languages.ILanguageExtensionPoint[]) => {
+    setAvailableLanguages(languages.filter(({ id }) => SUPPORTED_LANGUAGES.includes(id)))
+  }
+
   return (
     <div className="flex h-screen w-screen">
       <div className="flex flex-col flex-grow">
         <EditorHeader />
-        <EditorBody theme={theme} defaultEditorOptions={{ ...defaultEditorOptions, fontSize }} language={language} setLanguages={setAvailableLanguages} />
+        <EditorBody theme={theme} defaultEditorOptions={{ ...defaultEditorOptions, fontSize }} language={language} setLanguages={onLanguagesFetch} />
         <EditorFooter fontSize={fontSize} setFontSize={onFontSizeChange} theme={theme} setTheme={onThemeChange} currentLanguage={language} availableLanguages={availableLanguages} setLanguage={setLanguage}/>
       </div>
       <div>
