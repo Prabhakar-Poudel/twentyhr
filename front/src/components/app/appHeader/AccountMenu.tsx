@@ -1,3 +1,4 @@
+import { Box } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -6,7 +7,7 @@ import IconButton from '@mui/material/IconButton'
 import Settings from '@mui/icons-material/Settings'
 import Logout from '@mui/icons-material/Logout'
 import { MouseEvent, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from 'src/contexts/AuthContext'
 
 export default function AccountMenu() {
@@ -25,9 +26,9 @@ export default function AccountMenu() {
 	}
 
 	return (
-		<>
+		<Box>
 			<IconButton onClick={handleClick}>
-				<Avatar sx={{ width: 32, height: 32 }} />
+				<Avatar sx={{ width: 24, height: 24 }} />
 			</IconButton>
 			<Menu
 				anchorEl={anchorEl}
@@ -39,12 +40,14 @@ export default function AccountMenu() {
 					className: 'drop-shadow-2xl',
 				}}
 			>
-				<MenuItem>
-					<ListItemIcon>
-						<Settings fontSize="small" />
-					</ListItemIcon>
-					Settings
-				</MenuItem>
+				<Link to="/account">
+					<MenuItem>
+						<ListItemIcon>
+							<Settings fontSize="small" />
+						</ListItemIcon>
+						Settings
+					</MenuItem>
+				</Link>
 				<MenuItem onClick={onLogout}>
 					<ListItemIcon>
 						<Logout fontSize="small" />
@@ -52,6 +55,6 @@ export default function AccountMenu() {
 					Logout
 				</MenuItem>
 			</Menu>
-		</>
+		</Box>
 	)
 }

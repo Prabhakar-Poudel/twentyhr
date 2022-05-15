@@ -1,17 +1,16 @@
 class OrganizationsController < ApplicationController
+  load_and_authorize_resource
+
   def show
-    organization = Organization.find(params[:id])
-    render json: { data: organization }
+    render json: { data: @organization }
   end
 
   def index
-    organizations = Organization.all
-    render json: { data: organizations, total: organizations.size }
+    render json: { data: @organizations, total: @organizations.size }
   end
 
   def create
-    organization = Organization.create(organization_params)
-    if organization.save
+    if @organization.save
       render json: { data: organization }
     else
       render json: { }, status: unprocessable_entity
@@ -19,9 +18,8 @@ class OrganizationsController < ApplicationController
   end
 
   def update
-    organization = Organization.find(params[:id])
-    if organization.update(organization_params)
-      render json: { data: organization }
+    if @organization.update(organization_params)
+      render json: { data: @organization }
     else
       render json: { }, status: unprocessable_entity
     end

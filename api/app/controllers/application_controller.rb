@@ -5,12 +5,20 @@ class ApplicationController < ActionController::API
   before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
 
+  helper_method :current_organization
+
   respond_to :json
+
+  check_authorization unless: :devise_controller?
 
   protected
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up)
     devise_parameter_sanitizer.permit(:account_update)
+  end
+
+  def current_organization
+    @current_organization ||= Organization.find(params[:organization_id]) if params[:organization_id]
   end
 end

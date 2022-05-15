@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { Routes, Route } from 'react-router-dom'
 import { AuthProvider } from 'src/contexts/AuthContext'
 import { ToastProvider } from 'src/hooks/useToast'
+import AccountSettingsPage from 'src/pages/account/AccountSettingsPage'
 import ForgotPasswordPage from 'src/pages/account/ForgotPasswordPage'
 import LoginPage from 'src/pages/account/LoginPage'
 import ResetPasswordPage from 'src/pages/account/ResetPasswordPage'
@@ -25,7 +26,13 @@ const theme = createTheme({
 	},
 })
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false,
+		},
+	},
+})
 
 const App = () => {
 	return (
@@ -45,6 +52,7 @@ const App = () => {
 							<Route element={<AuthenticatedRoute />}>
 								<Route path="/editor" element={<EditorPage />} />
 								<Route path="/questions" element={<QuestionsHome />} />
+								<Route path="/account" element={<AccountSettingsPage />} />
 								<Route path="/admin/*" element={<AdminHome />} />
 								<Route path="/" element={<DashboardPage />} />
 							</Route>

@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :timeoutable, :trackable and :omniauthable
   devise :confirmable, :database_authenticatable, :lockable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_one :organization
+  belongs_to :organization, optional: true
 
   has_paper_trail
 end

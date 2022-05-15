@@ -21,7 +21,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # PUT /users
   def update
-    super
+    raise ActionController::RoutingError.new('Not Found')
   end
 
   # DELETE /users

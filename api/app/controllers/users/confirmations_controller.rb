@@ -13,6 +13,15 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
 
   # GET /users/confirmation?confirmation_token=abcdef
   def show
-    super
+    super do |user|
+      create_user_organization(user) if user.errors.empty? && user.organization.nil?
+    end
+  end
+
+  private
+
+  def create_user_organization(user)
+    organization = Organization.create(name: user.email)
+    user.update!(organization: organization)
   end
 end

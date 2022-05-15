@@ -29,7 +29,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     fetchProfile()
   }, [])
 
-
   const logIn = (newUser: UserLoginProps) => {
     const { email, password } = newUser
     if(!(email && password)) return
@@ -52,7 +51,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const fetchProfile = () => {
     fetchCurrentUser().finally(() => setLoading(false))
   }
-
 
   const value = { loading, user, fetchCurrentUser, logIn, logOut }
 
