@@ -14,6 +14,7 @@ import AdminHome from 'src/pages/admin/AdminHome'
 import DashboardPage from 'src/pages/dashboard/DashboardPage'
 import EditorPage from 'src/pages/editor/EditorPage'
 import NotFoundPage from 'src/pages/NotFoundPage'
+import NewQuestion from 'src/pages/question/NewQuestion'
 import QuestionsHome from 'src/pages/question/QuestionsHome'
 import AuthenticatedRoute from 'src/routes/AuthenticatedRoute'
 import LoginRoute from 'src/routes/LoginRoute'
@@ -43,17 +44,19 @@ const App = () => {
 					<AuthProvider>
 						<Routes>
 							<Route element={<LoginRoute />}>
-								<Route path="/login" element={<LoginPage />} />
-								<Route path="/forgot-password" element={<ForgotPasswordPage />} />
-								<Route path="/reset-password" element={<ResetPasswordPage />} />
-								<Route path="/signup" element={<SignUpPage />} />
-								<Route path="/verify-account" element={<VerifyAccountPage />} />
+								<Route path="login" element={<LoginPage />} />
+								<Route path="forgot-password" element={<ForgotPasswordPage />} />
+								<Route path="reset-password" element={<ResetPasswordPage />} />
+								<Route path="signup" element={<SignUpPage />} />
+								<Route path="verify-account" element={<VerifyAccountPage />} />
 							</Route>
 							<Route element={<AuthenticatedRoute />}>
-								<Route path="/editor" element={<EditorPage />} />
-								<Route path="/questions" element={<QuestionsHome />} />
-								<Route path="/account" element={<AccountSettingsPage />} />
-								<Route path="/admin/*" element={<AdminHome />} />
+								<Route path="editor" element={<EditorPage />} />
+								<Route path="questions" element={<QuestionsHome />} />
+								<Route path="questions/new" element={<NewQuestion />} />
+								<Route path="questions/:id/edit" element={<NewQuestion />} />
+								<Route path="account" element={<AccountSettingsPage />} />
+								<Route path="admin/*" element={<AdminHome />} />
 								<Route path="/" element={<DashboardPage />} />
 							</Route>
 							<Route path="*" element={<NotFoundPage />} />

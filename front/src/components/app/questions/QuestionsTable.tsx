@@ -10,6 +10,7 @@ import {
 	GridToolbarFilterButton,
 	GridToolbarQuickFilter,
 } from '@mui/x-data-grid'
+import { useNavigate } from 'react-router-dom'
 import { QuestionIndex } from 'src/types/question'
 
 interface Props {
@@ -22,7 +23,12 @@ const columns: GridColDef[] = [
 	{ field: 'status', headerName: 'Status', width: 100 },
 ]
 
-function Toolbar() {
+const Toolbar = () => {
+	const navigate = useNavigate()
+
+	const onNewQuestion = () => navigate('/questions/new')
+
+
 	return (
 		<GridToolbarContainer className="justify-between">
 			<Box>
@@ -33,7 +39,7 @@ function Toolbar() {
 				<GridToolbarFilterButton />
 				<GridToolbarDensitySelector />
 			</Box>
-			<Button variant="contained" className="!rounded-full" startIcon={<EditIcon />}>Compose</Button>
+			<Button variant="contained" className="!rounded-full" startIcon={<EditIcon />} onClick={onNewQuestion}>Compose</Button>
 		</GridToolbarContainer>
 	);
 }

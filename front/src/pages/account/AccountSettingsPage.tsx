@@ -32,7 +32,7 @@ const AccountSettingsPage = () => {
       <AppHeader />
       <Box className="mx-4 md:mx-10">
         <Box className="my-4">
-          <Typography variant="h4">Account Settings</Typography>
+          <Typography className="my-4" variant="h4">Account Settings</Typography>
         </Box>
         <Box className="w-80" component="form" onSubmit={updateUserData}>
           <TextField
