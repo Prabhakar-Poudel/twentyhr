@@ -13,7 +13,7 @@ class OrganizationsController < ApplicationController
     if @organization.save
       render json: { data: organization }
     else
-      render json: { }, status: unprocessable_entity
+      render json: { }, status: :unprocessable_entity
     end
   end
 

@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   get 'profile', to: 'users#profile'
   resources :users, only: %i[index show create update]
 
-  resources :interview_questions, only: %i[index show create update]
+  resources :questions, only: %i[index show create update]
 end

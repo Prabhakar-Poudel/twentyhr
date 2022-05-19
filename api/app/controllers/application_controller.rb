@@ -19,6 +19,11 @@ class ApplicationController < ActionController::API
   end
 
   def current_organization
-    @current_organization ||= Organization.find(params[:organization_id]) if params[:organization_id]
+    @current_organization ||=
+      if params[:organization_id].present?
+        Organization.find(params[:organization_id])
+      else
+        current_user.organization
+      end
   end
 end

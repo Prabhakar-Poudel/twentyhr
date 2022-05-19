@@ -6,7 +6,7 @@ export const useQuestionsIndex = () => {
   const queryKey = ['questions']
   const result = useQuery(
     queryKey,
-    ({ queryKey }) => axios.get('/interview_questions').then(({ data }) => data)
+    ({ queryKey }) => axios.get('/questions').then(({ data }) => data)
   )
 
   return {
@@ -20,7 +20,7 @@ export const useQuestionShow = ({ id }: { id: string }) => {
   const queryKey = ['questions', id]
   const queryResult = useQuery(
     queryKey,
-    ({ queryKey }) => axios.get(`/interview_questions/${id}`).then(({ data }) => data)
+    ({ queryKey }) => axios.get(`/questions/${id}`).then(({ data }) => data)
   )
 
   return {

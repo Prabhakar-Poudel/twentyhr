@@ -34,7 +34,8 @@ export const CodeInput = ({ label, defaultValue = '', defaultLanguage, helperTex
 
   const onLanguageChange = (event: SyntheticEvent, newValue: string) => {
     setLanguage(newValue)
-    onChangeHandler()
+    const currentValue = editor.getValue()
+    onChange({ currentValue, language: newValue })
   }
 
   return (

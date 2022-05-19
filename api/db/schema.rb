@@ -19,26 +19,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_12_194629) do
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "question_status", ["draft", "published", "archived"]
 
-  create_table "interview_questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_id", null: false
     t.uuid "creator_id", null: false
-    t.string "title", null: false
-    t.string "description", limit: 500
-    t.text "candidate_instruction"
+    t.string "title", limit: 300, null: false
+    t.string "description", limit: 1000
+    t.text "instruction"
     t.text "initial_code"
+    t.text "language"
     t.text "guidelines"
     t.enum "status", default: "draft", null: false, enum_type: "question_status"
     t.datetime "last_used_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["creator_id"], name: "index_interview_questions_on_creator_id"
-    t.index ["organization_id"], name: "index_interview_questions_on_organization_id"
-  end
-
-  create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_questions_on_creator_id"
+    t.index ["organization_id"], name: "index_questions_on_organization_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -75,7 +76,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_12_194629) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
-  add_foreign_key "interview_questions", "organizations"
-  add_foreign_key "interview_questions", "users", column: "creator_id"
+  add_foreign_key "questions", "organizations"
+  add_foreign_key "questions", "users", column: "creator_id"
   add_foreign_key "users", "organizations"
 end

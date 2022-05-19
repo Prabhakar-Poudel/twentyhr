@@ -11,6 +11,7 @@ import {
 	GridToolbarQuickFilter,
 } from '@mui/x-data-grid'
 import { useNavigate } from 'react-router-dom'
+import { StatusChip } from 'src/components/app/questions/StatusChip'
 import { QuestionIndex } from 'src/types/question'
 
 interface Props {
@@ -20,7 +21,7 @@ interface Props {
 const columns: GridColDef[] = [
 	{ field: 'title', headerName: 'Title', width: 400 },
 	{ field: 'creator_id', headerName: 'Create by', width: 300 },
-	{ field: 'status', headerName: 'Status', width: 100 },
+	{ field: 'status', headerName: 'Status', width: 150, renderCell: StatusChip },
 ]
 
 const Toolbar = () => {

@@ -5,11 +5,11 @@ import 'react-quill/dist/quill.snow.css'
 import './rich-text-input.css'
 
 interface Props {
-  id?: string
   label: string
   helperText?: string
   error?: string
   placeholder?: string
+  onChange: (value: string) => void
 }
 
 const quillModules = {
@@ -31,16 +31,16 @@ const quillFormats = [
   'link',
 ]
 
-export const RichTextInput = ({ id, label, helperText, placeholder }: Props) => {
+export const RichTextInput = ({ label, helperText, placeholder, onChange }: Props) => {
   return (
     <FormControl fullWidth margin="normal">
       <FormLabel>{label}</FormLabel>
       <ReactQuill
-        id={id}
         theme="snow"
         placeholder={placeholder || ''}
         modules={quillModules}
         formats={quillFormats}
+        onChange={onChange}
       >
         <InputBase fullWidth readOnly className="h-80"/>
       </ReactQuill>
