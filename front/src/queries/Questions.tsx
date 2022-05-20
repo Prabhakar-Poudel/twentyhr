@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from 'react-query'
+import { questionTransform } from 'src/dataTransforms/question'
 import { axios } from 'src/lib/axios/axios'
 
 export const useQuestionsIndex = () => {
@@ -15,12 +16,12 @@ export const useQuestionsIndex = () => {
   }
 }
 
-export const useQuestionShow = ({ id }: { id: string }) => {
+export const useQuestionShow = (id: string) => {
   const queryClient = useQueryClient()
   const queryKey = ['questions', id]
   const queryResult = useQuery(
     queryKey,
-    ({ queryKey }) => axios.get(`/questions/${id}`).then(({ data }) => data)
+    ({ queryKey }) => axios.get(`/questions/${id}`).then(({ data }) => questionTransform(data))
   )
 
   return {

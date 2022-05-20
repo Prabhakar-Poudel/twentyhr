@@ -9,6 +9,7 @@ interface Props {
   helperText?: string
   error?: string
   placeholder?: string
+  defaultValue?: string
   onChange: (value: string) => void
 }
 
@@ -31,7 +32,7 @@ const quillFormats = [
   'link',
 ]
 
-export const RichTextInput = ({ label, helperText, placeholder, onChange }: Props) => {
+export const RichTextInput = ({ label, helperText, placeholder, onChange, defaultValue }: Props) => {
   return (
     <FormControl fullWidth margin="normal">
       <FormLabel>{label}</FormLabel>
@@ -41,6 +42,7 @@ export const RichTextInput = ({ label, helperText, placeholder, onChange }: Prop
         modules={quillModules}
         formats={quillFormats}
         onChange={onChange}
+        defaultValue={defaultValue || ''}
       >
         <InputBase fullWidth readOnly className="h-80"/>
       </ReactQuill>

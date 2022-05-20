@@ -4,37 +4,34 @@ import { useNavigate } from 'react-router-dom'
 import { CodeInput, OnChangeParams } from 'src/components/shared/CodeInput'
 import { RichTextInput } from 'src/components/shared/RichTextInput'
 import useToast from 'src/hooks/useToast'
-import { axios } from 'src/lib/axios/axios'
+import { Question, QuestionPayload, QuestionNew } from 'src/types/question'
 
-const QuestionForm = () => {
+interface Props {
+  defaultValues: QuestionNew | Question
+  onSave: (question: QuestionPayload) => Promise<Question>
+}
+
+const QuestionForm = ({ defaultValues, onSave }: Props) => {
   const navigate = useNavigate()
   const toast = useToast()
+  const [starterCode, setStarterCode] = useState(defaultValues.starterCode || '// console.log("Hello world")')
+  const [language, setLanguage] = useState(defaultValues.language || 'javascript')
+  const [title, setTitle] = useState(defaultValues.title || '')
+  const [description, setDescription] = useState(defaultValues.description || '')
+  const [instruction, setInstruction] = useState(defaultValues.instruction || '')
+  const [guidelines, setGuidelines] = useState(defaultValues.guidelines || '')
 
-  const [starterCode, setStarterCode] = useState('// console.log("Hello world")')
-  const [language, setLanguage] = useState('javascript')
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [instructions, setInstructions] = useState('')
-  const [guidelines, setGuidelines] = useState('')
+  const buttonText = 'id' in defaultValues ? 'Update' : 'Create'
 
   const onCodeUpdate = ({ currentValue, language }: OnChangeParams) => {
     setStarterCode(currentValue)
     setLanguage(language)
   }
 
-  const createQuestion = (event: FormEvent) => {
+  const submitForm = (event: FormEvent) => {
     event.preventDefault()
-    const body = {
-      title,
-      description,
-      instruction: instructions,
-      guidelines,
-      initial_code: starterCode,
-      language,
-      status: 'published',
-    }
-    axios
-      .post('/questions/', { question: body})
+    const body = { title, description, instruction, guidelines, initial_code: starterCode, language, status: 'published' }
+    onSave(body)
       .then(() => {
         toast({ message: 'Question created successfully', type: 'success' })
         navigate('/questions')
@@ -47,7 +44,7 @@ const QuestionForm = () => {
       <Box className="my-4">
         <Typography className="my-4" variant="h4">Create a new interview question</Typography>
       </Box>
-      <Box component="form" onSubmit={createQuestion}>
+      <Box component="form" onSubmit={submitForm}>
         <FormControl fullWidth margin="normal">
           <FormLabel required htmlFor="title">Title</FormLabel>
           <TextField
@@ -81,23 +78,25 @@ const QuestionForm = () => {
           label="Instructions"
           placeholder="Author instructions about this interview"
           helperText="This will be visible to both candidate and interviewers during an interview"
-          onChange={(change) => setInstructions(change)}
+          defaultValue={instruction}
+          onChange={(change) => setInstruction(change)}
         />
         <RichTextInput
           label="Guidelines"
           placeholder="Author guidelines on how to take this interview"
           helperText="This will be visible only to the interviewers during an interview"
+          defaultValue={guidelines}
           onChange={(change) => setGuidelines(change)}
         />
         <CodeInput
-          defaultValue='// console.log("Hello world")'
-          defaultLanguage="javascript"
+          defaultValue={starterCode}
+          defaultLanguage={language}
           label="Starter code"
           helperText="This code will be prefilled in the editor when interview starts"
           onChange={onCodeUpdate}
         />
         <Box className="my-4">
-          <Button fullWidth variant="contained" type="submit">Create</Button>
+          <Button fullWidth variant="contained" type="submit">{buttonText}</Button>
         </Box>
       </Box>
     </Container>

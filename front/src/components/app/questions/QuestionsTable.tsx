@@ -16,6 +16,7 @@ import { QuestionIndex } from 'src/types/question'
 
 interface Props {
 	rows: QuestionIndex[]
+	onRowClick: (rowId: string) => void
 }
 
 const columns: GridColDef[] = [
@@ -42,16 +43,17 @@ const Toolbar = () => {
 			</Box>
 			<Button variant="contained" className="!rounded-full" startIcon={<EditIcon />} onClick={onNewQuestion}>Compose</Button>
 		</GridToolbarContainer>
-	);
+	)
 }
 
-export default function QuestionsTable({ rows }: Props) {
+export default function QuestionsTable({ rows, onRowClick }: Props) {
 	return (
 		<Container>
 			<Paper elevation={12}>
 				<DataGrid
 					autoHeight
 					autoPageSize
+					hideFooterSelectedRowCount
 					rows={rows}
 					columns={columns}
 					pageSize={10}
@@ -59,8 +61,9 @@ export default function QuestionsTable({ rows }: Props) {
 					checkboxSelection={false}
 					aria-label="questions table"
 					density="comfortable"
-					editMode="row"
 					components={{ Toolbar }}
+					onRowClick={(row) => onRowClick(row.id as string)}
+					className="cursor-pointer"
 				/>
 			</Paper>
 		</Container>

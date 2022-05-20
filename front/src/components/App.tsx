@@ -14,6 +14,7 @@ import AdminHome from 'src/pages/admin/AdminHome'
 import DashboardPage from 'src/pages/dashboard/DashboardPage'
 import EditorPage from 'src/pages/editor/EditorPage'
 import NotFoundPage from 'src/pages/NotFoundPage'
+import EditQuestion from 'src/pages/question/EditQuestion'
 import NewQuestion from 'src/pages/question/NewQuestion'
 import QuestionsHome from 'src/pages/question/QuestionsHome'
 import AuthenticatedRoute from 'src/routes/AuthenticatedRoute'
@@ -54,7 +55,7 @@ const App = () => {
 								<Route path="editor" element={<EditorPage />} />
 								<Route path="questions" element={<QuestionsHome />} />
 								<Route path="questions/new" element={<NewQuestion />} />
-								<Route path="questions/:id/edit" element={<NewQuestion />} />
+								<Route path="questions/:id/edit" element={<EditQuestion />} />
 								<Route path="account" element={<AccountSettingsPage />} />
 								<Route path="admin/*" element={<AdminHome />} />
 								<Route path="/" element={<DashboardPage />} />
