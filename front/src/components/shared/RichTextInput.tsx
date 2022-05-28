@@ -37,6 +37,7 @@ export const RichTextInput = ({ label, helperText, placeholder, onChange, defaul
     <FormControl fullWidth margin="normal">
       <FormLabel>{label}</FormLabel>
       <ReactQuill
+        className="rich-text-input"
         theme="snow"
         placeholder={placeholder || ''}
         modules={quillModules}
@@ -44,7 +45,7 @@ export const RichTextInput = ({ label, helperText, placeholder, onChange, defaul
         onChange={onChange}
         defaultValue={defaultValue || ''}
       >
-        <InputBase fullWidth readOnly className="h-80"/>
+        <InputBase fullWidth className="h-80"/>
       </ReactQuill>
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>

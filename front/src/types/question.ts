@@ -1,3 +1,5 @@
+import { User } from 'src/types/user'
+
 export type QuestionStatus = 'draft' | 'published' | 'archived'
 
 export interface QuestionIndex {
@@ -5,7 +7,7 @@ export interface QuestionIndex {
   title: string
   description?: string
   organization_id: string
-  creator_id: string
+  creator: User
   status: QuestionStatus
 }
 

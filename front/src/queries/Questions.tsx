@@ -21,7 +21,8 @@ export const useQuestionShow = (id: string) => {
   const queryKey = ['questions', id]
   const queryResult = useQuery(
     queryKey,
-    ({ queryKey }) => axios.get(`/questions/${id}`).then(({ data }) => questionTransform(data))
+    ({ queryKey }) => axios.get(`/questions/${id}`).then(({ data }) => questionTransform(data)),
+    { retry: false }
   )
 
   return {

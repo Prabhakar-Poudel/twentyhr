@@ -6,6 +6,10 @@
     width: 100%
 }
 
+.ql-container {
+    font-size: 1rem;
+}
+
 .ql-container.ql-snow {
     border: none;
     outline: none;
@@ -17,14 +21,14 @@
     border-color: inherit;
 }
 
-.quill {
+.rich-text-input.quill {
     border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, 0.23);
 }
-.quill:hover {
+.rich-text-input.quill:hover {
     border-color: #fff;
 }
-.quill:focus-within {
+.rich-text-input.quill:focus-within {
     border-color: var(--primary-color-main);
     border-width: 2px;
     margin: -1px

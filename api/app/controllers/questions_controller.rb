@@ -2,8 +2,12 @@ class QuestionsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    questions = @questions.select(:id, :title, :description, :organization_id, :creator_id, :status).order(created_at: :desc)
-    render json: questions, status: :ok
+    questions =
+      @questions
+        .includes(:creator)
+        .select(:id, :title, :description, :status, :creator_id)
+        .order(created_at: :desc)
+    render json: questions.as_json(except: :creator_id, include: { creator: { only: [:name, :email, :id] }}), status: :ok
   end
 
   def show

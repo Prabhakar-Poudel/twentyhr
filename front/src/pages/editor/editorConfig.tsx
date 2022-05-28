@@ -25,6 +25,12 @@ const defaultEditorOptions: MonacoEditorOptions = {
   smoothScrolling: true,
 }
 
+export const readonlyEditorOptions: MonacoEditorOptions = {
+  ...defaultEditorOptions,
+  readOnly: true,
+  cursorStyle: 'underline-thin',
+}
+
 export const SUPPORTED_LANGUAGES = ['javascript', 'typescript', 'ruby', 'python', 'java', 'csharp', 'cpp', 'c', 'go', 'rust', 'scala', 'php', 'haskell', 'pgsql']
 
 export default defaultEditorOptions

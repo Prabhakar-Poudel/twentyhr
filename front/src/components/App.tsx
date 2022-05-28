@@ -17,6 +17,7 @@ import NotFoundPage from 'src/pages/NotFoundPage'
 import EditQuestion from 'src/pages/question/EditQuestion'
 import NewQuestion from 'src/pages/question/NewQuestion'
 import QuestionsHome from 'src/pages/question/QuestionsHome'
+import ViewQuestion from 'src/pages/question/ViewQuestion'
 import AuthenticatedRoute from 'src/routes/AuthenticatedRoute'
 import LoginRoute from 'src/routes/LoginRoute'
 
@@ -53,7 +54,9 @@ const App = () => {
 							</Route>
 							<Route element={<AuthenticatedRoute />}>
 								<Route path="editor" element={<EditorPage />} />
-								<Route path="questions" element={<QuestionsHome />} />
+								<Route path="questions" element={<QuestionsHome />}>
+									<Route path=":id" element={<ViewQuestion />} />
+								</Route>
 								<Route path="questions/new" element={<NewQuestion />} />
 								<Route path="questions/:id/edit" element={<EditQuestion />} />
 								<Route path="account" element={<AccountSettingsPage />} />
