@@ -15,7 +15,15 @@ interface EditorFooterProps {
 const EditorFooter = ({ fontSize, setFontSize, theme, setTheme, currentLanguage, setLanguage, availableLanguages }: EditorFooterProps) => {
   return (
     <AppBar position="relative" component="footer">
-      <IdeConfiguration fontSize={fontSize} setFontSize={setFontSize} theme={theme} setTheme={setTheme} currentLanguage={currentLanguage} availableLanguages={availableLanguages} setLanguage={setLanguage} />
+      <IdeConfiguration
+        fontSize={fontSize}
+        setFontSize={setFontSize}
+        theme={theme}
+        setTheme={setTheme}
+        currentLanguage={currentLanguage}
+        availableLanguages={availableLanguages}
+        setLanguage={setLanguage}
+      />
     </AppBar>
   )
 }

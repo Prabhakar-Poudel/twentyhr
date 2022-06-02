@@ -1,16 +1,14 @@
-import { AppBar, Box, Toolbar } from '@mui/material'
-import { Link } from 'react-router-dom'
-import logo from 'src/assets/logos/logo192.png'
+import { AppBar, Toolbar } from '@mui/material'
+import HomeLogo from 'src/components/app/appHeader/HomeLogo'
+import NavigationItems from 'src/components/app/appHeader/NavigationItems'
 import AccountMenu from './AccountMenu'
 
 const AppHeader = () => {
 	return (
 		<AppBar position="relative">
-			<Toolbar variant="dense">
-				<Link to="/">
-					<img src={logo} alt="logo" className="w-7 h-7" />
-				</Link>
-				<Box sx={{ flexGrow: 1 }} />
+			<Toolbar variant="dense" className="gap-4">
+				<HomeLogo />
+				<NavigationItems />
 				<AccountMenu />
 			</Toolbar>
 		</AppBar>

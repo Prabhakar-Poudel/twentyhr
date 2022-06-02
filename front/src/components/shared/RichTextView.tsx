@@ -11,7 +11,7 @@ const RichTextView = ({ value = '', placeholder = ''}: Props) => {
       theme="snow"
       modules={{ toolbar: false }}
       readOnly
-      defaultValue={value}
+      value={value}
       placeholder={placeholder}
     />
   )

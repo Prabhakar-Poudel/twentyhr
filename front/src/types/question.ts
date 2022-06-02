@@ -3,52 +3,37 @@ import { User } from 'src/types/user'
 export type QuestionStatus = 'draft' | 'published' | 'archived'
 
 export interface QuestionIndex {
-  id: string
-  title: string
-  description?: string
-  organization_id: string
   creator: User
+  description?: string
+  id: string
+  organization_id: string
   status: QuestionStatus
+  title: string
 }
 
 export interface QuestionNew {
-  guidelines?: string
-  title?: string
   description?: string
-  starterCode?: string
+  guidelines?: string
   instruction?: string
   language?: string
+  starterCode?: string
+  title?: string
 }
 
 export interface QuestionPayload {
-  guidelines?: string
-  title: string
   description?: string
+  guidelines?: string
   initial_code?: string
   instruction?: string
   language?: string
-}
-
-interface QuestionBase {
-  id: string
   title: string
-  description?: string
-  guidelines?: string
-  instruction?: string
-  language?: string
-  status: QuestionStatus
 }
 
-export interface QuestionShow extends QuestionBase {
-  initial_code?: string
-  organization_id: string
-  creator_id: string
+export interface QuestionShow extends QuestionPayload {
   created_at: string
+  creator_id: string
+  id: string
+  organization_id: string
+  status: QuestionStatus
   updated_at: string
-}
-
-export interface Question extends QuestionBase {
-  starterCode?: string
-  creatorId: string
-  organizationId: string
 }

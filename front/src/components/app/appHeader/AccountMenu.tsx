@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton'
 import Settings from '@mui/icons-material/Settings'
 import Logout from '@mui/icons-material/Logout'
 import { MouseEvent, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useAuth } from 'src/contexts/AuthContext'
 
 export default function AccountMenu() {
@@ -19,11 +19,7 @@ export default function AccountMenu() {
 		setAnchorEl(event.currentTarget)
 	const handleClose = () => setAnchorEl(null)
 
-	const navigate = useNavigate()
-	const onLogout = async () => {
-		await logOut()
-		navigate('/login')
-	}
+	const onLogout = () => logOut()
 
 	return (
 		<Box>
@@ -48,12 +44,14 @@ export default function AccountMenu() {
 						Settings
 					</MenuItem>
 				</Link>
-				<MenuItem onClick={onLogout}>
-					<ListItemIcon>
-						<Logout fontSize="small" />
-					</ListItemIcon>
-					Logout
-				</MenuItem>
+				<Link to="/login">
+					<MenuItem onClick={onLogout}>
+						<ListItemIcon>
+							<Logout fontSize="small" />
+						</ListItemIcon>
+						Logout
+					</MenuItem>
+				</Link>
 			</Menu>
 		</Box>
 	)

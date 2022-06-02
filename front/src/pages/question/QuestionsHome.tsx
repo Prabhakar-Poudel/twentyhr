@@ -15,7 +15,7 @@ const QuestionsHome = () => {
       <Container >
         <Typography component="h1" variant="h2">Questions</Typography>
         <Typography variant="subtitle1" color="textSecondary">
-          Here you can manage your questions.
+          Here you can manage and view questions
         </Typography>
         <QuestionsTable rows={data} />
         <Outlet />

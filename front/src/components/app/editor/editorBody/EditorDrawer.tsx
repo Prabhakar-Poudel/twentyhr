@@ -1,28 +1,35 @@
+import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen'
+import OpenInFullIcon from '@mui/icons-material/OpenInFull'
+import { Box, Divider, IconButton, Tab, Tabs } from '@mui/material'
 import Drawer from '@mui/material/Drawer'
-import { useEffect, useRef } from 'react'
-import { Terminal } from 'xterm'
+import { SyntheticEvent, useState } from 'react'
+import DrawInput from 'src/components/shared/DrawInput'
+import RichTextView from 'src/components/shared/RichTextView'
+import TabPanel from 'src/components/shared/TabPannel'
+import TerminalView from 'src/components/shared/TerminalView'
 import 'xterm/css/xterm.css'
+
+const TABS = ['terminal', 'draw', 'instruction', 'guideline']
 
 interface EditorDrawerProps {
   open: boolean
+  instructions?: string
+  guidelines?: string
+  terminalContent?: string
 }
 
-const EditorDrawer = ({ open }: EditorDrawerProps) => {
-  const terminalRef = useRef<Terminal | null>(null)
+const EditorDrawer = ({ open, instructions = '', guidelines = '', terminalContent = '' }: EditorDrawerProps) => {
+  const [activeTab, setActiveTab] = useState(TABS[0])
+  const [expanded, setExpanded] = useState(false)
+  const handleChange = (event: SyntheticEvent, newValue: string) => {
+    setActiveTab(newValue)
+  }
 
-  useEffect(() => {
-    const container = document.getElementById('terminal-container')
-    if (!container || terminalRef.current) return
-    const term = new Terminal({ theme: { background: '#1e1e1e' }, cursorBlink: true, fontSize: 16, disableStdin: false })
-    term.open(container)
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
-    terminalRef.current = term
-  }, [])
+  const onExpandButtonClick = () => {
+    setExpanded(!expanded)
+  }
 
-  useEffect(() => {
-    if(open && terminalRef.current) terminalRef.current.focus()
-    else if(terminalRef.current) terminalRef.current.blur()
-  }, [open])
+  const size = expanded ? 'w-screen' : 'w-192'
 
   return (
     <Drawer
@@ -30,7 +37,34 @@ const EditorDrawer = ({ open }: EditorDrawerProps) => {
       anchor="right"
       open={open}
     >
-      <div id="terminal-container" className="h-full" />
+      <Box className={`${size} grow flex flex-col duration-300 ease-in-out`}>
+        <Box className="flex">
+          <IconButton aria-label="expand drawer" onClick={onExpandButtonClick}>
+            {expanded ? <CloseFullscreenIcon /> : <OpenInFullIcon />}
+          </IconButton>
+          <Tabs value={activeTab} onChange={handleChange} className="grow">
+            <Tab value={TABS[0]} label="Terminal" />
+            <Tab value={TABS[1]} label="Draw" />
+            <Tab value={TABS[2]} label="Instructions" />
+            <Tab value={TABS[3]} label="Guidelines" />
+          </Tabs>
+        </Box>
+        <Divider />
+        <Box className="grow basis-32 overflow-hidden">
+          <TabPanel activeTab={activeTab} tabId={TABS[0]}>
+            <TerminalView value={terminalContent} />
+          </TabPanel>
+          <TabPanel activeTab={activeTab} tabId={TABS[1]}>
+            <DrawInput />
+          </TabPanel>
+          <TabPanel activeTab={activeTab} tabId={TABS[2]}>
+            <RichTextView value={instructions} placeholder="No instruction added" />
+          </TabPanel>
+          <TabPanel activeTab={activeTab} tabId={TABS[3]}>
+            <RichTextView value={guidelines} placeholder="No guidelines added" />
+          </TabPanel>
+        </Box>
+      </Box>
     </Drawer>
   )
 }

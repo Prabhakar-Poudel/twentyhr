@@ -2,38 +2,13 @@ import MonacoEditor from '@monaco-editor/react'
 import { Box, Divider, Tab, Tabs } from '@mui/material'
 import { useState, SyntheticEvent, ReactNode } from 'react'
 import RichTextView from 'src/components/shared/RichTextView'
+import TabPanel from 'src/components/shared/TabPannel'
 import { readonlyEditorOptions } from 'src/pages/editor/editorConfig'
-import { Question } from 'src/types/question'
+import { QuestionShow } from 'src/types/question'
 
 const TABS = ['instruction', 'guideline', 'code']
 
-interface TabPanelProps {
-  children: ReactNode
-  tabId: string
-  activeTab: string
-}
-
-const TabPanel = (props: TabPanelProps) => {
-  const { children, activeTab, tabId } = props
-
-  return (
-    <Box
-      role="tabpanel"
-      hidden={activeTab !== tabId}
-      id={tabId}
-      aria-labelledby={tabId}
-      className="h-full"
-    >
-      {activeTab === tabId && (
-        <Box className="mt-2 h-full overflow-auto">
-          {children}
-        </Box>
-      )}
-    </Box>
-  )
-}
-
-const QuestionDisplayTab = ({ question }: { question: Question }) => {
+const QuestionDisplayTab = ({ question }: { question: QuestionShow }) => {
   const [activeTab, setActiveTab] = useState(TABS[0])
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setActiveTab(newValue)
@@ -57,7 +32,7 @@ const QuestionDisplayTab = ({ question }: { question: Question }) => {
         <TabPanel activeTab={activeTab} tabId={TABS[2]}>
           <MonacoEditor
             language={question.language}
-            defaultValue={question.starterCode}
+            defaultValue={question.initial_code}
             theme="vs-dark"
             options={readonlyEditorOptions}
             className="border-0 code-input"

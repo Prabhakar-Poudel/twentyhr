@@ -1,0 +1,6 @@
+.draw-input .excalidraw {
+    --color-primary: #00c853;
+}
+.draw-input .excalidraw.theme--dark {
+    --color-primary: #00c853;
+}

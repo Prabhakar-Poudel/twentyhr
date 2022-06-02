@@ -1,20 +1,20 @@
 import { Box, Button, Container, FormControl, FormLabel, TextField, Typography } from '@mui/material'
 import { FormEvent, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { CodeInput, OnChangeParams } from 'src/components/shared/CodeInput'
 import { RichTextInput } from 'src/components/shared/RichTextInput'
 import useToast from 'src/hooks/useToast'
-import { Question, QuestionPayload, QuestionNew } from 'src/types/question'
+import { QuestionShow, QuestionPayload } from 'src/types/question'
 
 interface Props {
-  defaultValues: QuestionNew | Question
-  onSave: (question: QuestionPayload) => Promise<Question>
+  defaultValues: Partial<QuestionShow>
+  onSave: (question: QuestionPayload) => Promise<QuestionShow>
 }
 
 const QuestionForm = ({ defaultValues, onSave }: Props) => {
   const navigate = useNavigate()
   const toast = useToast()
-  const [starterCode, setStarterCode] = useState(defaultValues.starterCode || '// console.log("Hello world")')
+  const [starterCode, setStarterCode] = useState(defaultValues.initial_code || '// console.log("Hello world")')
   const [language, setLanguage] = useState(defaultValues.language || 'javascript')
   const [title, setTitle] = useState(defaultValues.title || '')
   const [description, setDescription] = useState(defaultValues.description || '')
@@ -95,8 +95,11 @@ const QuestionForm = ({ defaultValues, onSave }: Props) => {
           helperText="This code will be prefilled in the editor when interview starts"
           onChange={onCodeUpdate}
         />
-        <Box className="my-4">
-          <Button fullWidth variant="contained" type="submit">{buttonText}</Button>
+        <Box className="my-4 flex flex-row-reverse">
+          <Button variant="contained" type="submit">{buttonText}</Button>
+          <Link to="/questions" className="mx-2">
+            <Button>Cancel</Button>
+          </Link>
         </Box>
       </Box>
     </Container>

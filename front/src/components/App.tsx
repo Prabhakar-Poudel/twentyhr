@@ -13,6 +13,7 @@ import VerifyAccountPage from 'src/pages/account/VerifyAccountPage'
 import AdminHome from 'src/pages/admin/AdminHome'
 import DashboardPage from 'src/pages/dashboard/DashboardPage'
 import EditorPage from 'src/pages/editor/EditorPage'
+import InterviewsHome from 'src/pages/interview/InterviewsHome'
 import NotFoundPage from 'src/pages/NotFoundPage'
 import EditQuestion from 'src/pages/question/EditQuestion'
 import NewQuestion from 'src/pages/question/NewQuestion'
@@ -53,12 +54,13 @@ const App = () => {
 								<Route path="verify-account" element={<VerifyAccountPage />} />
 							</Route>
 							<Route element={<AuthenticatedRoute />}>
-								<Route path="editor" element={<EditorPage />} />
 								<Route path="questions" element={<QuestionsHome />}>
 									<Route path=":id" element={<ViewQuestion />} />
 								</Route>
 								<Route path="questions/new" element={<NewQuestion />} />
 								<Route path="questions/:id/edit" element={<EditQuestion />} />
+								<Route path="interviews" element={<InterviewsHome />} />
+								<Route path="interviews/:id" element={<EditorPage />} />
 								<Route path="account" element={<AccountSettingsPage />} />
 								<Route path="admin/*" element={<AdminHome />} />
 								<Route path="/" element={<DashboardPage />} />

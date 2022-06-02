@@ -1,14 +1,18 @@
-import { Paper } from '@mui/material'
-import Button from '@mui/material/Button'
+import { IconButton, Paper } from '@mui/material'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 
 interface EditorStickyProps {
   onClick: (event: any) => void
+  open: boolean
 }
 
-const EditorSticky = ({ onClick }: EditorStickyProps) => {
+const EditorSticky = ({ onClick, open }: EditorStickyProps) => {
   return (
-    <Paper square elevation={4} className="w-8 h-screen p-0 pt-20 z-[1300] relative">
-      <Button variant="text" size="small" aria-label="open drawer" onClick={onClick} className="!p-0 rotate-90 -translate-x-5" color="secondary" disableRipple disableElevation>Terminal</Button>
+    <Paper square elevation={4} className="w-6 h-screen p-0 pt-10 z-[1300] relative">
+      <IconButton aria-label="open drawer" color="secondary" onClick={onClick} disableRipple className="!p-0">
+        {open ? <ArrowForwardIosIcon /> : <ArrowBackIosIcon />}
+      </IconButton>
     </Paper>
   )
 }

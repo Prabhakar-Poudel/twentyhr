@@ -5,12 +5,12 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  resources :organizations, only: %i[index show create update]
 
   devise_for :users, module: 'users', only: %i[sessions passwords registrations confirmations], skip_helpers: true, defaults: { format: :json }
 
-  get 'profile', to: 'users#profile'
+  resources :organizations, only: %i[index show create update]
   resources :users, only: %i[index show create update]
-
+  get 'profile', to: 'users#profile'
   resources :questions, only: %i[index show create update]
+  resources :interviews, only: %i[index show create update]
 end

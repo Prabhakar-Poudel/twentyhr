@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
+import { useQueryClient } from 'react-query'
 import { axios } from 'src/lib/axios/axios'
 import { User } from 'src/types/user'
 
@@ -24,6 +25,7 @@ const AuthContext = createContext<AuthContextType>(null!)
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     fetchProfile()
@@ -38,6 +40,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }
 
   const logOut = async () => {
+    await queryClient.invalidateQueries()
     return axios.delete('/users/sign_out')
       .finally(() => setUser(null))
   }

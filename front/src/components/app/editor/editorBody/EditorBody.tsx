@@ -1,4 +1,4 @@
-import MonacoEditor, { OnMount } from '@monaco-editor/react'
+import  MonacoEditor, { OnMount } from '@monaco-editor/react'
 import { Skeleton } from '@mui/material'
 import * as monaco from 'monaco-editor'
 import { useEffect, useState } from 'react'
@@ -8,6 +8,7 @@ interface EditorBodyProps {
   defaultEditorOptions: MonacoEditorOptions
   theme: string
   language: string
+  defaultValue?: string
   setLanguages: (languages: monaco.languages.ILanguageExtensionPoint[]) => void
 }
 
@@ -21,7 +22,7 @@ const LoadingEditor = () => (
   />
 )
 
-const EditorBody = ({ defaultEditorOptions, theme, language, setLanguages }: EditorBodyProps) => {
+const EditorBody = ({ defaultEditorOptions, theme, language, setLanguages, defaultValue = '' }: EditorBodyProps) => {
   const [editor, setEditor] = useState<any>(null)
   const [monaco, setMonaco] = useState<any>(null)
   const [rendered, setRendered] = useState(false)
@@ -32,12 +33,14 @@ const EditorBody = ({ defaultEditorOptions, theme, language, setLanguages }: Edi
     if (!editor || rendered) return
     window.addEventListener('resize', resizeHandler)
     setLanguages(monaco.languages.getLanguages())
-    editor.getModel().onDidChangeLanguage((e: any) => {
-      console.log(e)
-    })
+    editor.getModel().onDidChangeLanguage((e: any) => console.log(e))
     setRendered(true)
     return () => window.removeEventListener('resize', resizeHandler)
   }, [editor])
+
+  useEffect(() => {
+    if(editor) editor.setValue(defaultValue)
+  }, [defaultValue])
 
   const onMount: OnMount = (editor, monaco) => {
     editor.focus()
@@ -49,11 +52,10 @@ const EditorBody = ({ defaultEditorOptions, theme, language, setLanguages }: Edi
     <div className="grow flex">
       <MonacoEditor
         language={language}
-        defaultValue=""
         theme={theme}
         options={defaultEditorOptions}
         loading={<LoadingEditor />}
-        onChange={(newValue, event) => console.log(event)}
+        onChange={(newValue, event) => console.log(event, newValue)}
         onMount={onMount}
       />
     </div>

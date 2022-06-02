@@ -10,14 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_12_194629) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_29_134007) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "interview_status", ["created", "started", "ended", "archived"]
   create_enum "question_status", ["draft", "published", "archived"]
+
+  create_table "interviews", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "organization_id", null: false
+    t.uuid "creator_id", null: false
+    t.uuid "question_id"
+    t.string "title", limit: 300, null: false
+    t.enum "status", default: "created", null: false, enum_type: "interview_status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_interviews_on_creator_id"
+    t.index ["organization_id"], name: "index_interviews_on_organization_id"
+    t.index ["question_id"], name: "index_interviews_on_question_id"
+  end
 
   create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
@@ -76,6 +90,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_12_194629) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "interviews", "organizations"
+  add_foreign_key "interviews", "questions"
+  add_foreign_key "interviews", "users", column: "creator_id"
   add_foreign_key "questions", "organizations"
   add_foreign_key "questions", "users", column: "creator_id"
   add_foreign_key "users", "organizations"

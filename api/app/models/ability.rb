@@ -7,6 +7,7 @@ class Ability
     return unless user.present?
     can [:read, :update], User, id: user.id
     can [:read, :create, :update], Question, creator: user
+    can [:read, :create, :update], Interview, creator: user
     can [:read], Organization, id: user.organization_id
   end
 end
