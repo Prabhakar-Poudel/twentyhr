@@ -14,7 +14,7 @@ interface Props {
 const QuestionForm = ({ defaultValues, onSave }: Props) => {
   const navigate = useNavigate()
   const toast = useToast()
-  const [starterCode, setStarterCode] = useState(defaultValues.initial_code || '// console.log("Hello world")')
+  const [starterCode, setStarterCode] = useState(defaultValues.initial_code || '// Hello World')
   const [language, setLanguage] = useState(defaultValues.language || 'javascript')
   const [title, setTitle] = useState(defaultValues.title || '')
   const [description, setDescription] = useState(defaultValues.description || '')

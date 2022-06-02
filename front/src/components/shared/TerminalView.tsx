@@ -4,7 +4,6 @@ import { Terminal } from 'xterm'
 
 const TERMINAL = new Terminal({
   theme: { background: '#121212' },
-  cursorBlink: true,
   fontSize: 16,
 })
 
@@ -20,9 +19,6 @@ const TerminalView = ({ value = '' }: Props) => {
     TERMINAL.open(container)
     TERMINAL.write(value)
     TERMINAL.focus()
-
-    console.log(TERMINAL.cols, TERMINAL.rows)
-
     return () => TERMINAL.dispose()
   }, [])
 

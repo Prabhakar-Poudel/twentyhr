@@ -10,6 +10,7 @@ const InterviewTitle = ({ defaultValue, onChange}: Props) =>
     size="small"
     label="Title"
     defaultValue={defaultValue}
+    variant="filled"
     onChange={(e) => onChange(e.target.value)}
   />
 

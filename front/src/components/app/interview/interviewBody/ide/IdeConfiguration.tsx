@@ -1,9 +1,9 @@
+import { Tooltip } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import Popover from '@mui/material/Popover'
 import GearIcon from '@mui/icons-material/Settings'
 import { useState, MouseEvent } from 'react'
-import { Box } from '@mui/material'
-import ConfigurationPopup, { IdeConfigurationProps } from 'src/components/app/editor/editorFooter/ConfigurationPopup'
+import ConfigurationPopup, { IdeConfigurationProps } from 'src/components/app/interview/interviewBody/ide/ConfigurationPopup'
 
 const IdeConfiguration = (props: IdeConfigurationProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
@@ -13,20 +13,23 @@ const IdeConfiguration = (props: IdeConfigurationProps) => {
   const showConfiguration = Boolean(anchorEl)
 
   return (
-    <Box>
-      <IconButton color="primary" aria-label="configure IDE" onClick={handleOpen}>
-        <GearIcon />
-      </IconButton>
+    <>
+      <Tooltip arrow title="Configure Editor">
+        <IconButton aria-label="configure IDE" onClick={handleOpen}>
+          <GearIcon />
+        </IconButton>
+      </Tooltip>
       <Popover
-        id="ide-configuration"
-        open={showConfiguration}
         anchorEl={anchorEl}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+        id="ide-configuration"
         onClose={handleClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={showConfiguration}
       >
         <ConfigurationPopup {...props} />
       </Popover>
-    </Box>
+    </>
   )
 }
 

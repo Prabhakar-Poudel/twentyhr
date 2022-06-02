@@ -1,5 +1,5 @@
 import EditIcon from '@mui/icons-material/Edit'
-import { Button } from '@mui/material'
+import { Fab } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { interviewTransform } from 'src/dataTransforms/interview'
 import { axios } from 'src/lib/axios/axios'
@@ -17,14 +17,10 @@ const CreateNewInterview = () => {
   }
 
   return (
-    <Button
-      variant="contained"
-      className="!rounded-full"
-      startIcon={<EditIcon />}
-      onClick={onCreateNewInterview}
-    >
+    <Fab color="primary" size="small" variant="extended" aria-label="create interview" className="gap-2" onClick={onCreateNewInterview}>
+      <EditIcon />
       Start an interview
-    </Button>
+    </Fab>
   )
 }
 

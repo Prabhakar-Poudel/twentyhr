@@ -18,7 +18,7 @@ const OptionItem = (props: HTMLAttributes<HTMLLIElement>, question: QuestionInde
     </Box>
   </li>
 
-const InputField = (props: AutocompleteRenderInputParams) => <TextField { ...props } label="Question" />
+const InputField = (props: AutocompleteRenderInputParams) => <TextField { ...props } variant="filled" label="Question" />
 
 interface Props {
   currentQuestion?: QuestionShow

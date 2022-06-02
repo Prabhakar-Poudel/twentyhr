@@ -11,6 +11,7 @@ interface Props {
   placeholder?: string
   defaultValue?: string
   onChange: (value: string) => void
+  margin?: 'none' | 'dense' | 'normal'
 }
 
 const quillModules = {
@@ -32,9 +33,9 @@ const quillFormats = [
   'link',
 ]
 
-export const RichTextInput = ({ label, helperText, placeholder, onChange, defaultValue }: Props) => {
+export const RichTextInput = ({ label, helperText, placeholder, onChange, defaultValue, margin = 'normal' }: Props) => {
   return (
-    <FormControl fullWidth margin="normal">
+    <FormControl fullWidth margin={margin}>
       <FormLabel>{label}</FormLabel>
       <ReactQuill
         className="rich-text-input"

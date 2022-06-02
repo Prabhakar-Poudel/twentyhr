@@ -3,7 +3,7 @@ import { Box, Divider, Tab, Tabs } from '@mui/material'
 import { useState, SyntheticEvent, ReactNode } from 'react'
 import RichTextView from 'src/components/shared/RichTextView'
 import TabPanel from 'src/components/shared/TabPannel'
-import { readonlyEditorOptions } from 'src/pages/editor/editorConfig'
+import { readonlyEditorOptions } from 'src/config/editorConfig'
 import { QuestionShow } from 'src/types/question'
 
 const TABS = ['instruction', 'guideline', 'code']

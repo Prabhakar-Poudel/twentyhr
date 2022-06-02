@@ -1,5 +1,5 @@
 import EditIcon from '@mui/icons-material/Edit'
-import { Button } from '@mui/material'
+import { Fab } from '@mui/material'
 import { GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid'
 import { Link } from 'react-router-dom'
 
@@ -10,7 +10,10 @@ const GridToolbar = () =>
       <GridToolbarFilterButton />
     </div>
     <Link to="/questions/new">
-      <Button variant="contained" className="!rounded-full" startIcon={<EditIcon />}>Create a question</Button>
+      <Fab color="primary" size="small" variant="extended" aria-label="create question" className="gap-2">
+        <EditIcon />
+        Create a question
+      </Fab>
     </Link>
   </GridToolbarContainer>
 

@@ -2,7 +2,7 @@ import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
 import { Box, Divider, IconButton, Tab, Tabs } from '@mui/material'
 import Drawer from '@mui/material/Drawer'
-import { SyntheticEvent, useState } from 'react'
+import { SyntheticEvent, useEffect, useState } from 'react'
 import DrawInput from 'src/components/shared/DrawInput'
 import RichTextView from 'src/components/shared/RichTextView'
 import TabPanel from 'src/components/shared/TabPannel'
@@ -11,16 +11,18 @@ import 'xterm/css/xterm.css'
 
 const TABS = ['terminal', 'draw', 'instruction', 'guideline']
 
-interface EditorDrawerProps {
+interface Props {
   open: boolean
   instructions?: string
   guidelines?: string
   terminalContent?: string
+  focusTerminal?: boolean
 }
 
-const EditorDrawer = ({ open, instructions = '', guidelines = '', terminalContent = '' }: EditorDrawerProps) => {
+const InterviewRightDrawer = ({ open, instructions = '', guidelines = '', terminalContent = '', focusTerminal }: Props) => {
   const [activeTab, setActiveTab] = useState(TABS[0])
   const [expanded, setExpanded] = useState(false)
+
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setActiveTab(newValue)
   }
@@ -28,6 +30,10 @@ const EditorDrawer = ({ open, instructions = '', guidelines = '', terminalConten
   const onExpandButtonClick = () => {
     setExpanded(!expanded)
   }
+
+  useEffect(() => {
+    if(focusTerminal) setActiveTab(TABS[0])
+  }, [focusTerminal])
 
   const size = expanded ? 'w-screen' : 'w-192'
 
@@ -50,7 +56,7 @@ const EditorDrawer = ({ open, instructions = '', guidelines = '', terminalConten
           </Tabs>
         </Box>
         <Divider />
-        <Box className="grow basis-32 overflow-hidden">
+        <Box className="grow basis-32 overflow-hidden pb-12">
           <TabPanel activeTab={activeTab} tabId={TABS[0]}>
             <TerminalView value={terminalContent} />
           </TabPanel>
@@ -69,4 +75,4 @@ const EditorDrawer = ({ open, instructions = '', guidelines = '', terminalConten
   )
 }
 
-export default EditorDrawer
+export default InterviewRightDrawer

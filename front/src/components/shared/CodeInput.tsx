@@ -2,7 +2,7 @@ import MonacoEditor, { OnMount } from '@monaco-editor/react'
 import { Box, FormControl, FormHelperText, FormLabel, TextField } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete'
 import { SyntheticEvent, useState } from 'react'
-import defaultEditorOptions, { SUPPORTED_LANGUAGES } from 'src/pages/editor/editorConfig'
+import defaultEditorOptions, { SUPPORTED_LANGUAGES } from 'src/config/editorConfig'
 
 import './code-input.css'
 
