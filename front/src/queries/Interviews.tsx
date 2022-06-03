@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from 'react-query'
-import { interviewTransform } from 'src/dataTransforms/interview'
 import { axios } from 'src/lib/axios/axios'
+import { InterviewNew, InterviewShow } from 'src/types/interview'
 
 export const useInterviewsIndex = () => {
   const queryClient = useQueryClient()
@@ -21,7 +21,7 @@ export const useInterviewShow = (id: string) => {
   const queryKey = ['interviews', id]
   const queryResult = useQuery(
     queryKey,
-    ({ queryKey }) => axios.get(`/interviews/${id}`).then(({ data }) => interviewTransform(data)),
+    ({ queryKey }) => axios.get(`/interviews/${id}`).then(({ data }) => data),
     { retry: false }
   )
 
@@ -30,3 +30,7 @@ export const useInterviewShow = (id: string) => {
     invalidateInterview: () => queryClient.invalidateQueries(queryKey),
   }
 }
+
+export const createInterview = (data?: InterviewNew) =>  axios
+  .post<InterviewShow>('/interviews/', { interview: { ...data, status: 'created' } })
+  .then((res) => res.data)

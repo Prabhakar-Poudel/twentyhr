@@ -4,13 +4,13 @@ import Toolbar from '@mui/material/Toolbar'
 import InterviewTitle from 'src/components/app/interview/interviewHeader/InterviewTitle'
 import QuestionsDropdown from 'src/components/app/interview/interviewHeader/QuestionsDropdown'
 import { axios } from 'src/lib/axios/axios'
-import { Interview } from 'src/types/interview'
+import { InterviewShow } from 'src/types/interview'
 import { QuestionShow } from 'src/types/question'
 
 interface Props {
 	currentQuestion?: QuestionShow
 	onChangeQuestion: (questionId: string) => void
-	interview: Interview
+	interview: InterviewShow
 }
 
 const InterviewHeader = ({ currentQuestion, onChangeQuestion, interview }: Props) => {

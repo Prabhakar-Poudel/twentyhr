@@ -30,8 +30,3 @@ export interface InterviewShow extends InterviewBase {
   created_at: string
   updated_at: string
 }
-
-export interface Interview extends InterviewBase {
-  creatorId: string
-  organizationId: string
-}

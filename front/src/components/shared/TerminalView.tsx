@@ -19,6 +19,13 @@ const TerminalView = ({ value = '' }: Props) => {
     TERMINAL.open(container)
     TERMINAL.write(value)
     TERMINAL.focus()
+    TERMINAL.onKey(e => {
+      if (e.key === 'Enter') {
+        TERMINAL.writeln('')
+      } else {
+        TERMINAL.write(e.key)
+      }
+    })
     return () => TERMINAL.dispose()
   }, [])
 

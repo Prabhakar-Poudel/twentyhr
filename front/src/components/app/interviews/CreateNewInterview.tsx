@@ -1,13 +1,7 @@
 import EditIcon from '@mui/icons-material/Edit'
 import { Fab } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { interviewTransform } from 'src/dataTransforms/interview'
-import { axios } from 'src/lib/axios/axios'
-import { InterviewShow } from 'src/types/interview'
-
-const createInterview = () =>  axios
-  .post<InterviewShow>('/interviews/', { interview: { status: 'created' } })
-  .then((res) => interviewTransform(res.data))
+import { createInterview } from 'src/queries/Interviews'
 
 const CreateNewInterview = () => {
   const navigate = useNavigate()

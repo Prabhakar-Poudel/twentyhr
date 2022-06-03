@@ -23,7 +23,7 @@ const ViewQuestion = () => {
     <Modal open onClose={closeQuestion} className="flex justify-center">
       <Paper elevation={24} className="w-3/4">
         {isLoading && <Box><LinearProgress /></Box>}
-        {data && <QuestionDisplay id={id!} data={data!} />}
+        {data && <QuestionDisplay id={id!} question={data!} />}
       </Paper>
     </Modal>
   )
