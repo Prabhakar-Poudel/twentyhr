@@ -17,15 +17,8 @@ const TerminalView = ({ value = '' }: Props) => {
     const container = document.getElementById('terminal-container')
     if(!container) return
     TERMINAL.open(container)
-    TERMINAL.write(value)
+    TERMINAL.writeln(value)
     TERMINAL.focus()
-    TERMINAL.onKey(e => {
-      if (e.key === 'Enter') {
-        TERMINAL.writeln('')
-      } else {
-        TERMINAL.write(e.key)
-      }
-    })
     return () => TERMINAL.dispose()
   }, [])
 

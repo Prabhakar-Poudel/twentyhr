@@ -79,7 +79,7 @@ const InterviewBody = ({ language, setLanguage, defaultValue = '', onCodeExecute
           theme={theme}
           options={{ ...defaultEditorOptions, fontSize }}
           loading={<LoadingEditor />}
-          onChange={(newValue, event) => console.log(event, newValue)}
+          onChange={(newValue) => console.log(newValue)}
           onMount={onMount}
         />
       </Box>
