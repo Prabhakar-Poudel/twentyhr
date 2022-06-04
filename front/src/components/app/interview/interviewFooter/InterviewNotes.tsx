@@ -14,7 +14,7 @@ const InterviewNotes = () => {
 
   return (
     <>
-      <Button color="secondary" variant="outlined" size="small" startIcon={<NotesIcon />} onClick={handleOpen}>Take Notes</Button>
+      <Button color="secondary" variant="outlined" size="small" startIcon={<NotesIcon />} onClick={handleOpen}>Quick Notes</Button>
       <Popover
         open={showNotes}
         onClose={handleClose}

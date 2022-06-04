@@ -32,7 +32,6 @@ const InterviewPage = () => {
 
   const changeQuestion = async (questionId: string) => {
     const question = await axios.get<QuestionShow>(`/questions/${questionId}`).then(({ data }) => data)
-    console.log(question)
     setQuestion(question)
     setLanguage(question.language!)
     setCode(question.initial_code)

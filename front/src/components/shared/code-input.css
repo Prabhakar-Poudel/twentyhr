@@ -3,7 +3,7 @@
     border: 1px solid rgba(255, 255, 255, 0.23);
 }
 .code-input-wrapper:hover {
-    border-color: #fff;
+    border-color: white;
 }
 .code-input-wrapper:focus-within {
     border-color: var(--primary-color-main);
@@ -12,7 +12,7 @@
 }
 .code-input-wrapper .monaco-editor .margin,
 .code-input-wrapper .monaco-editor .monaco-editor-background {
-    background-color: #121212;
+    background-color: var(--dark-bg-color);
 }
 .MuiFormControl-root:focus-within label.MuiFormLabel-root {
     color: var(--primary-color-main);

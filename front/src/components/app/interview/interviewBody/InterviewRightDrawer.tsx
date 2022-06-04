@@ -1,6 +1,6 @@
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
-import { Box, Divider, IconButton, Tab, Tabs } from '@mui/material'
+import { Box, Divider, IconButton, Tab, Tabs, Tooltip } from '@mui/material'
 import Drawer from '@mui/material/Drawer'
 import { SyntheticEvent, useEffect, useState } from 'react'
 import DrawInput from 'src/components/shared/DrawInput'
@@ -36,6 +36,7 @@ const InterviewRightDrawer = ({ open, instructions = '', guidelines = '', termin
   }, [focusTerminal])
 
   const size = expanded ? 'w-screen' : 'w-192'
+  const tooltip = expanded ? 'Close fullscreen' : 'Open fullscreen'
 
   return (
     <Drawer
@@ -45,9 +46,11 @@ const InterviewRightDrawer = ({ open, instructions = '', guidelines = '', termin
     >
       <Box className={`${size} grow flex flex-col duration-300 ease-in-out`}>
         <Box className="flex">
-          <IconButton aria-label="expand drawer" onClick={onExpandButtonClick}>
-            {expanded ? <CloseFullscreenIcon /> : <OpenInFullIcon />}
-          </IconButton>
+          <Tooltip arrow title={tooltip}>
+            <IconButton aria-label="expand drawer" onClick={onExpandButtonClick}>
+              {expanded ? <CloseFullscreenIcon /> : <OpenInFullIcon />}
+            </IconButton>
+          </Tooltip>
           <Tabs value={activeTab} onChange={handleChange} className="grow">
             <Tab value={TABS[0]} label="Terminal" />
             <Tab value={TABS[1]} label="Draw" />

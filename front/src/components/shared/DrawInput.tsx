@@ -1,10 +1,18 @@
 import { Excalidraw, THEME } from '@excalidraw/excalidraw-next'
-import { ExcalidrawImperativeAPI } from '@excalidraw/excalidraw-next/types/types'
+import { ExcalidrawElement } from '@excalidraw/excalidraw-next/types/element/types'
+import { AppState, ExcalidrawImperativeAPI } from '@excalidraw/excalidraw-next/types/types'
 import { Box } from '@mui/material'
 import { useRef } from 'react'
 import './draw.css'
 
-const DrawInput = ({ initialData = { }}) => {
+interface Props {
+  initialData?: {
+    elements?: ExcalidrawElement[]
+    appState?: AppState
+  }
+}
+
+const DrawInput = ({ initialData = { }}: Props) => {
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null)
 
   return (

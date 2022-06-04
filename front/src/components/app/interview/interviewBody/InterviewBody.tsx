@@ -46,7 +46,6 @@ const InterviewBody = ({ language, setLanguage, defaultValue = '', onCodeExecute
     if (!editor || rendered) return
     window.addEventListener('resize', resizeHandler)
     updateAvailableLanguages(monaco.languages.getLanguages())
-    editor.getModel().onDidChangeLanguage((e: any) => console.log(e))
     setRendered(true)
     return () => window.removeEventListener('resize', resizeHandler)
   }, [editor])
@@ -79,7 +78,6 @@ const InterviewBody = ({ language, setLanguage, defaultValue = '', onCodeExecute
           theme={theme}
           options={{ ...defaultEditorOptions, fontSize }}
           loading={<LoadingEditor />}
-          onChange={(newValue) => console.log(newValue)}
           onMount={onMount}
         />
       </Box>

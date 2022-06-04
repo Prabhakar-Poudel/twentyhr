@@ -21,6 +21,7 @@ import QuestionsHome from 'src/pages/question/QuestionsHome'
 import ViewQuestion from 'src/pages/question/ViewQuestion'
 import AuthenticatedRoute from 'src/routes/AuthenticatedRoute'
 import LoginRoute from 'src/routes/LoginRoute'
+import './colors.css'
 
 const theme = createTheme({
 	palette: {

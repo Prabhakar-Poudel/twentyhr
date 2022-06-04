@@ -1,5 +1,6 @@
 import { PlayArrow } from '@mui/icons-material'
-import { Box, IconButton, SelectChangeEvent, Tooltip } from '@mui/material'
+import { Box, Button, SelectChangeEvent, Tooltip } from '@mui/material'
+import { useEffect } from 'react'
 import IdeConfiguration from 'src/components/app/interview/interviewBody/ide/IdeConfiguration'
 import Language from 'src/components/app/interview/interviewBody/ide/Language'
 
@@ -15,13 +16,19 @@ interface InterviewFooterProps {
 }
 
 const EditorHeader = ({ fontSize, setFontSize, theme, setTheme, currentLanguage, setLanguage, availableLanguages, onCodeExecute }: InterviewFooterProps) => {
+  const KeyPress = (event: KeyboardEvent): any => {
+    if ((event.ctrlKey || event.metaKey) && event.code === 'Enter') onCodeExecute()
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', KeyPress, false)
+    return () => {
+      document.removeEventListener('keydown', KeyPress, false)
+    }
+  }, [])
+  
   return (
-    <Box className="pl-7 flex gap-4">
-      <Tooltip arrow title="Execute code (ctrl+r)">
-        <IconButton size="small" color="primary" onClick={onCodeExecute}>
-          <PlayArrow />
-        </IconButton>
-      </Tooltip>
+    <Box className="pl-4 flex gap-4">
       <IdeConfiguration
         fontSize={fontSize}
         setFontSize={setFontSize}
@@ -29,6 +36,11 @@ const EditorHeader = ({ fontSize, setFontSize, theme, setTheme, currentLanguage,
         setTheme={setTheme}
       />
       <Language availableLanguages={availableLanguages} currentLanguage={currentLanguage} setLanguage={setLanguage} />
+      <Box className="flex items-center">
+        <Tooltip arrow title="⌘ + Enter">
+          <Button variant="contained" size="small" color="primary" onClick={onCodeExecute} startIcon={<PlayArrow />} >Run</Button>
+        </Tooltip>
+      </Box>
     </Box>
   )
 }
