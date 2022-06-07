@@ -1,5 +1,5 @@
 import NotesIcon from '@mui/icons-material/Notes'
-import { Button, Popover } from '@mui/material'
+import { Button, Popover, Tooltip } from '@mui/material'
 import { MouseEvent, useState } from 'react'
 import { RichTextInput } from 'src/components/shared/RichTextInput'
 
@@ -14,7 +14,9 @@ const InterviewNotes = () => {
 
   return (
     <>
-      <Button color="secondary" variant="outlined" size="small" startIcon={<NotesIcon />} onClick={handleOpen}>Quick Notes</Button>
+      <Tooltip title="Your private interview notes">
+        <Button color="secondary" variant="outlined" size="small" startIcon={<NotesIcon />} onClick={handleOpen}>Note</Button>
+      </Tooltip>
       <Popover
         open={showNotes}
         onClose={handleClose}
@@ -27,7 +29,7 @@ const InterviewNotes = () => {
           onChange={(change) => setNotes(change)}
           margin="none"
           defaultValue={notes}
-          placeholder="You can add private interview notes here..."
+          placeholder="You can add your private interview notes here..."
         />
       </Popover>
     </>

@@ -1,4 +1,4 @@
-import  MonacoEditor, { OnMount } from '@monaco-editor/react'
+import MonacoEditor, { Monaco, OnMount } from '@monaco-editor/react'
 import { Box, SelectChangeEvent, Skeleton } from '@mui/material'
 import * as monaco from 'monaco-editor'
 import { useEffect, useState } from 'react'
@@ -23,8 +23,8 @@ const LoadingEditor = () => (
 )
 
 const InterviewBody = ({ language, setLanguage, defaultValue = '', onCodeExecute }: InterviewBodyProps) => {
-  const [editor, setEditor] = useState<any>(null)
-  const [monaco, setMonaco] = useState<any>(null)
+  const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null)
+  const [monaco, setMonaco] = useState<Monaco | null>(null)
   const [rendered, setRendered] = useState(false)
   const [fontSize, setFontSize] = useState<number>(defaultEditorOptions.fontSize)
   const [theme, setTheme] = useState<string>('vs-dark')
@@ -33,7 +33,7 @@ const InterviewBody = ({ language, setLanguage, defaultValue = '', onCodeExecute
   const onFontSizeChange = (event: Event, value: number) => setFontSize(value)
   const onThemeChange =  (event: SelectChangeEvent) => setTheme(event.target.value)
 
-  const resizeHandler = () => editor.layout({ width: '95%', height: '90%' })
+  const resizeHandler = () => editor!.layout({ width: 95, height: 90 })
 
   const updateAvailableLanguages = (monacoLanguages: monaco.languages.ILanguageExtensionPoint[]) => {
     const languages = monacoLanguages
@@ -45,7 +45,7 @@ const InterviewBody = ({ language, setLanguage, defaultValue = '', onCodeExecute
   useEffect(() => {
     if (!editor || rendered) return
     window.addEventListener('resize', resizeHandler)
-    updateAvailableLanguages(monaco.languages.getLanguages())
+    updateAvailableLanguages(monaco!.languages.getLanguages())
     setRendered(true)
     return () => window.removeEventListener('resize', resizeHandler)
   }, [editor])

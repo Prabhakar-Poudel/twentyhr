@@ -8,10 +8,12 @@ import InterviewHeader from 'src/components/app/interview/interviewHeader/Interv
 import InterviewBody from 'src/components/app/interview/interviewBody/InterviewBody'
 import InterviewFooter from 'src/components/app/interview/interviewFooter/InterviewFooter'
 import { axios } from 'src/lib/axios/axios'
+import NotFoundPage from 'src/pages/NotFoundPage'
 import { useInterviewShow } from 'src/queries/Interviews'
 import { QuestionShow } from 'src/types/question'
 import InterviewRightDrawer from 'src/components/app/interview/interviewBody/InterviewRightDrawer'
 import RightDrawerToggle from 'src/components/app/interview/interviewBody/RightDrawerToggle'
+import { connectToInterview, demoActiveUsers } from 'src/websockets/channels/interviewChannel'
 
 const InterviewPage = () => {
   const { id } = useParams()
@@ -21,13 +23,19 @@ const InterviewPage = () => {
   const [question, setQuestion] = useState<QuestionShow>()
   const [showDrawer, setShowDrawer] = useState(true)
   const [focusTerminal, setFocusTerminal] = useState(false)
+  const [activeUsers, setActiveUsers] = useState([])
 
   useEffect(() => {
     loader.config({ monaco })
   }, [])
 
   useEffect(() => {
-    if (interview?.question) changeQuestion(interview.question.id)
+    if (interview) {
+      const subscription = connectToInterview(interview.id, setActiveUsers)
+      if(interview.question) changeQuestion(interview.question.id)
+
+      return () => subscription.unsubscribe()
+    }
   }, [interview])
 
   const changeQuestion = async (questionId: string) => {
@@ -47,7 +55,7 @@ const InterviewPage = () => {
   }
 
   if(isLoading) return <LinearScale />
-  if(!isLoading && !interview) return <div>Interview not found</div>
+  if(!isLoading && !interview) return <NotFoundPage />
 
   return (
     <Box className="flex flex-col h-screen w-screen">
@@ -65,7 +73,7 @@ const InterviewPage = () => {
           focusTerminal={focusTerminal}
         />
       )}
-      <InterviewFooter />
+      <InterviewFooter activeUsers={activeUsers} />
     </Box>
   )
 }
