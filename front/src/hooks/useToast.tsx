@@ -47,11 +47,12 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
   const createToast = useCallback((params: CreateToastParams) => {
     setToasts((toasts) => [...toasts, { ...params, id: crypto.randomUUID(), open: true }])
     return toasts
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const removeToast = (toastId: string) =>  setToasts((toasts) => toasts.filter((toast) => toastId !== toast.id))
 
-  const value = useMemo(() => ({ toasts, createToast, removeToast }), [toasts])
+  const value = useMemo(() => ({ toasts, createToast, removeToast }), [toasts, createToast])
 
   return (
     <ToastContext.Provider value={value}>

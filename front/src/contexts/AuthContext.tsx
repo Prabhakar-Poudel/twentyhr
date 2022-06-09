@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
+import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { axios } from 'src/lib/axios/axios'
 import { User } from 'src/types/user'
@@ -27,9 +27,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [loading, setLoading] = useState(true)
   const queryClient = useQueryClient()
 
+  const fetchCurrentUser = () => {
+    return axios.get('/profile')
+      .then(response => setUser(response.data))
+      .catch(() => setUser(null))
+  }
+
+  const fetchProfile = useCallback(() => {
+    fetchCurrentUser().finally(() => setLoading(false))
+  }, [])
+
   useEffect(() => {
     fetchProfile()
-  }, [])
+  }, [fetchProfile])
 
   const logIn = (newUser: UserLoginProps) => {
     const { email, password } = newUser
@@ -43,16 +53,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await queryClient.invalidateQueries()
     return axios.delete('/users/sign_out')
       .finally(() => setUser(null))
-  }
-
-  const fetchCurrentUser = () => {
-    return axios.get('/profile')
-      .then(response => setUser(response.data))
-      .catch(() => setUser(null))
-  }
-
-  const fetchProfile = () => {
-    fetchCurrentUser().finally(() => setLoading(false))
   }
 
   const value = { loading, user, fetchCurrentUser, logIn, logOut }

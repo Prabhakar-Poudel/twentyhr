@@ -1,6 +1,6 @@
 import { LinearScale } from '@mui/icons-material'
 import { Box } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import * as monaco from 'monaco-editor'
 import { loader } from '@monaco-editor/react'
 import { useParams } from 'react-router'
@@ -52,11 +52,11 @@ const InterviewPage = () => {
   const onDrawerToggle = () => setShowDrawer(!showDrawer)
   const terminalContent = 'Hello from \x1B[1;3;31mxterm.js\x1B[0m $ '
 
-  const onCodeExecute = () => {
+  const onCodeExecute = useCallback(() => {
     setShowDrawer(true)
     setFocusTerminal(true)
     setTimeout(() => setFocusTerminal(false), 1000)
-  }
+  }, [])
 
   if(isLoading) return <LinearScale />
   if(!isLoading && !interview) return <NotFoundPage />

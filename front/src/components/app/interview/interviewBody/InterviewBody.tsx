@@ -1,7 +1,7 @@
 import MonacoEditor, { Monaco, OnMount } from '@monaco-editor/react'
 import { Box, SelectChangeEvent, Skeleton } from '@mui/material'
 import * as monaco from 'monaco-editor'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import EditorHeader from 'src/components/app/interview/interviewBody/ide/EditorHeader'
 import defaultEditorOptions, { SUPPORTED_LANGUAGES } from 'src/config/editorConfig'
 
@@ -33,7 +33,7 @@ const InterviewBody = ({ language, setLanguage, defaultValue = '', onCodeExecute
   const onFontSizeChange = (event: Event, value: number) => setFontSize(value)
   const onThemeChange =  (event: SelectChangeEvent) => setTheme(event.target.value)
 
-  const resizeHandler = () => editor!.layout({ width: 95, height: 90 })
+  const resizeHandler = useCallback(() => editor!.layout({ width: 95, height: 90 }), [editor])
 
   const updateAvailableLanguages = (monacoLanguages: monaco.languages.ILanguageExtensionPoint[]) => {
     const languages = monacoLanguages
@@ -48,11 +48,11 @@ const InterviewBody = ({ language, setLanguage, defaultValue = '', onCodeExecute
     updateAvailableLanguages(monaco!.languages.getLanguages())
     setRendered(true)
     return () => window.removeEventListener('resize', resizeHandler)
-  }, [editor])
+  }, [editor, monaco, rendered, resizeHandler])
 
   useEffect(() => {
     if(editor) editor.setValue(defaultValue)
-  }, [defaultValue])
+  }, [defaultValue, editor])
 
   const onMount: OnMount = (editor, monaco) => {
     editor.focus()

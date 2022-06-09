@@ -1,6 +1,6 @@
 import Paper from '@mui/material/Paper'
 import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { creatorGetter, getCellClassName } from 'src/components/app/questions/helpers'
 import { RowActions } from 'src/components/app/questions/RowActions'
 import { StatusCell } from 'src/components/app/questions/StatusCell'

@@ -1,4 +1,4 @@
-import { Excalidraw, THEME } from '@excalidraw/excalidraw-next'
+import Excalidraw, { THEME } from '@excalidraw/excalidraw-next'
 import { ExcalidrawElement } from '@excalidraw/excalidraw-next/types/element/types'
 import { AppState, ExcalidrawImperativeAPI } from '@excalidraw/excalidraw-next/types/types'
 import { Box } from '@mui/material'

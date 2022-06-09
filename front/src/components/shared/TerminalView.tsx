@@ -17,10 +17,11 @@ const TerminalView = ({ value = '' }: Props) => {
     const container = document.getElementById('terminal-container')
     if(!container) return
     TERMINAL.open(container)
+    TERMINAL.clear()
     TERMINAL.writeln(value)
     TERMINAL.focus()
     return () => TERMINAL.dispose()
-  }, [])
+  }, [value])
 
   return (
     <Box id="terminal-container"/>

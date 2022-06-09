@@ -1,6 +1,6 @@
 import { PlayArrow } from '@mui/icons-material'
 import { Box, Button, SelectChangeEvent, Tooltip } from '@mui/material'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import IdeConfiguration from 'src/components/app/interview/interviewBody/ide/IdeConfiguration'
 import Language from 'src/components/app/interview/interviewBody/ide/Language'
 
@@ -16,16 +16,16 @@ interface InterviewFooterProps {
 }
 
 const EditorHeader = ({ fontSize, setFontSize, theme, setTheme, currentLanguage, setLanguage, availableLanguages, onCodeExecute }: InterviewFooterProps) => {
-  const KeyPress = (event: KeyboardEvent): any => {
+  const KeyPress = useCallback((event: KeyboardEvent): any => {
     if ((event.ctrlKey || event.metaKey) && event.code === 'Enter') onCodeExecute()
-  }
+  }, [onCodeExecute])
 
   useEffect(() => {
     document.addEventListener('keydown', KeyPress, false)
     return () => {
       document.removeEventListener('keydown', KeyPress, false)
     }
-  }, [])
+  }, [KeyPress])
   
   return (
     <Box className="pl-4 flex gap-4">
