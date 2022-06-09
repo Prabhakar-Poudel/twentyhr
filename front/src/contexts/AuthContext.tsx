@@ -22,16 +22,16 @@ interface AuthProviderProps {
 
 const AuthContext = createContext<AuthContextType>(null!)
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
+export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const queryClient = useQueryClient()
 
-  const fetchCurrentUser = () => {
-    return axios.get('/profile')
-      .then(response => setUser(response.data))
+  const fetchCurrentUser = () =>
+    axios
+      .get('/profile')
+      .then((response) => setUser(response.data))
       .catch(() => setUser(null))
-  }
 
   const fetchProfile = useCallback(() => {
     fetchCurrentUser().finally(() => setLoading(false))
@@ -43,21 +43,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const logIn = (newUser: UserLoginProps) => {
     const { email, password } = newUser
-    if(!(email && password)) return
-    return axios.post('/users/sign_in', { user: { email, password }})
-      .then(response => setUser(response.data))
+    if (!(email && password)) return
+    return axios
+      .post('/users/sign_in', { user: { email, password } })
+      .then((response) => setUser(response.data))
       .finally(() => setLoading(false))
   }
 
   const logOut = async () => {
     await queryClient.invalidateQueries()
-    return axios.delete('/users/sign_out')
-      .finally(() => setUser(null))
+    return axios.delete('/users/sign_out').finally(() => setUser(null))
   }
 
   const value = { loading, user, fetchCurrentUser, logIn, logOut }
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
 export const useAuth = () => useContext(AuthContext)

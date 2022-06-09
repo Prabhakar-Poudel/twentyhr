@@ -11,7 +11,7 @@ interface Props {
   onSave: (question: QuestionPayload) => Promise<QuestionShow>
 }
 
-const QuestionForm = ({ defaultValues, onSave }: Props) => {
+function QuestionForm({ defaultValues, onSave }: Props) {
   const navigate = useNavigate()
   const toast = useToast()
   const [starterCode, setStarterCode] = useState(defaultValues.initial_code || '// Hello World')
@@ -30,7 +30,15 @@ const QuestionForm = ({ defaultValues, onSave }: Props) => {
 
   const submitForm = (event: FormEvent) => {
     event.preventDefault()
-    const body = { title, description, instruction, guidelines, initial_code: starterCode, language, status: 'published' }
+    const body = {
+      title,
+      description,
+      instruction,
+      guidelines,
+      initial_code: starterCode,
+      language,
+      status: 'published',
+    }
     onSave(body)
       .then(() => {
         toast({ message: 'Question created successfully', type: 'success' })
@@ -42,11 +50,15 @@ const QuestionForm = ({ defaultValues, onSave }: Props) => {
   return (
     <Container maxWidth="md">
       <Box className="my-4">
-        <Typography className="my-4" variant="h4">Create a new interview question</Typography>
+        <Typography className="my-4" variant="h4">
+          Create a new interview question
+        </Typography>
       </Box>
       <Box component="form" onSubmit={submitForm}>
         <FormControl fullWidth margin="normal">
-          <FormLabel required htmlFor="title">Title</FormLabel>
+          <FormLabel required htmlFor="title">
+            Title
+          </FormLabel>
           <TextField
             autoFocus
             fullWidth
@@ -96,7 +108,9 @@ const QuestionForm = ({ defaultValues, onSave }: Props) => {
           onChange={onCodeUpdate}
         />
         <Box className="my-4 flex flex-row-reverse">
-          <Button variant="contained" type="submit">{buttonText}</Button>
+          <Button variant="contained" type="submit">
+            {buttonText}
+          </Button>
           <Link to="/questions" className="mx-2">
             <Button>Cancel</Button>
           </Link>

@@ -1,9 +1,9 @@
 .draw-input .excalidraw {
-    --color-primary: var(--primary-color-main);
+  --color-primary: var(--primary-color-main);
 }
 .draw-input .excalidraw.theme--dark {
-    --color-primary: var(--primary-color-main);
+  --color-primary: var(--primary-color-main);
 }
 .excalidraw.excalidraw-modal-container {
-    z-index: 1300;
+  z-index: 1300;
 }

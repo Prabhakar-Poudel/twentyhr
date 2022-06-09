@@ -12,17 +12,11 @@ interface InterviewBodyProps {
   onCodeExecute: () => void
 }
 
-const LoadingEditor = () => (
-  <Skeleton
-    animation="wave"
-    width="100%"
-    height="100%"
-    variant="rectangular"
-    sx={{ bgcolor: 'grey.900' }}
-  />
-)
+function LoadingEditor() {
+  return <Skeleton animation="wave" width="100%" height="100%" variant="rectangular" sx={{ bgcolor: 'grey.900' }} />
+}
 
-const InterviewBody = ({ language, setLanguage, defaultValue = '', onCodeExecute }: InterviewBodyProps) => {
+function InterviewBody({ language, setLanguage, defaultValue = '', onCodeExecute }: InterviewBodyProps) {
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null)
   const [monaco, setMonaco] = useState<Monaco | null>(null)
   const [rendered, setRendered] = useState(false)
@@ -31,7 +25,7 @@ const InterviewBody = ({ language, setLanguage, defaultValue = '', onCodeExecute
   const [availableLanguages, setAvailableLanguages] = useState<string[]>([])
 
   const onFontSizeChange = (event: Event, value: number) => setFontSize(value)
-  const onThemeChange =  (event: SelectChangeEvent) => setTheme(event.target.value)
+  const onThemeChange = (event: SelectChangeEvent) => setTheme(event.target.value)
 
   const resizeHandler = useCallback(() => editor!.layout({ width: 95, height: 90 }), [editor])
 
@@ -51,7 +45,7 @@ const InterviewBody = ({ language, setLanguage, defaultValue = '', onCodeExecute
   }, [editor, monaco, rendered, resizeHandler])
 
   useEffect(() => {
-    if(editor) editor.setValue(defaultValue)
+    if (editor) editor.setValue(defaultValue)
   }, [defaultValue, editor])
 
   const onMount: OnMount = (editor, monaco) => {

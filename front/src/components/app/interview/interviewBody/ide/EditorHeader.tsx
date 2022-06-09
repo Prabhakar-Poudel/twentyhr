@@ -15,10 +15,22 @@ interface InterviewFooterProps {
   onCodeExecute: () => void
 }
 
-const EditorHeader = ({ fontSize, setFontSize, theme, setTheme, currentLanguage, setLanguage, availableLanguages, onCodeExecute }: InterviewFooterProps) => {
-  const KeyPress = useCallback((event: KeyboardEvent): any => {
-    if ((event.ctrlKey || event.metaKey) && event.code === 'Enter') onCodeExecute()
-  }, [onCodeExecute])
+function EditorHeader({
+  fontSize,
+  setFontSize,
+  theme,
+  setTheme,
+  currentLanguage,
+  setLanguage,
+  availableLanguages,
+  onCodeExecute,
+}: InterviewFooterProps) {
+  const KeyPress = useCallback(
+    (event: KeyboardEvent): any => {
+      if ((event.ctrlKey || event.metaKey) && event.code === 'Enter') onCodeExecute()
+    },
+    [onCodeExecute]
+  )
 
   useEffect(() => {
     document.addEventListener('keydown', KeyPress, false)
@@ -26,19 +38,16 @@ const EditorHeader = ({ fontSize, setFontSize, theme, setTheme, currentLanguage,
       document.removeEventListener('keydown', KeyPress, false)
     }
   }, [KeyPress])
-  
+
   return (
     <Box className="pl-4 flex gap-4">
-      <IdeConfiguration
-        fontSize={fontSize}
-        setFontSize={setFontSize}
-        theme={theme}
-        setTheme={setTheme}
-      />
+      <IdeConfiguration fontSize={fontSize} setFontSize={setFontSize} theme={theme} setTheme={setTheme} />
       <Language availableLanguages={availableLanguages} currentLanguage={currentLanguage} setLanguage={setLanguage} />
       <Box className="flex items-center">
         <Tooltip arrow title="⌘ + Enter">
-          <Button variant="contained" size="small" color="primary" onClick={onCodeExecute} startIcon={<PlayArrow />} >Run</Button>
+          <Button variant="contained" size="small" color="primary" onClick={onCodeExecute} startIcon={<PlayArrow />}>
+            Run
+          </Button>
         </Tooltip>
       </Box>
     </Box>

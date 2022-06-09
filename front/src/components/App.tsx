@@ -24,55 +24,55 @@ import LoginRoute from 'src/routes/LoginRoute'
 import './colors.css'
 
 const theme = createTheme({
-	palette: {
-		mode: 'dark',
-		primary: { main: '#00c853' },
-		secondary: { main: '#834cf3' },
-	},
+  palette: {
+    mode: 'dark',
+    primary: { main: '#00c853' },
+    secondary: { main: '#834cf3' },
+  },
 })
 
 const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			refetchOnWindowFocus: false,
-		},
-	},
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
 })
 
-const App = () => {
-	return (
-		<ThemeProvider theme={theme}>
-			<CssBaseline enableColorScheme />
-			<ToastProvider>
-				<QueryClientProvider client={queryClient}>
-					<AuthProvider>
-						<Routes>
-							<Route element={<LoginRoute />}>
-								<Route path="login" element={<LoginPage />} />
-								<Route path="forgot-password" element={<ForgotPasswordPage />} />
-								<Route path="reset-password" element={<ResetPasswordPage />} />
-								<Route path="signup" element={<SignUpPage />} />
-								<Route path="verify-account" element={<VerifyAccountPage />} />
-							</Route>
-							<Route element={<AuthenticatedRoute />}>
-								<Route path="questions" element={<QuestionsHome />}>
-									<Route path=":id" element={<ViewQuestion />} />
-								</Route>
-								<Route path="questions/new" element={<NewQuestion />} />
-								<Route path="questions/:id/edit" element={<EditQuestion />} />
-								<Route path="interviews" element={<InterviewsHome />} />
-								<Route path="interviews/:id" element={<InterviewPage />} />
-								<Route path="account" element={<AccountSettingsPage />} />
-								<Route path="admin/*" element={<AdminHome />} />
-								<Route path="/" element={<DashboardPage />} />
-							</Route>
-							<Route path="*" element={<NotFoundPage />} />
-						</Routes>
-					</AuthProvider>
-				</QueryClientProvider>
-			</ToastProvider>
-		</ThemeProvider>
-	)
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline enableColorScheme />
+      <ToastProvider>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <Routes>
+              <Route element={<LoginRoute />}>
+                <Route path="login" element={<LoginPage />} />
+                <Route path="forgot-password" element={<ForgotPasswordPage />} />
+                <Route path="reset-password" element={<ResetPasswordPage />} />
+                <Route path="signup" element={<SignUpPage />} />
+                <Route path="verify-account" element={<VerifyAccountPage />} />
+              </Route>
+              <Route element={<AuthenticatedRoute />}>
+                <Route path="questions" element={<QuestionsHome />}>
+                  <Route path=":id" element={<ViewQuestion />} />
+                </Route>
+                <Route path="questions/new" element={<NewQuestion />} />
+                <Route path="questions/:id/edit" element={<EditQuestion />} />
+                <Route path="interviews" element={<InterviewsHome />} />
+                <Route path="interviews/:id" element={<InterviewPage />} />
+                <Route path="account" element={<AccountSettingsPage />} />
+                <Route path="admin/*" element={<AdminHome />} />
+                <Route path="/" element={<DashboardPage />} />
+              </Route>
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </AuthProvider>
+        </QueryClientProvider>
+      </ToastProvider>
+    </ThemeProvider>
+  )
 }
 
 export default App

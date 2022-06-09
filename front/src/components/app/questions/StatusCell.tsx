@@ -7,8 +7,12 @@ const colorMap: Record<string, string> = {
   archived: 'grey.600',
 }
 
-export const StatusCell = ({ value }: GridRenderCellParams) => {
+export function StatusCell({ value }: GridRenderCellParams) {
   const color = colorMap[value]
 
-  return <Typography color={color} className="uppercase">{value}</Typography>
+  return (
+    <Typography color={color} className="uppercase">
+      {value}
+    </Typography>
+  )
 }

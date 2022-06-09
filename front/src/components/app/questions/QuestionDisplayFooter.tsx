@@ -2,7 +2,7 @@ import { Box, Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { createInterview } from 'src/queries/Interviews'
 
-const QuestionDisplayFooter = ({ id }: { id: string }) => {
+function QuestionDisplayFooter({ id }: { id: string }) {
   const navigate = useNavigate()
 
   const onCreateNewInterview = async () => {

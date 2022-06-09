@@ -4,10 +4,9 @@ import QuestionForm from 'src/components/app/questions/QuestionForm'
 import { axios } from 'src/lib/axios/axios'
 import { QuestionPayload, QuestionShow } from 'src/types/question'
 
-const NewQuestion = () => {
-  const createQuestion = (question: QuestionPayload) =>  axios
-    .post<QuestionShow>('/questions/', { question })
-    .then((res) => res.data)
+function NewQuestion() {
+  const createQuestion = (question: QuestionPayload) =>
+    axios.post<QuestionShow>('/questions/', { question }).then((res) => res.data)
   const defaultValues = {}
 
   return (

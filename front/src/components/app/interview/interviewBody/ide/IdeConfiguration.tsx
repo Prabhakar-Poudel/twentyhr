@@ -3,9 +3,11 @@ import IconButton from '@mui/material/IconButton'
 import Popover from '@mui/material/Popover'
 import GearIcon from '@mui/icons-material/Settings'
 import { useState, MouseEvent } from 'react'
-import ConfigurationPopup, { IdeConfigurationProps } from 'src/components/app/interview/interviewBody/ide/ConfigurationPopup'
+import ConfigurationPopup, {
+  IdeConfigurationProps,
+} from 'src/components/app/interview/interviewBody/ide/ConfigurationPopup'
 
-const IdeConfiguration = (props: IdeConfigurationProps) => {
+function IdeConfiguration(props: IdeConfigurationProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   const handleOpen = (event: MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget)

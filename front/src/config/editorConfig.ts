@@ -31,6 +31,21 @@ export const readonlyEditorOptions: MonacoEditorOptions = {
   cursorStyle: 'underline-thin',
 }
 
-export const SUPPORTED_LANGUAGES = ['javascript', 'typescript', 'ruby', 'python', 'java', 'csharp', 'cpp', 'c', 'go', 'rust', 'scala', 'php', 'haskell', 'pgsql']
+export const SUPPORTED_LANGUAGES = [
+  'javascript',
+  'typescript',
+  'ruby',
+  'python',
+  'java',
+  'csharp',
+  'cpp',
+  'c',
+  'go',
+  'rust',
+  'scala',
+  'php',
+  'haskell',
+  'pgsql',
+]
 
 export default defaultEditorOptions

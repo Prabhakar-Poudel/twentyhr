@@ -17,7 +17,7 @@ const columns: GridColDef[] = [
   { field: 'status', headerName: 'Status', width: 120, cellClassName: 'capitalize' },
 ]
 
-const InterviewsTable = ({ rows }: Props) => {
+function InterviewsTable({ rows }: Props) {
   const navigate = useNavigate()
 
   const openInterview = ({ id }: GridRowParams) => navigate(`/interviews/${id}`)

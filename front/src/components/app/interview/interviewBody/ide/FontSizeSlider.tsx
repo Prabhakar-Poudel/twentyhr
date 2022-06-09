@@ -6,7 +6,7 @@ interface Props {
   onChange: (event: Event, value: any) => void
 }
 
-const FontSizeSlider = ({ fontSize, onChange }: Props) => {
+function FontSizeSlider({ fontSize, onChange }: Props) {
   return (
     <>
       <Typography id="font-size-label">Font size</Typography>

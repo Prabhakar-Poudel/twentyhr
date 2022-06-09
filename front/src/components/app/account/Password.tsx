@@ -1,6 +1,6 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { IconButton, InputAdornment, InputLabel, OutlinedInput, FormControl } from '@mui/material'
-import { ChangeEventHandler, useState} from 'react'
+import { ChangeEventHandler, useState } from 'react'
 
 interface PasswordFieldProps {
   label?: string
@@ -9,7 +9,7 @@ interface PasswordFieldProps {
   onChange: ChangeEventHandler<HTMLInputElement>
 }
 
-const PasswordField = ({ value, onChange, label = "Password", autocomplete = "current-password" }: PasswordFieldProps) => {
+function PasswordField({ value, onChange, label = 'Password', autocomplete = 'current-password' }: PasswordFieldProps) {
   const [showPassword, setShowPassword] = useState(false)
 
   return (

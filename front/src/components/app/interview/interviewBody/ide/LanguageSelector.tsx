@@ -4,11 +4,17 @@ import { HTMLAttributes, SyntheticEvent } from 'react'
 
 const optionFormatter = (option: string) => option.toUpperCase()
 
-const InputField = (params: AutocompleteRenderInputParams) =>
-  <TextField {...params} margin="normal" size="small" variant="standard" />
+function InputField(params: AutocompleteRenderInputParams) {
+  return <TextField {...params} margin="normal" size="small" variant="standard" />
+}
 
-const OptionItem = (props: HTMLAttributes<HTMLLIElement>, option: string) =>
-  <Box component="li" {...props}>{optionFormatter(option)}</Box>
+function OptionItem(props: HTMLAttributes<HTMLLIElement>, option: string) {
+  return (
+    <Box component="li" {...props}>
+      {optionFormatter(option)}
+    </Box>
+  )
+}
 
 export interface LanguageSelectorProps {
   availableLanguages: string[]
@@ -16,7 +22,7 @@ export interface LanguageSelectorProps {
   setLanguage: (language: string) => void
 }
 
-const LanguageSelector = ({ availableLanguages, currentLanguage, setLanguage }: LanguageSelectorProps) => {
+function LanguageSelector({ availableLanguages, currentLanguage, setLanguage }: LanguageSelectorProps) {
   const selectedLanguage = availableLanguages.find((id) => id === currentLanguage) || null
   const onLanguageChange = (event: SyntheticEvent, newValue: string) => setLanguage(newValue || currentLanguage)
 

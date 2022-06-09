@@ -1,12 +1,5 @@
 import { Stack } from '@mui/material'
-import {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useMemo,
-  useState
-} from 'react'
+import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Toast, ToastProps } from 'src/lib/global-components'
 
@@ -25,23 +18,28 @@ interface ToastContextProps {
 export const ToastContext = createContext<ToastContextProps>({
   toasts: [],
   createToast: () => {},
-  removeToast: () => {}
+  removeToast: () => {},
 })
 
-const ToastList = ({ toasts, removeToast }: ToastContextProps) =>
-  <Stack spacing={1} className="bottom-0 fixed">
-    {toasts.map((toast) => (
-      <Toast key={toast.id} {...toast} onClose={removeToast} />
-    ))}
-  </Stack>
+function ToastList({ toasts, removeToast }: ToastContextProps) {
+  return (
+    <Stack spacing={1} className="bottom-0 fixed">
+      {toasts.map((toast) => (
+        <Toast key={toast.id} {...toast} onClose={removeToast} />
+      ))}
+    </Stack>
+  )
+}
 
-const ToastConsumer = () => (
-  <ToastContext.Consumer>
-    {(params: ToastContextProps) => createPortal(<ToastList {...params} />, document.body)}
-  </ToastContext.Consumer>
-)
+function ToastConsumer() {
+  return (
+    <ToastContext.Consumer>
+      {(params: ToastContextProps) => createPortal(<ToastList {...params} />, document.body)}
+    </ToastContext.Consumer>
+  )
+}
 
-export const ToastProvider = ({ children }: ToastProviderProps) => {
+export function ToastProvider({ children }: ToastProviderProps) {
   const [toasts, setToasts] = useState<ToastProps[]>([])
 
   const createToast = useCallback((params: CreateToastParams) => {
@@ -50,7 +48,7 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const removeToast = (toastId: string) =>  setToasts((toasts) => toasts.filter((toast) => toastId !== toast.id))
+  const removeToast = (toastId: string) => setToasts((toasts) => toasts.filter((toast) => toastId !== toast.id))
 
   const value = useMemo(() => ({ toasts, createToast, removeToast }), [toasts, createToast])
 

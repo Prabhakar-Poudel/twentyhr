@@ -1,15 +1,11 @@
 import { Close, InfoRounded } from '@mui/icons-material'
-import {
-  Box,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton, List, ListItem, Tooltip, Typography,
-} from '@mui/material'
+import { Box, Dialog, DialogContent, DialogTitle, IconButton, List, ListItem, Tooltip, Typography } from '@mui/material'
 import { useState } from 'react'
-import LanguageSelector, { LanguageSelectorProps } from 'src/components/app/interview/interviewBody/ide/LanguageSelector'
+import LanguageSelector, {
+  LanguageSelectorProps,
+} from 'src/components/app/interview/interviewBody/ide/LanguageSelector'
 
-const Language = (props: LanguageSelectorProps) => {
+function Language(props: LanguageSelectorProps) {
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => setOpen(true)
@@ -25,15 +21,12 @@ const Language = (props: LanguageSelectorProps) => {
         </IconButton>
       </Tooltip>
 
-      <Dialog
-        open={open}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="language-info"
-      >
+      <Dialog open={open} keepMounted onClose={handleClose} aria-describedby="language-info">
         <DialogTitle className="flex">
           <Box className="grow">
-            <Typography variant="h4" className="capitalize">{props.currentLanguage}</Typography>
+            <Typography variant="h4" className="capitalize">
+              {props.currentLanguage}
+            </Typography>
             <Typography variant="body2">Running NodeJS v17.3.0</Typography>
           </Box>
           <Tooltip arrow title="Close">
@@ -44,14 +37,26 @@ const Language = (props: LanguageSelectorProps) => {
         </DialogTitle>
         <DialogContent dividers id="language-info">
           <Typography variant="h6">Available libraries</Typography>
-            <List>
-              <ListItem>Utility libraries to help you get through simple tasks - underscore, lodash, moment, and more.</ListItem>
-              <ListItem>Utility libraries to help you get through simple tasks - underscore, lodash, moment, and more.</ListItem>
-              <ListItem>Utility libraries to help you get through simple tasks - underscore, lodash, moment, and more.</ListItem>
-              <ListItem>Utility libraries to help you get through simple tasks - underscore, lodash, moment, and more.</ListItem>
-              <ListItem>Utility libraries to help you get through simple tasks - underscore, lodash, moment, and more.</ListItem>
-              <ListItem>Utility libraries to help you get through simple tasks - underscore, lodash, moment, and more.</ListItem>
-            </List>
+          <List>
+            <ListItem>
+              Utility libraries to help you get through simple tasks - underscore, lodash, moment, and more.
+            </ListItem>
+            <ListItem>
+              Utility libraries to help you get through simple tasks - underscore, lodash, moment, and more.
+            </ListItem>
+            <ListItem>
+              Utility libraries to help you get through simple tasks - underscore, lodash, moment, and more.
+            </ListItem>
+            <ListItem>
+              Utility libraries to help you get through simple tasks - underscore, lodash, moment, and more.
+            </ListItem>
+            <ListItem>
+              Utility libraries to help you get through simple tasks - underscore, lodash, moment, and more.
+            </ListItem>
+            <ListItem>
+              Utility libraries to help you get through simple tasks - underscore, lodash, moment, and more.
+            </ListItem>
+          </List>
         </DialogContent>
       </Dialog>
     </Box>

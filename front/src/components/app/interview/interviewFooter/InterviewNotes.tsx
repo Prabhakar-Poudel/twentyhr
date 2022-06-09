@@ -3,7 +3,7 @@ import { Button, Popover, Tooltip } from '@mui/material'
 import { MouseEvent, useState } from 'react'
 import { RichTextInput } from 'src/components/shared/RichTextInput'
 
-const InterviewNotes = () => {
+function InterviewNotes() {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
   const [notes, setNotes] = useState('')
 
@@ -12,12 +12,15 @@ const InterviewNotes = () => {
 
   const showNotes = Boolean(anchorEl)
 
-  const placeholder = 'You can add your private interview notes here. This will be visible only to you and can be accessed later in your dashboard when the interview has ended.'
+  const placeholder =
+    'You can add your private interview notes here. This will be visible only to you and can be accessed later in your dashboard when the interview has ended.'
 
   return (
     <>
       <Tooltip title="Your private interview notes">
-        <Button color="secondary" variant="outlined" size="small" startIcon={<NotesIcon />} onClick={handleOpen}>Note</Button>
+        <Button color="secondary" variant="outlined" size="small" startIcon={<NotesIcon />} onClick={handleOpen}>
+          Note
+        </Button>
       </Tooltip>
       <Popover
         open={showNotes}

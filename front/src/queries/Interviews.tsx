@@ -5,10 +5,7 @@ import { InterviewNew, InterviewShow } from 'src/types/interview'
 export const useInterviewsIndex = () => {
   const queryClient = useQueryClient()
   const queryKey = ['interviews']
-  const result = useQuery(
-    queryKey,
-    ({ queryKey }) => axios.get('/interviews').then(({ data }) => data)
-  )
+  const result = useQuery(queryKey, ({ queryKey }) => axios.get('/interviews').then(({ data }) => data))
 
   return {
     ...result,
@@ -19,11 +16,9 @@ export const useInterviewsIndex = () => {
 export const useInterviewShow = (id: string) => {
   const queryClient = useQueryClient()
   const queryKey = ['interviews', id]
-  const queryResult = useQuery(
-    queryKey,
-    ({ queryKey }) => axios.get(`/interviews/${id}`).then(({ data }) => data),
-    { retry: false }
-  )
+  const queryResult = useQuery(queryKey, ({ queryKey }) => axios.get(`/interviews/${id}`).then(({ data }) => data), {
+    retry: false,
+  })
 
   return {
     ...queryResult,
@@ -31,6 +26,5 @@ export const useInterviewShow = (id: string) => {
   }
 }
 
-export const createInterview = (data?: InterviewNew) =>  axios
-  .post<InterviewShow>('/interviews/', { interview: { ...data, status: 'created' } })
-  .then((res) => res.data)
+export const createInterview = (data?: InterviewNew) =>
+  axios.post<InterviewShow>('/interviews/', { interview: { ...data, status: 'created' } }).then((res) => res.data)

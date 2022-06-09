@@ -11,11 +11,10 @@ interface Props {
   value?: string
 }
 
-const TerminalView = ({ value = '' }: Props) => {
-
+function TerminalView({ value = '' }: Props) {
   useEffect(() => {
     const container = document.getElementById('terminal-container')
-    if(!container) return
+    if (!container) return
     TERMINAL.open(container)
     TERMINAL.clear()
     TERMINAL.writeln(value)
@@ -23,9 +22,7 @@ const TerminalView = ({ value = '' }: Props) => {
     return () => TERMINAL.dispose()
   }, [value])
 
-  return (
-    <Box id="terminal-container"/>
-  )
+  return <Box id="terminal-container" />
 }
 
 export default TerminalView

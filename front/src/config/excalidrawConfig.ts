@@ -8,6 +8,5 @@ export const uiOptions: UIOptions = {
     theme: false,
     loadScene: false,
     changeViewBackgroundColor: false,
-  }
+  },
 }
-

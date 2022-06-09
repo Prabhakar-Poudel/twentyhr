@@ -8,18 +8,21 @@ interface Props {
   id: string
 }
 
-export const RowActions = ({ id }: Props | GridRenderCellParams) =>
-  <Box className="shrink-0">
-    <Link to={`/questions/${id}/edit`}>
-      <Tooltip key="Edit" title="Edit question">
-        <IconButton disableRipple color="secondary" aria-label="edit" className="hover:scale-125">
-          <EditIcon />
+export function RowActions({ id }: Props | GridRenderCellParams) {
+  return (
+    <Box className="shrink-0">
+      <Link to={`/questions/${id}/edit`}>
+        <Tooltip key="Edit" title="Edit question">
+          <IconButton disableRipple color="secondary" aria-label="edit" className="hover:scale-125">
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
+      </Link>
+      <Tooltip key="Archive" title="Archive question">
+        <IconButton disableRipple color="warning" aria-label="archive" className="hover:scale-125">
+          <ArchiveIcon />
         </IconButton>
       </Tooltip>
-    </Link>
-    <Tooltip key="Archive" title="Archive question">
-      <IconButton disableRipple color="warning" aria-label="archive" className="hover:scale-125">
-        <ArchiveIcon />
-      </IconButton>
-    </Tooltip>
-  </Box>
+    </Box>
+  )
+}

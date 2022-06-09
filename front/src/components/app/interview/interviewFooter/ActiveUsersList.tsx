@@ -2,7 +2,7 @@ import { Box } from '@mui/material'
 import ActiveUserIndicator from 'src/components/app/interview/interviewFooter/ActiveUserIndicator'
 
 export interface ActiveUser {
-  id: string,
+  id: string
   name: string
 }
 
@@ -10,7 +10,7 @@ interface Props {
   activeUsers: ActiveUser[]
 }
 
-const ActiveUsersList = ({ activeUsers }: Props) => {
+function ActiveUsersList({ activeUsers }: Props) {
   return (
     <Box className="flex gap-4">
       {activeUsers.map((user, index) => (

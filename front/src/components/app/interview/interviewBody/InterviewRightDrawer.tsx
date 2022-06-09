@@ -19,7 +19,13 @@ interface Props {
   focusTerminal?: boolean
 }
 
-const InterviewRightDrawer = ({ open, instructions = '', guidelines = '', terminalContent = '', focusTerminal }: Props) => {
+function InterviewRightDrawer({
+  open,
+  instructions = '',
+  guidelines = '',
+  terminalContent = '',
+  focusTerminal,
+}: Props) {
   const [activeTab, setActiveTab] = useState(TABS[0])
   const [expanded, setExpanded] = useState(false)
 
@@ -32,18 +38,14 @@ const InterviewRightDrawer = ({ open, instructions = '', guidelines = '', termin
   }
 
   useEffect(() => {
-    if(focusTerminal) setActiveTab(TABS[0])
+    if (focusTerminal) setActiveTab(TABS[0])
   }, [focusTerminal])
 
   const size = expanded ? 'w-screen' : 'w-192'
   const tooltip = expanded ? 'Close fullscreen' : 'Open fullscreen'
 
   return (
-    <Drawer
-      variant="persistent"
-      anchor="right"
-      open={open}
-    >
+    <Drawer variant="persistent" anchor="right" open={open}>
       <Box className={`${size} grow flex flex-col duration-300 ease-in-out`}>
         <Box className="flex">
           <Tooltip arrow title={tooltip}>

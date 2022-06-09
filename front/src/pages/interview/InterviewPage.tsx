@@ -16,9 +16,9 @@ import RightDrawerToggle from 'src/components/app/interview/interviewBody/RightD
 import { connectToInterview } from 'src/websockets/channels/interviewChannel'
 import { CONSUMER } from 'src/websockets/consumer'
 
-const InterviewPage = () => {
+function InterviewPage() {
   const { id } = useParams()
-  const { data: interview, isLoading  } = useInterviewShow(id!)
+  const { data: interview, isLoading } = useInterviewShow(id!)
   const [language, setLanguage] = useState<string>('')
   const [code, setCode] = useState<string>()
   const [question, setQuestion] = useState<QuestionShow>()
@@ -33,7 +33,7 @@ const InterviewPage = () => {
   useEffect(() => {
     if (interview) {
       const subscription = connectToInterview(interview.id, setActiveUsers)
-      if(interview.question) changeQuestion(interview.question.id)
+      if (interview.question) changeQuestion(interview.question.id)
 
       return () => {
         subscription.unsubscribe()
@@ -58,14 +58,19 @@ const InterviewPage = () => {
     setTimeout(() => setFocusTerminal(false), 1000)
   }, [])
 
-  if(isLoading) return <LinearScale />
-  if(!isLoading && !interview) return <NotFoundPage />
+  if (isLoading) return <LinearScale />
+  if (!isLoading && !interview) return <NotFoundPage />
 
   return (
     <Box className="flex flex-col h-screen w-screen">
       <Box className="flex flex-col grow">
         <InterviewHeader interview={interview} currentQuestion={question} onChangeQuestion={changeQuestion} />
-        <InterviewBody defaultValue={code} language={language} setLanguage={setLanguage} onCodeExecute={onCodeExecute} />
+        <InterviewBody
+          defaultValue={code}
+          language={language}
+          setLanguage={setLanguage}
+          onCodeExecute={onCodeExecute}
+        />
       </Box>
       <RightDrawerToggle open={showDrawer} onClick={onDrawerToggle} />
       {question && (

@@ -11,15 +11,15 @@ export interface ToastProps {
   type?: AlertColor
 }
 
-export const Toast = ({
+export function Toast({
   duration = 6000,
-  id='toast',
+  id = 'toast',
   message = '',
   onClose = () => {},
   open = false,
   title = '',
-  type = 'info'
- }: ToastProps) => {
+  type = 'info',
+}: ToastProps) {
   const [show, setShow] = useState(open)
 
   const handleClose = () => {

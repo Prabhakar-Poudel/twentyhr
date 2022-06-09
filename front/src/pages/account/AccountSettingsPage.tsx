@@ -6,11 +6,15 @@ import useToast from 'src/hooks/useToast'
 import { axios } from 'src/lib/axios/axios'
 import { User } from 'src/types/user'
 
-const AccountSettingsPage = () => {
+function AccountSettingsPage() {
   const { user } = useAuth()
   const toast = useToast()
 
-  const currentUser = { ...user, name: user?.name || '', email: user?.email || '' } as Required<User>
+  const currentUser = {
+    ...user,
+    name: user?.name || '',
+    email: user?.email || '',
+  } as Required<User>
 
   const [email, setEmail] = useState<string>(currentUser.email)
   const [name, setName] = useState<string>(currentUser.name)
@@ -32,7 +36,9 @@ const AccountSettingsPage = () => {
       <AppHeader />
       <Box className="mx-4 md:mx-10">
         <Box className="my-4">
-          <Typography className="my-4" variant="h4">Account Settings</Typography>
+          <Typography className="my-4" variant="h4">
+            Account Settings
+          </Typography>
         </Box>
         <Box className="w-80" component="form" onSubmit={updateUserData}>
           <TextField
@@ -58,7 +64,9 @@ const AccountSettingsPage = () => {
             onChange={(e) => setName(e.target.value)}
           />
           <Box className="mt-2">
-            <Button type="submit" variant="contained" fullWidth>Update</Button>
+            <Button type="submit" variant="contained" fullWidth>
+              Update
+            </Button>
           </Box>
         </Box>
       </Box>

@@ -19,7 +19,7 @@ interface Props {
   helperText?: string
 }
 
-export const CodeInput = ({ label, defaultValue = '', defaultLanguage, helperText, onChange }: Props) => {
+export function CodeInput({ label, defaultValue = '', defaultLanguage, helperText, onChange }: Props) {
   const [editor, setEditor] = useState<any>(null)
   const [language, setLanguage] = useState(defaultLanguage)
 
@@ -52,7 +52,11 @@ export const CodeInput = ({ label, defaultValue = '', defaultLanguage, helperTex
             className="w-36"
             size="small"
             getOptionLabel={(option) => option.toUpperCase()}
-            renderOption={(props, option) => <Box component="li" {...props}>{option.toUpperCase()}</Box>}
+            renderOption={(props, option) => (
+              <Box component="li" {...props}>
+                {option.toUpperCase()}
+              </Box>
+            )}
             renderInput={(params) => <TextField {...params} />}
           />
         </Box>

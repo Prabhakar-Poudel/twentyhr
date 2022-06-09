@@ -5,7 +5,7 @@ import QuestionDisplay from 'src/components/app/questions/QuestionDisplay'
 import useToast from 'src/hooks/useToast'
 import { useQuestionShow } from 'src/queries/Questions'
 
-const ViewQuestion = () => {
+function ViewQuestion() {
   const { id } = useParams()
   const { data, isLoading, error } = useQuestionShow(id!)
   const navigate = useNavigate()
@@ -22,8 +22,12 @@ const ViewQuestion = () => {
   return (
     <Modal open onClose={closeQuestion} className="flex justify-center">
       <Paper elevation={24} className="w-3/4">
-        {isLoading && <Box><LinearProgress /></Box>}
-        {data && <QuestionDisplay id={id!} question={data!} />}
+        {isLoading && (
+          <Box>
+            <LinearProgress />
+          </Box>
+        )}
+        {data && <QuestionDisplay id={id!} question={data} />}
       </Paper>
     </Modal>
   )

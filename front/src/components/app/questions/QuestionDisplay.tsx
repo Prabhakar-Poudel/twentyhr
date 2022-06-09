@@ -9,12 +9,14 @@ interface Props {
   question: QuestionShow
 }
 
-const QuestionDisplay = ({ id, question }: Props) => {
+function QuestionDisplay({ id, question }: Props) {
   return (
     <Box className="flex flex-col px-10 pt-5 h-full">
       <Box>
         <Box className="flex justify-between">
-          <Typography component="h2" variant="h4" className="truncate ...">{question.title}</Typography>
+          <Typography component="h2" variant="h4" className="truncate ...">
+            {question.title}
+          </Typography>
           <RowActions id={id} />
         </Box>
         <Typography>{question.description}</Typography>

@@ -2,7 +2,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import PageLoading from 'src/components/shared/PageLoading'
 import { useAuth } from 'src/contexts/AuthContext'
 
-const AuthenticatedRoute = () => {
+function AuthenticatedRoute() {
   const { user, loading } = useAuth()
   const location = useLocation()
 

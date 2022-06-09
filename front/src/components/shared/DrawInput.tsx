@@ -12,17 +12,12 @@ interface Props {
   }
 }
 
-const DrawInput = ({ initialData = { }}: Props) => {
+function DrawInput({ initialData = {} }: Props) {
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null)
 
   return (
     <Box className="draw-input h-full w-full">
-      <Excalidraw
-        autoFocus
-        initialData={initialData}
-        ref={excalidrawRef}
-        theme={THEME.DARK}
-      />
+      <Excalidraw autoFocus initialData={initialData} ref={excalidrawRef} theme={THEME.DARK} />
     </Box>
   )
 }

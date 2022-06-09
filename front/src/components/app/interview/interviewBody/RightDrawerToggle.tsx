@@ -7,23 +7,16 @@ interface Props {
   open: boolean
 }
 
-const RightDrawerToggle = ({ onClick, open }: Props) => {
+function RightDrawerToggle({ onClick, open }: Props) {
   const tooltip = open ? 'Close right panel' : 'Open right panel'
   return (
     <Box className="mt-2 z-[1300] absolute right-0">
       <Tooltip arrow title={tooltip}>
-        <IconButton
-          aria-label="toggle right panel"
-          color="secondary"
-          disableRipple
-          onClick={onClick}
-          size="small"
-        >
+        <IconButton aria-label="toggle right panel" color="secondary" disableRipple onClick={onClick} size="small">
           {open ? <ArrowForwardIosIcon /> : <ArrowBackIosIcon />}
         </IconButton>
       </Tooltip>
     </Box>
-
   )
 }
 

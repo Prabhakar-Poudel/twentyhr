@@ -16,10 +16,10 @@ interface Props {
 
 const quillModules = {
   toolbar: [
-    [{ 'header': [1, 2, 3, false] }],
-    ['bold', 'italic', 'underline','strike', 'blockquote'],
-    [{'list': 'ordered'}, {'list': 'bullet'}],
-    [{'indent': '-1'}, {'indent': '+1'}],
+    [{ header: [1, 2, 3, false] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    [{ indent: '-1' }, { indent: '+1' }],
     ['link'],
     ['clean'],
   ],
@@ -27,13 +27,18 @@ const quillModules = {
 
 const quillFormats = [
   'header',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
   'indent',
   'link',
 ]
 
-export const RichTextInput = ({ label, helperText, placeholder, onChange, defaultValue, margin = 'normal' }: Props) => {
+export function RichTextInput({ label, helperText, placeholder, onChange, defaultValue, margin = 'normal' }: Props) {
   return (
     <FormControl fullWidth margin={margin}>
       <FormLabel>{label}</FormLabel>
@@ -46,7 +51,7 @@ export const RichTextInput = ({ label, helperText, placeholder, onChange, defaul
         onChange={onChange}
         defaultValue={defaultValue || ''}
       >
-        <InputBase fullWidth className="h-80"/>
+        <InputBase fullWidth className="h-80" />
       </ReactQuill>
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>

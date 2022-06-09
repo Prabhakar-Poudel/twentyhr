@@ -5,13 +5,16 @@ interface Props {
   onChange: (title: string) => void
 }
 
-const InterviewTitle = ({ defaultValue, onChange}: Props) =>
-  <TextField
-    size="small"
-    label="Title"
-    defaultValue={defaultValue}
-    variant="filled"
-    onChange={(e) => onChange(e.target.value)}
-  />
+function InterviewTitle({ defaultValue, onChange }: Props) {
+  return (
+    <TextField
+      size="small"
+      label="Title"
+      defaultValue={defaultValue}
+      variant="filled"
+      onChange={(e) => onChange(e.target.value)}
+    />
+  )
+}
 
 export default InterviewTitle
