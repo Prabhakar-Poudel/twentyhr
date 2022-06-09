@@ -1,20 +1,5 @@
 import { CONSUMER } from "../consumer"
 
-export const demoActiveUsers = [
-  {
-    id: '123',
-    name: 'John Doe'
-  },
-  {
-    id: '456',
-    name: "Smantha Kally"
-  },
-  {
-    id: '789',
-    name: "Prabhakar Poudel"
-  }
-]
-
 export const connectToInterview = (id: string, setActiveUsers: any) => {
   return CONSUMER.subscriptions.create({ channel: 'InterviewChannel', id: id }, {
     initialized: () => {

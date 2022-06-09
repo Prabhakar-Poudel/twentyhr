@@ -13,7 +13,8 @@ import { useInterviewShow } from 'src/queries/Interviews'
 import { QuestionShow } from 'src/types/question'
 import InterviewRightDrawer from 'src/components/app/interview/interviewBody/InterviewRightDrawer'
 import RightDrawerToggle from 'src/components/app/interview/interviewBody/RightDrawerToggle'
-import { connectToInterview, demoActiveUsers } from 'src/websockets/channels/interviewChannel'
+import { connectToInterview } from 'src/websockets/channels/interviewChannel'
+import { CONSUMER } from 'src/websockets/consumer'
 
 const InterviewPage = () => {
   const { id } = useParams()
@@ -34,7 +35,10 @@ const InterviewPage = () => {
       const subscription = connectToInterview(interview.id, setActiveUsers)
       if(interview.question) changeQuestion(interview.question.id)
 
-      return () => subscription.unsubscribe()
+      return () => {
+        subscription.unsubscribe()
+        CONSUMER.disconnect()
+      }
     }
   }, [interview])
 

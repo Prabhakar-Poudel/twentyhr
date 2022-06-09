@@ -12,6 +12,8 @@ const InterviewNotes = () => {
 
   const showNotes = Boolean(anchorEl)
 
+  const placeholder = 'You can add your private interview notes here. This will be visible only to you and can be accessed later in your dashboard when the interview has ended.'
+
   return (
     <>
       <Tooltip title="Your private interview notes">
@@ -29,7 +31,7 @@ const InterviewNotes = () => {
           onChange={(change) => setNotes(change)}
           margin="none"
           defaultValue={notes}
-          placeholder="You can add your private interview notes here..."
+          placeholder={placeholder}
         />
       </Popover>
     </>
