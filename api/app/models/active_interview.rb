@@ -13,7 +13,7 @@ class ActiveInterview < ApplicationRecord
       @@redis.del(interview_key(interview))
     end
 
-    def add(interview, user)
+    def add_user(interview, user)
       @@redis.sadd(interview_key(interview), user_to_value(user))
     end
 

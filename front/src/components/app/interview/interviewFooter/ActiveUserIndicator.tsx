@@ -9,7 +9,7 @@ interface Props {
 function ActiveUserIndicator({ userName, index }: Props) {
   return (
     <Box className="flex items-center gap-1">
-      <Box className="h-2 w-2 rounded-full" sx={{ backgroundColor: COLORS[index] }} />
+      <Box className={`h-2 w-2 rounded-full ${COLORS[index]}`} />
       {userName}
     </Box>
   )

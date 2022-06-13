@@ -1,6 +1,6 @@
 import { CONSUMER } from '../consumer'
 
-export const connectToInterview = (id: string, setActiveUsers: any) =>
+export const connectToInterview = (id: string, onChannelData: any) =>
   CONSUMER.subscriptions.create(
     { channel: 'InterviewChannel', id },
     {
@@ -12,13 +12,7 @@ export const connectToInterview = (id: string, setActiveUsers: any) =>
         console.log('Connected to: ', id)
       },
 
-      received: (payload) => {
-        if (payload.type === 'active_users') {
-          setActiveUsers(payload.data)
-        } else {
-          console.log('Received: ', payload)
-        }
-      },
+      received: onChannelData,
 
       disconnected: () => {
         console.log('Disconnected from: ', id)

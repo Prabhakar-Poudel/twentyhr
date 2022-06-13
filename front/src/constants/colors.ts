@@ -1,14 +1,12 @@
-import { amber, deepPurple, green, lightBlue, lime, orange, pink, purple, red, teal } from '@mui/material/colors'
-
 export const COLORS = [
-  red[400],
-  purple[400],
-  amber[400],
-  teal[400],
-  green[400],
-  orange[400],
-  pink[400],
-  deepPurple[400],
-  lime[400],
-  lightBlue[400],
+  'bg-red-400',
+  'bg-purple-400',
+  'bg-amber-400',
+  'bg-teal-400',
+  'bg-green-400',
+  'bg-orange-400',
+  'bg-pink-400',
+  'bg-fuchsia-400',
+  'bg-lime-400',
+  'bg-sky-400',
 ]

@@ -1,7 +1,7 @@
 class InterviewChannel < ApplicationCable::Channel
   def subscribed
     reject unless interview && Ability.new(current_user).can?(:edit, interview)
-    ActiveInterview.add(interview, current_user)
+    ActiveInterview.add_user(interview, current_user)
     stream_for interview
     send_active_users
   end
