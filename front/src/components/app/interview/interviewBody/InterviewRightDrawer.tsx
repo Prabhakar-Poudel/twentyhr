@@ -1,30 +1,42 @@
+import { ExcalidrawElement } from '@excalidraw/excalidraw-next/types/element/types'
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
 import { Box, Divider, IconButton, Tab, Tabs, Tooltip } from '@mui/material'
 import Drawer from '@mui/material/Drawer'
 import { SyntheticEvent, useEffect, useState } from 'react'
-import DrawInput from 'src/components/shared/DrawInput'
+import DrawInput, { Pointer, SelectedElements } from 'src/components/shared/DrawInput'
 import RichTextView from 'src/components/shared/RichTextView'
 import TabPanel from 'src/components/shared/TabPannel'
 import TerminalView from 'src/components/shared/TerminalView'
 import 'xterm/css/xterm.css'
+import { ActiveUser, TerminalSelection } from 'src/pages/interview/helpers'
 
 const TABS = ['terminal', 'draw', 'instruction', 'guideline']
 
 interface Props {
-  open: boolean
-  instructions?: string
-  guidelines?: string
-  terminalContent?: string
+  activeUsers: ActiveUser[]
   focusTerminal?: boolean
+  guidelines?: string
+  drawingElements?: ExcalidrawElement[]
+  instructions?: string
+  onDrawChange: (elements: readonly ExcalidrawElement[]) => void
+  onDrawPointerChange: (pointer: Pointer, button: string, selectedElements: SelectedElements) => void
+  onTerminalSelectionChange: (selection?: TerminalSelection) => void
+  open: boolean
+  terminalContent?: string
 }
 
 function InterviewRightDrawer({
-  open,
-  instructions = '',
-  guidelines = '',
-  terminalContent = '',
+  activeUsers,
+  drawingElements,
   focusTerminal,
+  guidelines = '',
+  instructions = '',
+  onDrawChange,
+  onDrawPointerChange,
+  onTerminalSelectionChange,
+  open,
+  terminalContent = '',
 }: Props) {
   const [activeTab, setActiveTab] = useState(TABS[0])
   const [expanded, setExpanded] = useState(false)
@@ -63,10 +75,10 @@ function InterviewRightDrawer({
         <Divider />
         <Box className="grow basis-32 overflow-hidden pb-12">
           <TabPanel activeTab={activeTab} tabId={TABS[0]}>
-            <TerminalView value={terminalContent} />
+            <TerminalView value={terminalContent} onSelect={onTerminalSelectionChange} activeUsers={activeUsers} />
           </TabPanel>
           <TabPanel activeTab={activeTab} tabId={TABS[1]}>
-            <DrawInput />
+            <DrawInput elements={drawingElements} onChange={onDrawChange} onPointerUpdate={onDrawPointerChange} activeUsers={activeUsers} />
           </TabPanel>
           <TabPanel activeTab={activeTab} tabId={TABS[2]}>
             <RichTextView value={instructions} placeholder="No instruction added" />

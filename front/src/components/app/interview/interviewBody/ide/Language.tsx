@@ -1,4 +1,4 @@
-import { Close, InfoRounded } from '@mui/icons-material'
+import { Close, Help } from '@mui/icons-material'
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, List, ListItem, Tooltip, Typography } from '@mui/material'
 import { useState } from 'react'
 import LanguageSelector, {
@@ -16,8 +16,8 @@ function Language(props: LanguageSelectorProps) {
     <Box className="flex">
       <LanguageSelector {...props} />
       <Tooltip arrow title="Language information">
-        <IconButton size="small" color="info" onClick={handleOpen}>
-          <InfoRounded />
+        <IconButton disableRipple size="small" onClick={handleOpen}>
+          <Help />
         </IconButton>
       </Tooltip>
 

@@ -7,6 +7,6 @@ export const uiOptions: UIOptions = {
     saveAsImage: false,
     theme: false,
     loadScene: false,
-    changeViewBackgroundColor: false,
+    changeViewBackgroundColor: true,
   },
 }

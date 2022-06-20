@@ -17,3 +17,7 @@
 .MuiFormControl-root:focus-within label.MuiFormLabel-root {
   color: var(--primary-color-main);
 }
+
+.remote-cursor {
+  width: 2px !important;
+}

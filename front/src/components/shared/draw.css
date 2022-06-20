@@ -1,9 +1,16 @@
 .draw-input .excalidraw {
   --color-primary: var(--primary-color-main);
+  --select-highlight-color: var(--primary-color-main);
+  --color-primary-darker: #009624;
+  --color-primary-darkest: #004b13;
+  --color-primary-light: #5efc82;
+  --color-primary-chubb: #9bffaf;
 }
-.draw-input .excalidraw.theme--dark {
-  --color-primary: var(--primary-color-main);
+
+.excalidraw .HelpDialog--header {
+  display: none;
 }
+
 .excalidraw.excalidraw-modal-container {
   z-index: 1300;
 }

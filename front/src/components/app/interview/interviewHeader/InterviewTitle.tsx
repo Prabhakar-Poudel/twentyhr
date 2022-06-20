@@ -1,20 +1,17 @@
 import { TextField } from '@mui/material'
 
 interface Props {
-  defaultValue: string
+  value: string
   onChange: (title: string) => void
 }
 
-function InterviewTitle({ defaultValue, onChange }: Props) {
-  return (
-    <TextField
-      size="small"
-      label="Title"
-      defaultValue={defaultValue}
-      variant="filled"
-      onChange={(e) => onChange(e.target.value)}
-    />
-  )
-}
+const InterviewTitle = ({ value, onChange }: Props) =>
+  <TextField
+    size="small"
+    label="Title"
+    value={value}
+    variant="filled"
+    onChange={(e) => onChange(e.target.value)}
+  />
 
 export default InterviewTitle

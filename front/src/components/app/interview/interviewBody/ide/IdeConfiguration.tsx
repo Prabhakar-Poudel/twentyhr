@@ -1,7 +1,7 @@
 import { Tooltip } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import Popover from '@mui/material/Popover'
-import GearIcon from '@mui/icons-material/Settings'
+import SettingsIcon from '@mui/icons-material/SettingsSuggest'
 import { useState, MouseEvent } from 'react'
 import ConfigurationPopup, {
   IdeConfigurationProps,
@@ -17,8 +17,8 @@ function IdeConfiguration(props: IdeConfigurationProps) {
   return (
     <>
       <Tooltip arrow title="Configure Editor">
-        <IconButton aria-label="configure IDE" onClick={handleOpen}>
-          <GearIcon />
+        <IconButton disableRipple aria-label="configure IDE" onClick={handleOpen}>
+          <SettingsIcon />
         </IconButton>
       </Tooltip>
       <Popover

@@ -1,29 +1,35 @@
 import { PlayArrow } from '@mui/icons-material'
-import { Box, Button, SelectChangeEvent, Tooltip } from '@mui/material'
+import { Box, Button, SelectChangeEvent, Tooltip, Typography } from '@mui/material'
 import { useCallback, useEffect } from 'react'
+import EditorUserLocation from 'src/components/app/interview/interviewBody/ide/EditorUserLocation'
 import IdeConfiguration from 'src/components/app/interview/interviewBody/ide/IdeConfiguration'
 import Language from 'src/components/app/interview/interviewBody/ide/Language'
+import { ActiveUser } from 'src/pages/interview/helpers'
 
 interface InterviewFooterProps {
-  fontSize: number
-  theme: string
-  setTheme: (event: SelectChangeEvent) => void
-  setFontSize: (event: Event, value: number) => void
-  currentLanguage: string
+  activeUsers: ActiveUser[]
   availableLanguages: string[]
-  setLanguage: (language: string) => void
+  currentLanguage: string
+  fontSize: number
   onCodeExecute: () => void
+  onJumpToUser: (user: ActiveUser) => void
+  setFontSize: (event: Event, value: number) => void
+  setLanguage: (language: string) => void
+  setTheme: (event: SelectChangeEvent) => void
+  theme: string
 }
 
 function EditorHeader({
-  fontSize,
-  setFontSize,
-  theme,
-  setTheme,
-  currentLanguage,
-  setLanguage,
+  activeUsers,
   availableLanguages,
+  currentLanguage,
+  fontSize,
   onCodeExecute,
+  onJumpToUser,
+  setFontSize,
+  setLanguage,
+  setTheme,
+  theme,
 }: InterviewFooterProps) {
   const KeyPress = useCallback(
     (event: KeyboardEvent): any => {
@@ -50,6 +56,7 @@ function EditorHeader({
           </Button>
         </Tooltip>
       </Box>
+      <EditorUserLocation activeUsers={activeUsers} onJumpToUser={onJumpToUser} />
     </Box>
   )
 }

@@ -7,12 +7,12 @@ interface TabPanelProps {
   activeTab: string
 }
 
-function TabPanel(props: TabPanelProps) {
-  const { children, activeTab, tabId } = props
+const TabPanel = ({ children, activeTab, tabId }: TabPanelProps) => {
+  const isActiveTab = activeTab === tabId
 
   return (
-    <Box role="tabpanel" hidden={activeTab !== tabId} id={tabId} aria-labelledby={tabId} className="h-full">
-      {activeTab === tabId && <Box className="mt-2 h-full overflow-auto">{children}</Box>}
+    <Box role="tabpanel" hidden={!isActiveTab} id={tabId} aria-labelledby={tabId} className="h-full">
+      {isActiveTab && <Box className="mt-2 h-full overflow-auto">{children}</Box>}
     </Box>
   )
 }

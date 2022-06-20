@@ -1,14 +1,28 @@
 import * as monaco from 'monaco-editor'
-import { COLORS } from 'src/constants/colors'
+import { Pointer, SelectedElements } from 'src/components/shared/DrawInput'
+import { BG_COLORS, ColorKey } from 'src/constants/colors'
 import { User } from 'src/types/user'
+
+export interface TerminalSelection {
+  start: number
+  length: number
+}
 
 export interface ActiveUser {
   id: string
   name: string
-  color: string
+  bgColor: ColorKey
   editorHighlights: {
     selection: monaco.editor.IModelDeltaDecoration
     cursor: monaco.editor.IModelDeltaDecoration
+  }
+  drawing: {
+    pointer?: Pointer
+    button?: 'down' | 'up'
+    selectedElementIds?: SelectedElements
+  },
+  terminal: {
+    selection?: TerminalSelection
   }
 }
 
@@ -24,9 +38,21 @@ interface SelectionData {
   user: string
 }
 
+interface TerminalSelectionData {
+  selection: TerminalSelection
+  user: string
+}
+
 interface CursorData {
   position: monaco.Position
   user: string
+}
+
+interface PointerData {
+  pointer: Pointer
+  button: 'up' | 'down'
+  user: string
+  selectedElementIds: SelectedElements
 }
 
 const blankDecoration = () => ({ range: new monaco.Range(0,0,0,0), options: {} })
@@ -39,8 +65,14 @@ const defaultEditorHighlights = () => ({
 export const formatActiveUsers = (existingUsers: ActiveUser[], newUsers: ActiveUser[]): ActiveUser[] =>
   newUsers.map((user, idx) => {
     const existingUser = existingUsers.find((existingUser) => existingUser.id === user.id)
-    if (existingUser) return { ...user, editorHighlights: existingUser.editorHighlights, color: COLORS[idx] }
-    return { ...user, editorHighlights: defaultEditorHighlights(), color: COLORS[idx] }
+    if (existingUser) return { ...user, ...existingUser, bgColor: BG_COLORS[idx] }
+    return {
+      ...user,
+      editorHighlights: defaultEditorHighlights(),
+      drawing: {},
+      terminal: {},
+      bgColor: BG_COLORS[idx]
+    }
   })
 
 
@@ -57,7 +89,7 @@ export const setSelection = (activeUsers: ActiveUser[], data: SelectionData): Ac
   if (!activeUser) return activeUsers
   activeUser.editorHighlights.selection = {
     range: new monaco.Range(startLineNumber, startColumn, endLineNumber, endColumn),
-    options: { className: `${activeUser.color} opacity-30` }
+    options: { className: `${activeUser.bgColor} opacity-30` }
   }
   return _activeUsers
 }
@@ -70,7 +102,30 @@ export const setCursor = (activeUsers: ActiveUser[], data: CursorData): ActiveUs
   if (!activeUser) return activeUsers
   activeUser.editorHighlights.cursor = {
     range: new monaco.Range(lineNumber, column, lineNumber, column + 1),
-    options: { className: activeUser.color }
+    options: { className: `${activeUser.bgColor} remote-cursor animate-pulse` }
   }
+  return _activeUsers
+}
+
+export const setPointer = (activeUsers: ActiveUser[], data: PointerData): ActiveUser[] => {
+  const { pointer, button, selectedElementIds } = data
+  const _activeUsers = [...activeUsers]
+  const activeUser = _activeUsers.find((user) => user.id === data.user)
+
+  if (!activeUser) return activeUsers
+  if (!activeUser.drawing) activeUser.drawing = {} // crashes on re-renders
+  activeUser.drawing.pointer = pointer
+  activeUser.drawing.button = button
+  activeUser.drawing.selectedElementIds = selectedElementIds
+  return _activeUsers
+}
+
+
+export const setTerminalSelection = (activeUsers: ActiveUser[], data: TerminalSelectionData): ActiveUser[] => {
+  const _activeUsers = [...activeUsers]
+  const activeUser = _activeUsers.find((user) => user.id === data.user)
+
+  if (!activeUser) return activeUsers
+  activeUser.terminal.selection = data.selection
   return _activeUsers
 }

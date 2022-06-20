@@ -1,3 +1,4 @@
+import { ExcalidrawElement } from '@excalidraw/excalidraw-next/types/element/types'
 import { QuestionShow } from 'src/types/question'
 import { User } from 'src/types/user'
 
@@ -22,6 +23,8 @@ interface InterviewBase {
   title: string
   status: InterviewStatus
   question: QuestionShow
+  code: string
+  drawing: ExcalidrawElement[]
 }
 
 export interface InterviewShow extends InterviewBase {

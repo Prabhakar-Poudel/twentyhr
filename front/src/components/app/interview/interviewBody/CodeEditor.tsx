@@ -7,9 +7,10 @@ import defaultEditorOptions, { SUPPORTED_LANGUAGES } from 'src/config/editorConf
 import { ActiveUser } from 'src/pages/interview/helpers'
 
 interface InterviewBodyProps {
-  defaultValue: string
+  code: string
   language: string
   setLanguage: (language: string) => void
+  onCodeChange: (code: string) => void
   onCodeExecute: () => void
   onCursorChange: (event: monaco.editor.ICursorPositionChangedEvent) => void
   onSelectionChange: (event: monaco.editor.ICursorSelectionChangedEvent) => void
@@ -20,7 +21,7 @@ function LoadingEditor() {
   return <Skeleton animation="wave" width="100%" height="100%" variant="rectangular" sx={{ bgcolor: 'grey.900' }} />
 }
 
-function InterviewBody({ language, setLanguage, defaultValue, onCodeExecute, onCursorChange, onSelectionChange, activeUsers }: InterviewBodyProps) {
+function CodeEditor({ language, setLanguage, code, onCodeChange, onCodeExecute, onCursorChange, onSelectionChange, activeUsers }: InterviewBodyProps) {
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null)
   const [monaco, setMonaco] = useState<Monaco | null>(null)
   const [rendered, setRendered] = useState(false)
@@ -41,6 +42,15 @@ function InterviewBody({ language, setLanguage, defaultValue, onCodeExecute, onC
     setAvailableLanguages(languages)
   }
 
+  const applyHighlight = () => {
+    if (!editor) return
+
+    const highlightsToApply = activeUsers.flatMap(({ editorHighlights }) => [editorHighlights.cursor, editorHighlights.selection])
+
+    const newDecorations = editor.deltaDecorations(decorations, highlightsToApply)
+    setDecorations(newDecorations)
+  }
+
   useEffect(() => {
     if (!editor || rendered) return
     window.addEventListener('resize', resizeHandler)
@@ -50,18 +60,15 @@ function InterviewBody({ language, setLanguage, defaultValue, onCodeExecute, onC
   }, [editor, monaco, rendered, resizeHandler])
 
   useEffect(() => {
-    if (editor) editor.setValue(defaultValue)
-  }, [defaultValue, editor])
+    if (editor) {
+      editor.setValue(code)
+      applyHighlight()
+    }
+  }, [code, editor])
 
 
   useEffect(() => {
-    if (editor) {
-      console.log(activeUsers, 'active users')
-      const highlightsToApply = activeUsers.flatMap(({ editorHighlights }) => [editorHighlights.cursor, editorHighlights.selection])
-
-      const newDecorations = editor.deltaDecorations(decorations, highlightsToApply)
-      setDecorations(newDecorations)
-    }
+    applyHighlight()
   }, [editor, activeUsers])
 
 
@@ -73,29 +80,43 @@ function InterviewBody({ language, setLanguage, defaultValue, onCodeExecute, onC
     setMonaco(monaco)
   }
 
+  // @ts-expect-error
+  const onChange = (value?: string, event: monaco.editor.IModelContentChangedEvent) => {
+    if(event.isFlush) return
+    onCodeChange(value || '')
+  }
+
+  const jumpToUser = (user: ActiveUser) => {
+    const lineNumber = user.editorHighlights.cursor.range.endLineNumber
+    editor!.revealLineInCenter(lineNumber)
+  }
+
   return (
     <Box className="grow flex flex-col">
       <EditorHeader
-        fontSize={fontSize}
-        setFontSize={onFontSizeChange}
-        theme={theme}
-        setTheme={onThemeChange}
-        currentLanguage={language}
+        activeUsers={activeUsers}
         availableLanguages={availableLanguages}
-        setLanguage={setLanguage}
+        currentLanguage={language}
+        fontSize={fontSize}
         onCodeExecute={onCodeExecute}
+        onJumpToUser={jumpToUser}
+        setFontSize={onFontSizeChange}
+        setLanguage={setLanguage}
+        setTheme={onThemeChange}
+        theme={theme}
       />
       <Box className="grow">
         <MonacoEditor
           language={language}
-          theme={theme}
-          options={{ ...defaultEditorOptions, fontSize }}
           loading={<LoadingEditor />}
+          onChange={onChange}
           onMount={onMount}
+          options={{ ...defaultEditorOptions, fontSize }}
+          theme={theme}
         />
       </Box>
     </Box>
   )
 }
 
-export default InterviewBody
+export default CodeEditor

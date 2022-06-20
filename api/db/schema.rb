@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_29_134007) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_17_143634) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -28,6 +28,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_29_134007) do
     t.enum "status", default: "created", null: false, enum_type: "interview_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "code"
+    t.jsonb "drawing"
     t.index ["creator_id"], name: "index_interviews_on_creator_id"
     t.index ["organization_id"], name: "index_interviews_on_organization_id"
     t.index ["question_id"], name: "index_interviews_on_question_id"

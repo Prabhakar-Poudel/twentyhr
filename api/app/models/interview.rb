@@ -6,4 +6,14 @@ class Interview < ApplicationRecord
   validates :title, presence: true
 
   enum status: { created: 'created', started: 'started', ended: 'ended', archived: 'archived' }, _default: 'created'
+
+  def end!
+    self.status = 'ended'
+    self.save!
+  end
+
+  def start!
+    self.status = 'started'
+    self.save!
+  end
 end

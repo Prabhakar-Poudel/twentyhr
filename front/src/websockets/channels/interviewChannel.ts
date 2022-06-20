@@ -4,13 +4,9 @@ export const connectToInterview = (id: string, onChannelData: any) =>
   CONSUMER.subscriptions.create(
     { channel: 'InterviewChannel', id },
     {
-      initialized: () => {
-        console.log('initializing interview: ', id)
-      },
+      initialized: () => {},
 
-      connected: () => {
-        console.log('Connected to: ', id)
-      },
+      connected: () => {},
 
       received: onChannelData,
 
