@@ -209,7 +209,7 @@ function InterviewPage() {
           terminalContent={terminalContent}
         />
       )}
-      <InterviewFooter activeUsers={activeUsers} />
+      <InterviewFooter activeUsers={activeUsers} interview={id!} />
     </Box>
   )
 }

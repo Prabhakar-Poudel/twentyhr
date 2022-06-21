@@ -3,7 +3,7 @@ import { ExcalidrawElement } from '@excalidraw/excalidraw-next/types/element/typ
 import { AppState, ExcalidrawImperativeAPI, Gesture } from '@excalidraw/excalidraw-next/types/types'
 import { Box } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
-import { debounce, isEqual, isEqualWith } from 'lodash'
+import { debounce } from 'lodash'
 import './draw.css'
 import { uiOptions } from 'src/config/excalidrawConfig'
 import { COLOR_VALUE } from 'src/constants/colors'
@@ -25,16 +25,17 @@ type PointerUpdatePayload = {
 }
 
 interface Props {
+  appState: AppState | null
   activeUsers: ActiveUser[]
   elements?: ExcalidrawElement[]
   onChange: (elements: readonly ExcalidrawElement[]) => void
   onPointerUpdate?: (pointer: Pointer, button: string, selectedElements: SelectedElements) => void
+  setAppState: (state: AppState) => void
 }
 
-function DrawInput({ activeUsers, elements = [], onChange, onPointerUpdate }: Props) {
+function DrawInput({ appState, activeUsers, elements = [], onChange, onPointerUpdate, setAppState }: Props) {
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null)
   const [sceneVersion, setSceneVersion] = useState(0)
-  const [appState, setAppState] = useState<AppState | null>(null)
   const collaborators = new Map()
 
   useEffect(() => {
@@ -78,7 +79,7 @@ function DrawInput({ activeUsers, elements = [], onChange, onPointerUpdate }: Pr
     <Box className="draw-input h-full w-full">
       <Excalidraw
         autoFocus
-        initialData={{ elements, scrollToContent: true }}
+        initialData={{ appState, elements, scrollToContent: true }}
         isCollaborating={true}
         onChange={onChangeHandler}
         onPointerUpdate={onMouseMove}

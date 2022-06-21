@@ -11,6 +11,10 @@ class ApplicationController < ActionController::API
 
   check_authorization unless: :devise_controller?
 
+  rescue_from CanCan::AccessDenied do
+    render json: { }, status: :not_found
+  end
+
   protected
 
   def configure_permitted_parameters

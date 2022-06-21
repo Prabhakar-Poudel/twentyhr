@@ -1,6 +1,5 @@
 import { Box } from '@mui/material'
 import { useEffect, useRef } from 'react'
-import { COLOR_VALUE } from 'src/constants/colors'
 import { ActiveUser, TerminalSelection } from 'src/pages/interview/helpers'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
@@ -48,17 +47,20 @@ function TerminalView({ value = '', onSelect, activeUsers }: Props) {
     })
   }
 
+  const reFit = () => setTimeout(() => fitAddon.fit(), 100)
+
   useEffect(() => {
     const container = document.getElementById('terminal-container')
     if (!container) return
 
     terminal.open(container)
-    fitAddon.fit()
+    reFit()
     terminal.focus()
+    applySelection()
     terminal.onSelectionChange(handleSelect)
 
     resizeObserver.current = new ResizeObserver(() => {
-      fitAddon.fit()
+      reFit()
       applySelection()
     })
     resizeObserver.current.observe(container)

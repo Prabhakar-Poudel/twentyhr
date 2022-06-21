@@ -1,4 +1,5 @@
 import { ExcalidrawElement } from '@excalidraw/excalidraw-next/types/element/types'
+import { AppState } from '@excalidraw/excalidraw-next/types/types'
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
 import { Box, Divider, IconButton, Tab, Tabs, Tooltip } from '@mui/material'
@@ -40,6 +41,7 @@ function InterviewRightDrawer({
 }: Props) {
   const [activeTab, setActiveTab] = useState(TABS[0])
   const [expanded, setExpanded] = useState(false)
+  const [drawState, setDrawState] = useState<AppState | null>(null)
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setActiveTab(newValue)
@@ -66,7 +68,7 @@ function InterviewRightDrawer({
             </IconButton>
           </Tooltip>
           <Tabs value={activeTab} onChange={handleChange} className="grow">
-            <Tab value={TABS[0]} label="Terminal" />
+            <Tab value={TABS[0]} label="IO" />
             <Tab value={TABS[1]} label="Draw" />
             <Tab value={TABS[2]} label="Instructions" />
             <Tab value={TABS[3]} label="Guidelines" />
@@ -75,10 +77,21 @@ function InterviewRightDrawer({
         <Divider />
         <Box className="grow basis-32 overflow-hidden pb-12">
           <TabPanel activeTab={activeTab} tabId={TABS[0]}>
-            <TerminalView value={terminalContent} onSelect={onTerminalSelectionChange} activeUsers={activeUsers} />
+            <TerminalView
+              activeUsers={activeUsers}
+              onSelect={onTerminalSelectionChange}
+              value={terminalContent}
+            />
           </TabPanel>
           <TabPanel activeTab={activeTab} tabId={TABS[1]}>
-            <DrawInput elements={drawingElements} onChange={onDrawChange} onPointerUpdate={onDrawPointerChange} activeUsers={activeUsers} />
+            <DrawInput
+              appState={drawState}
+              activeUsers={activeUsers}
+              elements={drawingElements}
+              onChange={onDrawChange}
+              onPointerUpdate={onDrawPointerChange}
+              setAppState={setDrawState}
+            />
           </TabPanel>
           <TabPanel activeTab={activeTab} tabId={TABS[2]}>
             <RichTextView value={instructions} placeholder="No instruction added" />

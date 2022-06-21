@@ -31,7 +31,7 @@ class QuestionsController < ApplicationController
     if @question.update(question_params)
       render json: @question, status: :ok
     else
-      render json: { }, status: :unprocessable_entexitity
+      render json: { }, status: :unprocessable_entity
     end
   end
 

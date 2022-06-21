@@ -12,5 +12,8 @@ Rails.application.routes.draw do
   resources :users, only: %i[index show create update]
   get 'profile', to: 'users#profile'
   resources :questions, only: %i[index show create update]
-  resources :interviews, only: %i[index show create update]
+  resources :interviews, only: %i[index show create update] do
+    get 'note', to: 'notes#interview_note'
+  end
+  resources :notes, only: %i[index show create update]
 end

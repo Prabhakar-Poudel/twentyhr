@@ -32,7 +32,7 @@ class InterviewsController < ApplicationController
     if @interview.update(interview_params)
       render json: @interview, status: :ok
     else
-      render json: { }, status: :unprocessable_entexitity
+      render json: { }, status: :unprocessable_entity
     end
   end
 
