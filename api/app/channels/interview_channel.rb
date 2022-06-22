@@ -12,23 +12,25 @@ class InterviewChannel < ApplicationCable::Channel
   end
 
   def receive(payload)
+    InterviewChannel.broadcast_to(interview, payload)
+
     case payload['type']
     when 'start_interview'
       interview.start!
-    when 'end_interview'
+    when 'interview_ended'
       interview.end!
+      ActiveInterview.remove_all(interview)
     when 'code_updated'
-      interview.update!(code: payload['data']['code'])
+      interview.update_interview!(code: payload['data']['code'])
     when 'draw_updated'
-      interview.update!(drawing: payload['data']['elements'])
+      interview.update_interview!(drawing: payload['data']['elements'])
     when 'title_changed'
-      interview.update!(title: payload['data']['title'])
+      interview.update_interview!(title: payload['data']['title'])
     when 'language_changed'
-      interview.update!(language: payload['data']['language'])
+      interview.update_interview!(language: payload['data']['language'])
     when 'question_changed'
-      interview.update!(question: payload['data']['question'])
+      interview.update_interview!(question: payload['data']['question'])
     end
-    InterviewChannel.broadcast_to(interview, payload)
   end
 
   private

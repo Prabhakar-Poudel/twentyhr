@@ -16,10 +16,11 @@ const TABS = ['terminal', 'draw', 'instruction', 'guideline']
 
 interface Props {
   activeUsers: ActiveUser[]
+  drawingElements?: ExcalidrawElement[]
   focusTerminal?: boolean
   guidelines?: string
-  drawingElements?: ExcalidrawElement[]
   instructions?: string
+  interviewStatus: string
   onDrawChange: (elements: readonly ExcalidrawElement[]) => void
   onDrawPointerChange: (pointer: Pointer, button: string, selectedElements: SelectedElements) => void
   onTerminalSelectionChange: (selection?: TerminalSelection) => void
@@ -33,6 +34,7 @@ function InterviewRightDrawer({
   focusTerminal,
   guidelines = '',
   instructions = '',
+  interviewStatus,
   onDrawChange,
   onDrawPointerChange,
   onTerminalSelectionChange,
@@ -85,9 +87,10 @@ function InterviewRightDrawer({
           </TabPanel>
           <TabPanel activeTab={activeTab} tabId={TABS[1]}>
             <DrawInput
-              appState={drawState}
               activeUsers={activeUsers}
+              appState={drawState}
               elements={drawingElements}
+              interviewStatus={interviewStatus}
               onChange={onDrawChange}
               onPointerUpdate={onDrawPointerChange}
               setAppState={setDrawState}

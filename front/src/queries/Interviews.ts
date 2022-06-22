@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from 'react-query'
 import { axios } from 'src/lib/axios/axios'
-import { InterviewNew, InterviewShow } from 'src/types/interview'
+import { InterviewNew, InterviewShow, InterviewUpdate } from 'src/types/interview'
 import { Note } from 'src/types/note'
 
 export const useInterviewsIndex = () => {
@@ -35,3 +35,6 @@ export const noteForInterview = (id: string) =>
 
 export const createInterview = (data?: InterviewNew) =>
   axios.post<InterviewShow>('/interviews/', { interview: { ...data, status: 'created' } }).then((res) => res.data)
+
+export const updateInterview = (id: string, data: InterviewUpdate) =>
+  axios.put<InterviewShow>(`/interviews/${id}`, { interview: data }).then((res) => res.data)

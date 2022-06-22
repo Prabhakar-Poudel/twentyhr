@@ -5,23 +5,25 @@ import { useCallback, useEffect, useState } from 'react'
 import EditorHeader from 'src/components/app/interview/interviewBody/ide/EditorHeader'
 import defaultEditorOptions, { SUPPORTED_LANGUAGES } from 'src/config/editorConfig'
 import { ActiveUser } from 'src/pages/interview/helpers'
+import { InterviewStatus } from 'src/types/interview'
 
 interface InterviewBodyProps {
+  activeUsers: ActiveUser[]
   code: string
+  interviewStatus: string
   language: string
-  setLanguage: (language: string) => void
   onCodeChange: (code: string) => void
   onCodeExecute: () => void
   onCursorChange: (event: monaco.editor.ICursorPositionChangedEvent) => void
   onSelectionChange: (event: monaco.editor.ICursorSelectionChangedEvent) => void
-  activeUsers: ActiveUser[]
+  setLanguage: (language: string) => void
 }
 
 function LoadingEditor() {
   return <Skeleton animation="wave" width="100%" height="100%" variant="rectangular" sx={{ bgcolor: 'grey.900' }} />
 }
 
-function CodeEditor({ language, setLanguage, code, onCodeChange, onCodeExecute, onCursorChange, onSelectionChange, activeUsers }: InterviewBodyProps) {
+function CodeEditor({ activeUsers, code, interviewStatus, language, onCodeChange, onCodeExecute, onCursorChange, onSelectionChange, setLanguage }: InterviewBodyProps) {
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null)
   const [monaco, setMonaco] = useState<Monaco | null>(null)
   const [rendered, setRendered] = useState(false)
@@ -29,6 +31,8 @@ function CodeEditor({ language, setLanguage, code, onCodeChange, onCodeExecute, 
   const [theme, setTheme] = useState('vs-dark')
   const [availableLanguages, setAvailableLanguages] = useState<string[]>([])
   const [decorations, setDecorations] = useState<string[]>([])
+
+  const interviewEnded = ![InterviewStatus.created, InterviewStatus.started].includes(interviewStatus as InterviewStatus)
 
   const onFontSizeChange = (event: Event, value: number) => setFontSize(value)
   const onThemeChange = (event: SelectChangeEvent) => setTheme(event.target.value)
@@ -76,6 +80,11 @@ function CodeEditor({ language, setLanguage, code, onCodeChange, onCodeExecute, 
     editor.focus()
     editor.onDidChangeCursorPosition(onCursorChange)
     editor.onDidChangeCursorSelection(onSelectionChange)
+    editor.onDidAttemptReadOnlyEdit(() => {
+      const messageContribution = editor.getContribution('editor.contrib.messageController')
+      // @ts-expect-error
+      messageContribution.showMessage('This interview has ended', editor.getPosition())
+    })
     setEditor(editor)
     setMonaco(monaco)
   }
@@ -98,6 +107,7 @@ function CodeEditor({ language, setLanguage, code, onCodeChange, onCodeExecute, 
         availableLanguages={availableLanguages}
         currentLanguage={language}
         fontSize={fontSize}
+        interviewStatus={interviewStatus}
         onCodeExecute={onCodeExecute}
         onJumpToUser={jumpToUser}
         setFontSize={onFontSizeChange}
@@ -111,7 +121,7 @@ function CodeEditor({ language, setLanguage, code, onCodeChange, onCodeExecute, 
           loading={<LoadingEditor />}
           onChange={onChange}
           onMount={onMount}
-          options={{ ...defaultEditorOptions, fontSize }}
+          options={{ ...defaultEditorOptions, fontSize, readOnly: interviewEnded }}
           theme={theme}
         />
       </Box>

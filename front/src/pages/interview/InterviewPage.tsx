@@ -1,6 +1,5 @@
 import { ExcalidrawElement } from '@excalidraw/excalidraw-next/types/element/types'
-import { LinearScale } from '@mui/icons-material'
-import { Box } from '@mui/material'
+import { Box, LinearProgress } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
 import * as monaco from 'monaco-editor'
 import { loader } from '@monaco-editor/react'
@@ -21,7 +20,8 @@ import {
 } from 'src/pages/interview/helpers'
 import { PAYLOAD_TYPES } from 'src/pages/interview/payloads'
 import NotFoundPage from 'src/pages/NotFoundPage'
-import { useInterviewShow } from 'src/queries/Interviews'
+import { updateInterview, useInterviewShow } from 'src/queries/Interviews'
+import { InterviewStatus } from 'src/types/interview'
 import { QuestionShow } from 'src/types/question'
 import InterviewRightDrawer from 'src/components/app/interview/interviewBody/InterviewRightDrawer'
 import RightDrawerToggle from 'src/components/app/interview/interviewBody/RightDrawerToggle'
@@ -40,30 +40,40 @@ function InterviewPage() {
   const [activeUsers, setActiveUsers] = useState<ActiveUser[]>([])
   const [subscription, setSubscription] = useState<ActionCable.Channel>()
   const [title, setTitle] = useState('')
+  const [status, setStatus] = useState('')
   const { user } = useAuth()
+
+  const closeSocket = () => {
+    subscription?.unsubscribe()
+    CONSUMER.disconnect()
+  }
 
   useEffect(() => {
     loader.config({ monaco })
   }, [])
 
   useEffect(() => {
-    if (interview) {
+    if (!interview) return
+
+    if (interview.status === InterviewStatus.started) {
+      CONSUMER.connect()
       setSubscription(connectToInterview(interview.id, onChannelData))
-
-      setTitle(interview.title)
-
-      if (interview.question) changeQuestion(interview.question.id, interview.code, interview.drawing)
-
-      return () => {
-        subscription?.unsubscribe()
-        CONSUMER.disconnect()
-      }
     }
+    setTitle(interview.title)
+    setStatus(interview.status)
+
+    if (interview.question) changeQuestion(interview.question.id, interview.code, interview.drawing)
+
+    return closeSocket
   }, [interview])
 
   const onTitleChanged = (title: string) => {
     setTitle(title)
-    subscription?.send({ type: PAYLOAD_TYPES.TITLE_CHANGED,  data: {  title, user: user!.id }  })
+    if (status === InterviewStatus.started) {
+      subscription?.send({ type: PAYLOAD_TYPES.TITLE_CHANGED,  data: {  title, user: user!.id }  })
+    } else {
+      updateInterview(id!, { title })
+    }
   }
 
   const changeQuestion = async (questionId: string, initialCode?: string, drawing?: ExcalidrawElement[]) => {
@@ -108,8 +118,12 @@ function InterviewPage() {
     subscription?.send({ type: PAYLOAD_TYPES.DRAW_UPDATED, data: { elements, user: user!.id } })
   }
 
+  const onEndInterview = () => {
+    subscription?.send({ type: PAYLOAD_TYPES.INTERVIEW_ENDED, data: { user: user!.id } })
+  }
+
   const onChannelData = (payload: any) => {
-    if (user?.id === payload.data?.user && payload.type !== PAYLOAD_TYPES.DRAW_UPDATED) return
+    if (user?.id === payload.data?.user && ![PAYLOAD_TYPES.DRAW_UPDATED, PAYLOAD_TYPES.INTERVIEW_ENDED].includes(payload.type)) return
 
     switch (payload.type) {
       case PAYLOAD_TYPES.CURSOR_CHANGED: {
@@ -153,7 +167,8 @@ function InterviewPage() {
         break
       }
       case PAYLOAD_TYPES.INTERVIEW_ENDED: {
-        console.log(PAYLOAD_TYPES.INTERVIEW_ENDED, payload)
+        closeSocket()
+        setStatus(InterviewStatus.ended)
         break
       }
       default: {
@@ -171,7 +186,7 @@ function InterviewPage() {
     setTimeout(() => setFocusTerminal(false), 1000)
   }, [])
 
-  if (isLoading || !subscription) return <LinearScale />
+  if (isLoading || (!subscription && interview.status === InterviewStatus.started)) return <LinearProgress />
   if (!isLoading && !interview) return <NotFoundPage />
 
   return (
@@ -182,10 +197,12 @@ function InterviewPage() {
           title={title}
           onQuestionChanged={onQuestionChanged}
           onTitleChanged={onTitleChanged}
+          interviewStatus={status}
         />
         <CodeEditor
           activeUsers={activeUsers}
           code={code}
+          interviewStatus={status}
           language={language}
           onCodeChange={onCodeChange}
           onCodeExecute={onCodeExecute}
@@ -195,21 +212,25 @@ function InterviewPage() {
         />
       </Box>
       <RightDrawerToggle open={showDrawer} onClick={onDrawerToggle} />
-      {question && (
-        <InterviewRightDrawer
-          activeUsers={activeUsers}
-          focusTerminal={focusTerminal}
-          guidelines={question.guidelines}
-          drawingElements={drawingElements}
-          instructions={question.instruction}
-          onDrawChange={onDrawingElementsChange}
-          onDrawPointerChange={onDrawPointerChange}
-          onTerminalSelectionChange={onTerminalSelectionChange}
-          open={showDrawer}
-          terminalContent={terminalContent}
-        />
-      )}
-      <InterviewFooter activeUsers={activeUsers} interview={id!} />
+      <InterviewRightDrawer
+        activeUsers={activeUsers}
+        focusTerminal={focusTerminal}
+        guidelines={question?.guidelines}
+        drawingElements={drawingElements}
+        instructions={question?.instruction}
+        interviewStatus={status}
+        onDrawChange={onDrawingElementsChange}
+        onDrawPointerChange={onDrawPointerChange}
+        onTerminalSelectionChange={onTerminalSelectionChange}
+        open={showDrawer}
+        terminalContent={terminalContent}
+      />
+      <InterviewFooter
+        activeUsers={activeUsers}
+        interview={id!}
+        interviewStatus={status}
+        onEndInterview={onEndInterview}
+      />
     </Box>
   )
 }

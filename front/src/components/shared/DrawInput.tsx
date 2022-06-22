@@ -8,6 +8,7 @@ import './draw.css'
 import { uiOptions } from 'src/config/excalidrawConfig'
 import { COLOR_VALUE } from 'src/constants/colors'
 import { ActiveUser } from 'src/pages/interview/helpers'
+import { InterviewStatus } from 'src/types/interview'
 
 export type Pointer = {
   x: number
@@ -25,18 +26,21 @@ type PointerUpdatePayload = {
 }
 
 interface Props {
-  appState: AppState | null
   activeUsers: ActiveUser[]
+  appState: AppState | null
   elements?: ExcalidrawElement[]
+  interviewStatus: string
   onChange: (elements: readonly ExcalidrawElement[]) => void
   onPointerUpdate?: (pointer: Pointer, button: string, selectedElements: SelectedElements) => void
   setAppState: (state: AppState) => void
 }
 
-function DrawInput({ appState, activeUsers, elements = [], onChange, onPointerUpdate, setAppState }: Props) {
+function DrawInput({ activeUsers, appState, elements = [], interviewStatus, onChange, onPointerUpdate, setAppState }: Props) {
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null)
   const [sceneVersion, setSceneVersion] = useState(0)
   const collaborators = new Map()
+
+  const interviewEnded = ![InterviewStatus.created, InterviewStatus.started].includes(interviewStatus as InterviewStatus)
 
   useEffect(() => {
     if (!excalidrawRef.current) return
@@ -74,7 +78,6 @@ function DrawInput({ appState, activeUsers, elements = [], onChange, onPointerUp
     setSceneVersion(currentScene)
   }, 50)
 
-
   return (
     <Box className="draw-input h-full w-full">
       <Excalidraw
@@ -86,6 +89,7 @@ function DrawInput({ appState, activeUsers, elements = [], onChange, onPointerUp
         ref={excalidrawRef}
         theme={THEME.DARK}
         UIOptions={uiOptions}
+        viewModeEnabled={interviewEnded}
       />
     </Box>
   )

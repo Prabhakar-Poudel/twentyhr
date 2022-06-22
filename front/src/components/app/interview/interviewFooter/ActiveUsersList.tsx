@@ -10,14 +10,11 @@ interface Props {
   activeUsers: ActiveUser[]
 }
 
-function ActiveUsersList({ activeUsers }: Props) {
-  return (
-    <Box className="flex gap-4">
-      {activeUsers.map((user, index) => (
-        <ActiveUserIndicator userName={user.name} index={index} key={user.id} />
-      ))}
-    </Box>
-  )
-}
+const ActiveUsersList = ({ activeUsers }: Props) =>
+  <Box className="flex gap-4">
+    {activeUsers.map((user, index) => (
+      <ActiveUserIndicator userName={user.name} index={index} key={user.id} />
+    ))}
+  </Box>
 
 export default ActiveUsersList

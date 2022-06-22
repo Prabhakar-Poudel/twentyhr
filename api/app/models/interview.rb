@@ -8,12 +8,18 @@ class Interview < ApplicationRecord
   enum status: { created: 'created', started: 'started', ended: 'ended', archived: 'archived' }, _default: 'created'
 
   def end!
-    self.status = 'ended'
-    self.save!
+    self.update!(status: 'ended')
   end
 
   def start!
-    self.status = 'started'
-    self.save!
+    self.update!(status: 'started')
+  end
+
+  def update_interview!(attributes)
+    if self.ended?
+      raise ActiveModel::UnknownAttributeError, message: 'interview is read only'
+    else
+      self.update!(**attributes)
+    end
   end
 end
