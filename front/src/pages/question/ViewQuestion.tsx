@@ -1,7 +1,7 @@
 import { Box, LinearProgress, Modal, Paper } from '@mui/material'
 import { useParams } from 'react-router'
 import { useNavigate } from 'react-router-dom'
-import QuestionDisplay from 'src/components/app/questions/QuestionDisplay'
+import { QuestionDisplay } from 'src/components/app/questions/QuestionDisplay'
 import useToast from 'src/hooks/useToast'
 import { useQuestionShow } from 'src/queries/Questions'
 

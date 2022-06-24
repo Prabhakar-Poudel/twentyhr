@@ -5,7 +5,7 @@ import EditorUserLocation from 'src/components/app/interview/interviewBody/ide/E
 import IdeConfiguration from 'src/components/app/interview/interviewBody/ide/IdeConfiguration'
 import Language from 'src/components/app/interview/interviewBody/ide/Language'
 import { ActiveUser } from 'src/pages/interview/helpers'
-import { InterviewStatus } from 'src/types/interview'
+import { InterviewStatuses } from 'src/types/interview'
 
 interface InterviewFooterProps {
   activeUsers: ActiveUser[]
@@ -48,11 +48,14 @@ function EditorHeader({
     }
   }, [KeyPress])
 
+  // @ts-expect-error
+  if (![InterviewStatuses.created, InterviewStatuses.started].includes(interviewStatus)) return null
+
   return (
     <Box className="pl-4 flex gap-4">
       <IdeConfiguration fontSize={fontSize} setFontSize={setFontSize} theme={theme} setTheme={setTheme} />
       <Language availableLanguages={availableLanguages} currentLanguage={currentLanguage} setLanguage={setLanguage} />
-      {interviewStatus === InterviewStatus.started && (
+      {interviewStatus === InterviewStatuses.started && (
         <>
           <Box className="flex items-center">
             <Tooltip arrow title="⌘ + Enter">

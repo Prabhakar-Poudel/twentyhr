@@ -21,7 +21,7 @@ import {
 import { PAYLOAD_TYPES } from 'src/pages/interview/payloads'
 import NotFoundPage from 'src/pages/NotFoundPage'
 import { updateInterview, useInterviewShow } from 'src/queries/Interviews'
-import { InterviewStatus } from 'src/types/interview'
+import { InterviewStatuses } from 'src/types/interview'
 import { QuestionShow } from 'src/types/question'
 import InterviewRightDrawer from 'src/components/app/interview/interviewBody/InterviewRightDrawer'
 import RightDrawerToggle from 'src/components/app/interview/interviewBody/RightDrawerToggle'
@@ -30,7 +30,7 @@ import { CONSUMER } from 'src/websockets/consumer'
 
 function InterviewPage() {
   const { id } = useParams()
-  const { data: interview, isLoading } = useInterviewShow(id!)
+  const { data: interview, isLoading, invalidateInterview } = useInterviewShow(id!)
   const [language, setLanguage] = useState('')
   const [code, setCode] = useState('')
   const [drawingElements, setDrawingElements] = useState<ExcalidrawElement[]>([])
@@ -48,6 +48,17 @@ function InterviewPage() {
     CONSUMER.disconnect()
   }
 
+  const beginInterview = () => {
+    if (interview.status !== InterviewStatuses.started) return
+
+    CONSUMER.connect()
+    setSubscription(connectToInterview(interview.id, onChannelData))
+  }
+
+  const onBeginInterview = () => {
+    updateInterview(id!, { status: InterviewStatuses.started })
+  }
+
   useEffect(() => {
     loader.config({ monaco })
   }, [])
@@ -55,10 +66,7 @@ function InterviewPage() {
   useEffect(() => {
     if (!interview) return
 
-    if (interview.status === InterviewStatus.started) {
-      CONSUMER.connect()
-      setSubscription(connectToInterview(interview.id, onChannelData))
-    }
+    beginInterview()
     setTitle(interview.title)
     setStatus(interview.status)
 
@@ -69,7 +77,7 @@ function InterviewPage() {
 
   const onTitleChanged = (title: string) => {
     setTitle(title)
-    if (status === InterviewStatus.started) {
+    if (status === InterviewStatuses.started) {
       subscription?.send({ type: PAYLOAD_TYPES.TITLE_CHANGED,  data: {  title, user: user!.id }  })
     } else {
       updateInterview(id!, { title })
@@ -168,11 +176,9 @@ function InterviewPage() {
       }
       case PAYLOAD_TYPES.INTERVIEW_ENDED: {
         closeSocket()
-        setStatus(InterviewStatus.ended)
+        invalidateInterview()
+        setStatus(InterviewStatuses.ended)
         break
-      }
-      default: {
-        console.log('Received: ', payload)
       }
     }
   }
@@ -186,7 +192,7 @@ function InterviewPage() {
     setTimeout(() => setFocusTerminal(false), 1000)
   }, [])
 
-  if (isLoading || (!subscription && interview.status === InterviewStatus.started)) return <LinearProgress />
+  if (isLoading || (!subscription && interview.status === InterviewStatuses.started)) return <LinearProgress />
   if (!isLoading && !interview) return <NotFoundPage />
 
   return (
@@ -194,10 +200,11 @@ function InterviewPage() {
       <Box className="flex flex-col grow">
         <InterviewHeader
           currentQuestion={question}
-          title={title}
+          interviewStatus={status}
+          onBeginInterview={onBeginInterview}
           onQuestionChanged={onQuestionChanged}
           onTitleChanged={onTitleChanged}
-          interviewStatus={status}
+          title={title}
         />
         <CodeEditor
           activeUsers={activeUsers}

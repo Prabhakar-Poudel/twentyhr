@@ -26,10 +26,8 @@ class InterviewChannel < ApplicationCable::Channel
       interview.update_interview!(drawing: payload['data']['elements'])
     when 'title_changed'
       interview.update_interview!(title: payload['data']['title'])
-    when 'language_changed'
-      interview.update_interview!(language: payload['data']['language'])
     when 'question_changed'
-      interview.update_interview!(question: payload['data']['question'])
+      interview.update_interview!(question_id: payload['data']['question'])
     end
   end
 

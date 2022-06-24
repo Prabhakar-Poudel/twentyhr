@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react'
 import EditorHeader from 'src/components/app/interview/interviewBody/ide/EditorHeader'
 import defaultEditorOptions, { SUPPORTED_LANGUAGES } from 'src/config/editorConfig'
 import { ActiveUser } from 'src/pages/interview/helpers'
-import { InterviewStatus } from 'src/types/interview'
+import { InterviewStatuses } from 'src/types/interview'
 
 interface InterviewBodyProps {
   activeUsers: ActiveUser[]
@@ -32,7 +32,8 @@ function CodeEditor({ activeUsers, code, interviewStatus, language, onCodeChange
   const [availableLanguages, setAvailableLanguages] = useState<string[]>([])
   const [decorations, setDecorations] = useState<string[]>([])
 
-  const interviewEnded = ![InterviewStatus.created, InterviewStatus.started].includes(interviewStatus as InterviewStatus)
+  // @ts-expect-error
+  const interviewEnded = ![InterviewStatuses.created, InterviewStatuses.started].includes(interviewStatus)
 
   const onFontSizeChange = (event: Event, value: number) => setFontSize(value)
   const onThemeChange = (event: SelectChangeEvent) => setTheme(event.target.value)

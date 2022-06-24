@@ -8,7 +8,7 @@ import './draw.css'
 import { uiOptions } from 'src/config/excalidrawConfig'
 import { COLOR_VALUE } from 'src/constants/colors'
 import { ActiveUser } from 'src/pages/interview/helpers'
-import { InterviewStatus } from 'src/types/interview'
+import { InterviewStatuses } from 'src/types/interview'
 
 export type Pointer = {
   x: number
@@ -40,7 +40,8 @@ function DrawInput({ activeUsers, appState, elements = [], interviewStatus, onCh
   const [sceneVersion, setSceneVersion] = useState(0)
   const collaborators = new Map()
 
-  const interviewEnded = ![InterviewStatus.created, InterviewStatus.started].includes(interviewStatus as InterviewStatus)
+  // @ts-expect-error
+  const interviewEnded = ![InterviewStatuses.created, InterviewStatuses.started].includes(interviewStatus)
 
   useEffect(() => {
     if (!excalidrawRef.current) return

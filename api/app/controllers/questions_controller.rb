@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
     questions =
       @questions
         .includes(:creator)
-        .select(:id, :title, :description, :status, :creator_id)
+        .select(:id, :title, :description, :status, :created_at, :creator_id)
         .order(created_at: :desc)
     render json: questions.as_json(except: :creator_id, include: { creator: { only: [:name, :email, :id] }}), status: :ok
   end
@@ -19,6 +19,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
+    @question.creator_id = current_user.id
     @question.organization_id = current_organization.id
     if @question.save
       render json: @question, status: :created

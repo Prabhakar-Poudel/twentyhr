@@ -2,13 +2,13 @@ import { ExcalidrawElement } from '@excalidraw/excalidraw-next/types/element/typ
 import { QuestionShow } from 'src/types/question'
 import { User } from 'src/types/user'
 
-export enum InterviewStatus {
-  archived = 'archived',
-  created = 'created',
-  ended = 'ended',
-  started = 'started',
-}
-type Status = keyof InterviewStatus
+export const InterviewStatuses = {
+  archived: 'archived',
+  created: 'created',
+  ended: 'ended',
+  started: 'started',
+} as const
+export type InterviewStatus = keyof typeof InterviewStatuses
 
 export interface InterviewIndex {
   id: string
@@ -16,7 +16,7 @@ export interface InterviewIndex {
   organization_id: string
   creator: User
   question_id: string
-  status: Status
+  status: InterviewStatus
 }
 
 export interface InterviewNew {
@@ -27,7 +27,7 @@ export interface InterviewNew {
 interface InterviewBase {
   id: string
   title: string
-  status: Status
+  status: InterviewStatus
   question: QuestionShow
   code: string
   drawing: ExcalidrawElement[]
@@ -43,5 +43,5 @@ export interface InterviewShow extends InterviewBase {
 export interface InterviewUpdate {
   title?: string
   question_id?: string
-  status?: Status
+  status?: InterviewStatus
 }

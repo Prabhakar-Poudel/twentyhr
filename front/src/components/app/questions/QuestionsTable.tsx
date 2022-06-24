@@ -1,6 +1,7 @@
 import Paper from '@mui/material/Paper'
 import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid'
 import { useNavigate } from 'react-router-dom'
+import { CreatorCell } from 'src/components/app/questions/CreatorCell'
 import { creatorGetter, getCellClassName } from 'src/components/app/questions/helpers'
 import { RowActions } from 'src/components/app/questions/RowActions'
 import { StatusCell } from 'src/components/app/questions/StatusCell'
@@ -14,7 +15,7 @@ interface Props {
 
 const columns: GridColDef[] = [
   { field: 'title', headerName: 'Title', minWidth: 400, renderCell: TitleCell },
-  { field: 'creator', headerName: 'Created by', width: 300, valueGetter: creatorGetter },
+  { field: 'creator', headerName: 'Created by', width: 300, renderCell: CreatorCell, valueGetter: creatorGetter },
   { field: 'status', headerName: 'Status', width: 120, renderCell: StatusCell },
   {
     field: 'actions',
@@ -26,13 +27,12 @@ const columns: GridColDef[] = [
     disableReorder: true,
     filterable: false,
     groupable: false,
-    hideable: false,
     resizable: false,
     sortable: false,
   },
 ]
 
-function QuestionsTable({ rows }: Props) {
+const QuestionsTable = ({ rows }: Props) => {
   const navigate = useNavigate()
 
   const openQuestion = ({ id }: GridRowParams) => navigate(`/questions/${id}`)
@@ -50,7 +50,7 @@ function QuestionsTable({ rows }: Props) {
         checkboxSelection={false}
         aria-label="questions table"
         density="comfortable"
-        components={{ Toolbar: GridToolbar }}
+        components={{ Toolbar: GridToolbar } }
         getCellClassName={getCellClassName}
         onRowClick={openQuestion}
       />

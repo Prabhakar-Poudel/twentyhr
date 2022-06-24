@@ -4,10 +4,10 @@ class InterviewsController < ApplicationController
   def index
     interviews =
       @interviews
-        .includes(:creator)
-        .select(:id, :title, :status, :creator_id, :created_at)
+        .includes(:creator, :question)
+        .select(:id, :title, :status, :created_at, :creator_id, :question_id)
         .order(created_at: :desc)
-    render json: interviews.as_json(except: :creator_id, include: { creator: { only: [:name, :email, :id] }}), status: :ok
+    render json: interviews.as_json(except: [:creator_id, :question_id], include: { creator: { only: [:name, :email, :id] }, question: { only: [:title, :id] }}), status: :ok
   end
 
   def show
@@ -19,6 +19,7 @@ class InterviewsController < ApplicationController
   end
 
   def create
+    @interview.creator_id = current_user.id
     @interview.organization_id = current_organization.id
     @interview.title = "Interview #{SecureRandom.base36(8)}" if @interview.title.blank?
     if @interview.save
