@@ -197,27 +197,31 @@ function InterviewPage() {
 
   return (
     <Box className="flex flex-col h-screen w-screen">
-      <Box className="flex flex-col grow">
-        <InterviewHeader
-          currentQuestion={question}
-          interviewStatus={status}
-          onBeginInterview={onBeginInterview}
-          onQuestionChanged={onQuestionChanged}
-          onTitleChanged={onTitleChanged}
-          title={title}
-        />
-        <CodeEditor
-          activeUsers={activeUsers}
-          code={code}
-          interviewStatus={status}
-          language={language}
-          onCodeChange={onCodeChange}
-          onCodeExecute={onCodeExecute}
-          onCursorChange={onCursorChange}
-          onSelectionChange={onSelectionChange}
-          setLanguage={onLanguageChange}
-        />
-      </Box>
+      <InterviewHeader
+        currentQuestion={question}
+        interviewStatus={status}
+        onBeginInterview={onBeginInterview}
+        onQuestionChanged={onQuestionChanged}
+        onTitleChanged={onTitleChanged}
+        title={title}
+      />
+      <CodeEditor
+        activeUsers={activeUsers}
+        code={code}
+        interviewStatus={status}
+        language={language}
+        onCodeChange={onCodeChange}
+        onCodeExecute={onCodeExecute}
+        onCursorChange={onCursorChange}
+        onSelectionChange={onSelectionChange}
+        setLanguage={onLanguageChange}
+      />
+      <InterviewFooter
+        activeUsers={activeUsers}
+        interview={id!}
+        interviewStatus={status}
+        onEndInterview={onEndInterview}
+      />
       <RightDrawerToggle open={showDrawer} onClick={onDrawerToggle} />
       <InterviewRightDrawer
         activeUsers={activeUsers}
@@ -231,12 +235,6 @@ function InterviewPage() {
         onTerminalSelectionChange={onTerminalSelectionChange}
         open={showDrawer}
         terminalContent={terminalContent}
-      />
-      <InterviewFooter
-        activeUsers={activeUsers}
-        interview={id!}
-        interviewStatus={status}
-        onEndInterview={onEndInterview}
       />
     </Box>
   )
