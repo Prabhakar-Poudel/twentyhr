@@ -23,7 +23,7 @@ export const ToastContext = createContext<ToastContextProps>({
 
 function ToastList({ toasts, removeToast }: ToastContextProps) {
   return (
-    <Stack spacing={1} className="bottom-0 fixed">
+    <Stack spacing={1} className="bottom-0 fixed z-[1300]">
       {toasts.map((toast) => (
         <Toast key={toast.id} {...toast} onClose={removeToast} />
       ))}

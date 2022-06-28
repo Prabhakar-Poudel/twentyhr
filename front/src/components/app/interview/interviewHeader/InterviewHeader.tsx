@@ -15,7 +15,14 @@ interface Props {
   title: string
 }
 
-function InterviewHeader({ currentQuestion, interviewStatus, onBeginInterview, onQuestionChanged, onTitleChanged, title }: Props) {
+function InterviewHeader({
+  currentQuestion,
+  interviewStatus,
+  onBeginInterview,
+  onQuestionChanged,
+  onTitleChanged,
+  title,
+}: Props) {
   const readOnly = interviewStatus !== InterviewStatuses.started
   const newInterview = interviewStatus === InterviewStatuses.created
 
@@ -30,7 +37,11 @@ function InterviewHeader({ currentQuestion, interviewStatus, onBeginInterview, o
         <Box className="grow flex items-center gap-4 mb-0.5">
           <InterviewTitle onChange={onTitleChange} value={title} />
           {!readOnly && <QuestionsDropdown currentQuestion={currentQuestion} onChange={onQuestionChanged} />}
-          {newInterview && <Button variant="contained" onClick={onBeginInterview}>Begin Interview</Button>}
+          {newInterview && (
+            <Button variant="contained" onClick={onBeginInterview}>
+              Begin Interview
+            </Button>
+          )}
         </Box>
       </Toolbar>
     </AppBar>

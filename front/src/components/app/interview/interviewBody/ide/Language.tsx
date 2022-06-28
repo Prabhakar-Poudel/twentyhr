@@ -16,7 +16,7 @@ function Language(props: LanguageSelectorProps) {
     <Box className="flex">
       <LanguageSelector {...props} />
       <Tooltip arrow title="Language information">
-        <IconButton disableRipple size="small" onClick={handleOpen}>
+        <IconButton onClick={handleOpen}>
           <Help />
         </IconButton>
       </Tooltip>

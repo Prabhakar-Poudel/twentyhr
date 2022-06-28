@@ -38,7 +38,7 @@ function EditorHeader({
     (event: KeyboardEvent): any => {
       if ((event.ctrlKey || event.metaKey) && event.code === 'Enter') onCodeExecute()
     },
-    [onCodeExecute]
+    [onCodeExecute],
   )
 
   useEffect(() => {
@@ -59,7 +59,13 @@ function EditorHeader({
         <>
           <Box className="flex items-center">
             <Tooltip arrow title="⌘ + Enter">
-              <Button variant="contained" size="small" color="primary" onClick={onCodeExecute} startIcon={<PlayArrow />}>
+              <Button
+                variant="contained"
+                size="small"
+                color="primary"
+                onClick={onCodeExecute}
+                startIcon={<PlayArrow />}
+              >
                 Run
               </Button>
             </Tooltip>

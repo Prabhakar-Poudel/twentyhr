@@ -17,7 +17,7 @@ function IdeConfiguration(props: IdeConfigurationProps) {
   return (
     <>
       <Tooltip arrow title="Configure Editor">
-        <IconButton disableRipple aria-label="configure IDE" onClick={handleOpen}>
+        <IconButton aria-label="Configure Editor" onClick={handleOpen}>
           <SettingsIcon />
         </IconButton>
       </Tooltip>
