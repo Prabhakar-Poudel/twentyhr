@@ -1,4 +1,4 @@
-import { FiberManualRecord } from '@mui/icons-material'
+import { RadioButtonChecked } from '@mui/icons-material'
 import { ListItemIcon, ListItemText, MenuItem, MenuList, Paper } from '@mui/material'
 
 const MoreActionMenu = () => {
@@ -7,7 +7,7 @@ const MoreActionMenu = () => {
       <MenuList>
         <MenuItem className="gap-5">
           <ListItemIcon>
-            <FiberManualRecord />
+            <RadioButtonChecked />
           </ListItemIcon>
           <ListItemText>Record interview</ListItemText>
         </MenuItem>
