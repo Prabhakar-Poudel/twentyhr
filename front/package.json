@@ -60,7 +60,7 @@
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^14.2.1",
     "@types/actioncable": "^5.2.7",
-    "@types/jest": "^28.1.4",
+    "@types/jest": "^28.1.6",
     "@types/lodash": "^4.14.182",
     "@types/node": "^18.0.3",
     "@types/react": "^18.0.15",
