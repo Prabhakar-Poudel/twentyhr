@@ -8,7 +8,7 @@
     "@excalidraw/excalidraw-next": "^0.11.0-d057450",
     "@monaco-editor/react": "^4.4.5",
     "@mui/icons-material": "^5.8.4",
-    "@mui/material": "^5.8.7",
+    "@mui/material": "^5.9.0",
     "@mui/x-data-grid": "^5.13.0",
     "actioncable": "^5.2.8",
     "axios": "^0.27.2",
