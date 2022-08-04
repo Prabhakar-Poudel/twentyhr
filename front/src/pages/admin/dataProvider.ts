@@ -20,8 +20,9 @@ import {
   UpdateResult,
   fetchUtils,
 } from 'react-admin'
+import { rootUrl } from 'src/config/application'
 
-const apiUrl = 'http://localhost:3100'
+const apiUrl = rootUrl
 const httpClient = fetchUtils.fetchJson
 
 const dataProvider: DataProvider = {
