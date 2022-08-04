@@ -2,7 +2,7 @@ class ActiveInterview < ApplicationRecord
   PREFIX = 'active_interview'
 
   # TODO get URL from env
-  @@redis ||= Redis.new(url: 'redis://localhost:6380/1')
+  @@redis ||= Redis.new(url: ENV.fetch('REDIS_URL', 'redis://localhost:6380/1'))
 
   class << self
     def all_users(interview)

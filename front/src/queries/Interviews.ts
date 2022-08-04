@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from 'react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { axios } from 'src/lib/axios/axios'
 import { InterviewNew, InterviewShow, InterviewUpdate } from 'src/types/interview'
 import { Note } from 'src/types/note'
@@ -28,10 +28,10 @@ export const useInterviewShow = (id: string) => {
 }
 
 export const noteForInterview = (id: string) =>
-  axios.get<Note | null>(`interviews/${id}/note/`)
+  axios
+    .get<Note | null>(`interviews/${id}/note/`)
     .then((res) => res.data)
     .catch(() => null)
-
 
 export const createInterview = (data?: InterviewNew) =>
   axios.post<InterviewShow>('/interviews/', { interview: { ...data, status: 'created' } }).then((res) => res.data)

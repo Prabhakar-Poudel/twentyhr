@@ -13,4 +13,4 @@ test:
 
 production:
   <<: *default
-  url: postgresql://postgres:@localhost:5433/thr
+  url: <%= ENV.fetch("DATABASE_URL") { "postgresql://postgres:@localhost:5433/thr" } %>

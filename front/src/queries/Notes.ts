@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from 'react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { axios } from 'src/lib/axios/axios'
 import { NewNote, Note } from 'src/types/note'
 
@@ -26,8 +26,7 @@ export const useNoteShow = (id: string) => {
   }
 }
 
-export const createNote = (note: NewNote) =>
-  axios.post<Note>('/notes/', { note }).then((res) => res.data)
+export const createNote = (note: NewNote) => axios.post<Note>('/notes/', { note }).then((res) => res.data)
 
 export const updateNote = (id: string, content: string) =>
   axios.put<Note>(`/notes/${id}`, { note: { content } }).then((res) => res.data)

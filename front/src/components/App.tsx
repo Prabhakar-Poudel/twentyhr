@@ -1,6 +1,6 @@
 import { CssBaseline } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Routes, Route } from 'react-router-dom'
 import { AuthProvider } from 'src/contexts/AuthContext'
 import { ToastProvider } from 'src/hooks/useToast'
