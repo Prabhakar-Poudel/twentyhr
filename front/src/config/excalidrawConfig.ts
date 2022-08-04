@@ -1,12 +1,8 @@
-import { UIOptions } from '@excalidraw/excalidraw-next/types/types'
-
-export const uiOptions: UIOptions = {
+export const uiOptions = {
   canvasActions: {
-    export: false,
     clearCanvas: false,
     saveAsImage: false,
     theme: false,
     loadScene: false,
-    changeViewBackgroundColor: true,
   },
 }

@@ -1,6 +1,6 @@
-import Excalidraw, { THEME, getSceneVersion } from '@excalidraw/excalidraw-next'
-import { ExcalidrawElement } from '@excalidraw/excalidraw-next/types/element/types'
-import { AppState, ExcalidrawImperativeAPI, Gesture } from '@excalidraw/excalidraw-next/types/types'
+import { THEME, getSceneVersion, Excalidraw } from '@excalidraw/excalidraw'
+import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types'
+import { AppState, ExcalidrawImperativeAPI, Gesture } from '@excalidraw/excalidraw/types/types'
 import { Box } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { debounce } from 'lodash'
@@ -35,7 +35,15 @@ interface Props {
   setAppState: (state: AppState) => void
 }
 
-function DrawInput({ activeUsers, appState, elements = [], interviewStatus, onChange, onPointerUpdate, setAppState }: Props) {
+function DrawInput({
+  activeUsers,
+  appState,
+  elements = [],
+  interviewStatus,
+  onChange,
+  onPointerUpdate,
+  setAppState,
+}: Props) {
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null)
   const [sceneVersion, setSceneVersion] = useState(0)
   const collaborators = new Map()
@@ -46,20 +54,20 @@ function DrawInput({ activeUsers, appState, elements = [], interviewStatus, onCh
   useEffect(() => {
     if (!excalidrawRef.current) return
 
-    activeUsers.forEach(user => {
-        if (!user.drawing?.pointer) return
+    activeUsers.forEach((user) => {
+      if (!user.drawing?.pointer) return
 
-        const color = COLOR_VALUE[user.bgColor]
-        collaborators.set(user.id, { ...user.drawing, username: user.name, color: { background: color, stroke: color }})
-      })
-      excalidrawRef.current.updateScene({ collaborators })
+      const color = COLOR_VALUE[user.bgColor]
+      collaborators.set(user.id, { ...user.drawing, username: user.name, color: { background: color, stroke: color } })
+    })
+    excalidrawRef.current.updateScene({ collaborators })
   }, [activeUsers])
 
   useEffect(() => {
-    if(!excalidrawRef.current) return
+    if (!excalidrawRef.current) return
 
     const currentScene = getSceneVersion(elements)
-    if(sceneVersion >= currentScene) return
+    if (sceneVersion >= currentScene) return
     setSceneVersion(currentScene)
 
     excalidrawRef.current.updateScene({ elements, commitToHistory: false })
@@ -73,7 +81,7 @@ function DrawInput({ activeUsers, appState, elements = [], interviewStatus, onCh
   const onChangeHandler = debounce((changedElements: readonly ExcalidrawElement[], state: AppState) => {
     setAppState(state)
     const currentScene = getSceneVersion(changedElements)
-    if(currentScene <= sceneVersion) return
+    if (currentScene <= sceneVersion) return
 
     onChange(changedElements)
     setSceneVersion(currentScene)

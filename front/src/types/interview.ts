@@ -1,4 +1,4 @@
-import { ExcalidrawElement } from '@excalidraw/excalidraw-next/types/element/types'
+import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types'
 import { QuestionShow } from 'src/types/question'
 import { User } from 'src/types/user'
 

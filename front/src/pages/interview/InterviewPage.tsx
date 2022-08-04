@@ -1,4 +1,4 @@
-import { ExcalidrawElement } from '@excalidraw/excalidraw-next/types/element/types'
+import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types'
 import { Box, LinearProgress } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
 import * as monaco from 'monaco-editor'
@@ -16,7 +16,9 @@ import {
   getSelectionData,
   setCursor,
   setPointer,
-  setSelection, setTerminalSelection, TerminalSelection
+  setSelection,
+  setTerminalSelection,
+  TerminalSelection,
 } from 'src/pages/interview/helpers'
 import { PAYLOAD_TYPES } from 'src/pages/interview/payloads'
 import NotFoundPage from 'src/pages/NotFoundPage'
@@ -78,7 +80,7 @@ function InterviewPage() {
   const onTitleChanged = (title: string) => {
     setTitle(title)
     if (status === InterviewStatuses.started) {
-      subscription?.send({ type: PAYLOAD_TYPES.TITLE_CHANGED,  data: {  title, user: user!.id }  })
+      subscription?.send({ type: PAYLOAD_TYPES.TITLE_CHANGED, data: { title, user: user!.id } })
     } else {
       updateInterview(id!, { title })
     }
@@ -94,16 +96,16 @@ function InterviewPage() {
 
   const onQuestionChanged = async (questionId: string) => {
     await changeQuestion(questionId)
-    subscription?.send({ type: PAYLOAD_TYPES.QUESTION_CHANGED,  data: {  question: questionId, user: user!.id }  })
+    subscription?.send({ type: PAYLOAD_TYPES.QUESTION_CHANGED, data: { question: questionId, user: user!.id } })
   }
 
   const onLanguageChange = (language: string) => {
     setLanguage(language)
-    subscription?.send({ type: PAYLOAD_TYPES.LANGUAGE_CHANGED,  data: {  language, user: user!.id }  })
+    subscription?.send({ type: PAYLOAD_TYPES.LANGUAGE_CHANGED, data: { language, user: user!.id } })
   }
 
   const onCursorChange = (event: monaco.editor.ICursorPositionChangedEvent) => {
-    subscription?.send({ type: PAYLOAD_TYPES.CURSOR_CHANGED,  data: {  position: event.position, user: user!.id }  })
+    subscription?.send({ type: PAYLOAD_TYPES.CURSOR_CHANGED, data: { position: event.position, user: user!.id } })
   }
 
   const onSelectionChange = (event: monaco.editor.ICursorSelectionChangedEvent) => {
@@ -119,7 +121,10 @@ function InterviewPage() {
   }
 
   const onDrawPointerChange = (pointer: Pointer, button: string, selectedElementIds: SelectedElements) => {
-    subscription?.send({ type: PAYLOAD_TYPES.DRAW_POINTER_CHANGED, data: { pointer, button, selectedElementIds, user: user!.id } })
+    subscription?.send({
+      type: PAYLOAD_TYPES.DRAW_POINTER_CHANGED,
+      data: { pointer, button, selectedElementIds, user: user!.id },
+    })
   }
 
   const onDrawingElementsChange = (elements: readonly ExcalidrawElement[]) => {
@@ -131,7 +136,11 @@ function InterviewPage() {
   }
 
   const onChannelData = (payload: any) => {
-    if (user?.id === payload.data?.user && ![PAYLOAD_TYPES.DRAW_UPDATED, PAYLOAD_TYPES.INTERVIEW_ENDED].includes(payload.type)) return
+    if (
+      user?.id === payload.data?.user &&
+      ![PAYLOAD_TYPES.DRAW_UPDATED, PAYLOAD_TYPES.INTERVIEW_ENDED].includes(payload.type)
+    )
+      return
 
     switch (payload.type) {
       case PAYLOAD_TYPES.CURSOR_CHANGED: {

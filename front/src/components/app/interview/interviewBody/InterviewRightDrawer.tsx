@@ -1,5 +1,5 @@
-import { ExcalidrawElement } from '@excalidraw/excalidraw-next/types/element/types'
-import { AppState } from '@excalidraw/excalidraw-next/types/types'
+import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types'
+import { AppState } from '@excalidraw/excalidraw/types/types'
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen'
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
@@ -75,20 +75,48 @@ function InterviewRightDrawer({
             </IconButton>
           </Tooltip>
           <Tabs value={activeTab} onChange={handleChange} className="grow">
-            <Tab disableRipple wrapped value={TABS[0]} label="IO" icon={<TerminalIcon />} iconPosition="start" className={className} />
-            <Tab disableRipple wrapped value={TABS[1]} label="Draw" icon={<PolylineIcon />} iconPosition="start" className={className} />
-            <Tab disableRipple wrapped value={TABS[2]} label="What" icon={<QuizIcon />} iconPosition="start" className={className} />
-            <Tab disableRipple wrapped value={TABS[3]} label="How" icon={<EmojiObjectsIcon />} iconPosition="start" className={className} />
+            <Tab
+              disableRipple
+              wrapped
+              value={TABS[0]}
+              label="IO"
+              icon={<TerminalIcon />}
+              iconPosition="start"
+              className={className}
+            />
+            <Tab
+              disableRipple
+              wrapped
+              value={TABS[1]}
+              label="Draw"
+              icon={<PolylineIcon />}
+              iconPosition="start"
+              className={className}
+            />
+            <Tab
+              disableRipple
+              wrapped
+              value={TABS[2]}
+              label="What"
+              icon={<QuizIcon />}
+              iconPosition="start"
+              className={className}
+            />
+            <Tab
+              disableRipple
+              wrapped
+              value={TABS[3]}
+              label="How"
+              icon={<EmojiObjectsIcon />}
+              iconPosition="start"
+              className={className}
+            />
           </Tabs>
         </Box>
         <Divider />
         <Box className="grow basis-32 overflow-hidden pb-12">
           <TabPanel activeTab={activeTab} tabId={TABS[0]}>
-            <TerminalView
-              activeUsers={activeUsers}
-              onSelect={onTerminalSelectionChange}
-              value={terminalContent}
-            />
+            <TerminalView activeUsers={activeUsers} onSelect={onTerminalSelectionChange} value={terminalContent} />
           </TabPanel>
           <TabPanel activeTab={activeTab} tabId={TABS[1]}>
             <DrawInput
