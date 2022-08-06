@@ -65,6 +65,19 @@ Rails.application.configure do
   # Devise
   config.action_mailer.default_url_options = { host: 'https://www.twentyhr.com' }
 
+  # SMTP
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+    address: 'smtp-relay.sendinblue.com',
+    port: 587,
+    enable_starttls_auto: true,
+    user_name: ENV['SMTP_USER_NAME'],
+    password: ENV['SMTP_PASSWORD'],
+    authentication: 'login',
+    domain: 'twentyhr.com'
+  }
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
