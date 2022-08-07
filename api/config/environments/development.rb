@@ -54,7 +54,7 @@ Rails.application.configure do
   config.active_record.verbose_query_logs = true
 
   # Devise
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3100 }
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3101 }
 
   # mailhog
   config.action_mailer.delivery_method = :smtp
