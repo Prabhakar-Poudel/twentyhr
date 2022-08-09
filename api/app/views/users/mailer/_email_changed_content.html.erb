@@ -1,0 +1,31 @@
+<tr>
+  <td style="margin-bottom: 20px; padding: 0">
+    <h2 style="color: rgba(255, 255, 255, 0.7); text-align: center">
+      Hello <%= @resource.name || @resource.email %>!
+    </h2>
+  </td>
+</tr>
+<% if @resource.try(:unconfirmed_email?) %>
+  <tr>
+    <td style="padding: 0 0 20px;">
+      <p style=" color: rgba(255, 255, 255, 0.7); text-align: center; vertical-align: top; margin-top: 20px">
+        We're contacting you to notify you that your email is being changed to <%= @resource.unconfirmed_email %>.
+      </p>
+    </td>
+  </tr>
+<% else %>
+  <tr>
+    <td style="padding: 0 0 20px;">
+      <p style=" color: rgba(255, 255, 255, 0.7); text-align: center; vertical-align: top; margin-top: 20px">
+        We're contacting you to notify you that your email has been changed to <%= @resource.email %>.
+      </p>
+    </td>
+  </tr>
+<% end %>
+<tr>
+  <td style="padding: 20px; color: rgba(255, 255, 255, 0.4); text-align: center">
+    <p style="margin-bottom: 40px">
+      If you did not change the email recently, contact our customer support immediately.
+    </p>
+  </td>
+</tr>

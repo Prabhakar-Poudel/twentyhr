@@ -1,0 +1,36 @@
+<tr>
+  <td style="margin-bottom: 20px; padding: 0">
+    <h2 style="color: rgba(255, 255, 255, 0.7); text-align: center">
+      Hello <%= @resource.name || @resource.email %>!
+    </h2>
+  </td>
+</tr>
+<tr>
+  <td style="padding: 0 0 20px;">
+    <p style=" color: rgba(255, 255, 255, 0.7); text-align: center; vertical-align: top; margin-top: 20px">
+      Your account has been locked due to an excessive number of unsuccessful sign in attempts.
+      <br />
+      Click the link below to unlock your account:
+    </p>
+  </td>
+</tr>
+<tr>
+  <td style="padding: 0 0 20px;">
+    <table style="margin: 0 auto">
+      <tbody>
+      <tr>
+        <td style="background-color: #009624; border-radius: 16px; padding: 1rem; font-size: 1.3rem; display: block">
+          <%= link_to 'Unlock my account', unlock_url(token: @token), target: "_blank", style: "color: #FFFFFF; text-decoration: none" %>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td style="padding: 20px; color: rgba(255, 255, 255, 0.4); text-align: center">
+    <p style="margin-bottom: 40px">
+      If you suspect fraudulent activity in your account, you should immediately change your password.
+    </p>
+  </td>
+</tr>
