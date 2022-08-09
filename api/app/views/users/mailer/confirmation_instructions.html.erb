@@ -1,7 +1,1 @@
-<p>Welcome <%= @email %>!</p>
-
-<p>You can confirm your account email through the link below:</p>
-
-<p><%= link_to 'Confirm my account', verify_account_link(token: @token) %></p>
-<p>Alternatively you can use <%= @token %> as your verification code</p>
-<p>This code will be valid for 2 hours from the time of request</p>
+<%= render partial: "users/mailer/confirmation_content", layout: "users/mailer/mailer_layout" %>
