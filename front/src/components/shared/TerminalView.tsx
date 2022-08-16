@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import { ActiveUser, TerminalSelection } from 'src/pages/interview/helpers'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
+import 'xterm/css/xterm.css'
 
 const terminal = new Terminal({
   cursorBlink: true,

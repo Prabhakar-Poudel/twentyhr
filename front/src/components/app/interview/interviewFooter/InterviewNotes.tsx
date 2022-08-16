@@ -34,7 +34,6 @@ function InterviewNotes({ interview }: Props) {
       setNote({...note, content})
     } else {
       const newNote = { content, interview_id: interview }
-      setNote(newNote as Note)
       createNote(newNote).then(setNote)
     }
   }

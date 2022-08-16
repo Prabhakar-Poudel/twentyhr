@@ -1,5 +1,7 @@
 class InterviewsController < ApplicationController
-  load_and_authorize_resource
+  skip_before_action :authenticate_user!, only:  %i[ping]
+  load_and_authorize_resource except:  %i[ping]
+  skip_authorization_check only:  %i[ping]
 
   def index
     interviews =
@@ -35,6 +37,11 @@ class InterviewsController < ApplicationController
     else
       render json: { }, status: :unprocessable_entity
     end
+  end
+
+  def ping
+    interview = Interview.includes(:organization).find(params[:id])
+    render json: interview.as_json(only: [:status], include: { organization: { only: [:name] }}), status: :ok
   end
 
   private

@@ -20,8 +20,8 @@ const quillModules = {
     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
     [{ list: 'ordered' }, { list: 'bullet' }],
     [{ indent: '-1' }, { indent: '+1' }],
+    [{ color: [] }, { background: [] }],
     ['link'],
-    ['clean'],
   ],
 }
 
@@ -34,25 +34,32 @@ const quillFormats = [
   'blockquote',
   'list',
   'bullet',
+  'background',
+  'color',
   'indent',
   'link',
 ]
 
-export function RichTextInput({ label, helperText, placeholder, onChange, defaultValue, margin = 'normal' }: Props) {
+export const RichTextInput = ({
+  label,
+  helperText,
+  placeholder = '',
+  onChange,
+  defaultValue = '',
+  margin = 'normal',
+}: Props) => {
   return (
     <FormControl fullWidth margin={margin}>
       <FormLabel>{label}</FormLabel>
       <ReactQuill
         className="rich-text-input"
         theme="snow"
-        placeholder={placeholder || ''}
+        placeholder={placeholder}
         modules={quillModules}
         formats={quillFormats}
         onChange={onChange}
-        defaultValue={defaultValue || ''}
-      >
-        <InputBase fullWidth className="h-80" />
-      </ReactQuill>
+        defaultValue={defaultValue}
+      />
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
   )

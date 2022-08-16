@@ -1,21 +1,23 @@
-import { Container, Paper, Typography } from '@mui/material'
+import { Box, Paper, Typography } from '@mui/material'
 import pageNotFoundImage from 'src/assets/svg/pageNotFound.svg'
+import HomeLogo from 'src/components/app/appHeader/HomeLogo'
 
 interface Props {
   title?: string
 }
 
-function NotFoundPage({ title }: Props) {
+const NotFoundPage = ({ title }: Props) => {
   const note = title || 'The page you are looking for does not exist'
 
   return (
     <Paper square className="h-screen w-screen flex flex-wrap md:flex-nowrap">
-      <Container className="!grid place-content-center">
+      <Box className="m-auto grid place-content-center">
+        <HomeLogo withText />
         <img src={pageNotFoundImage} alt="login" className="h-full" />
         <Typography variant="h5" align="center">
           {note}
         </Typography>
-      </Container>
+      </Box>
     </Paper>
   )
 }

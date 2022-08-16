@@ -11,6 +11,8 @@ class NotesController < ApplicationController
   end
 
   def create
+    authorize! :update, Interview.find(@note[:interview_id])
+
     if @note.save
       render json: @note, status: :created
     else

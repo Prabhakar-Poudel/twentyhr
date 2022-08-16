@@ -21,7 +21,7 @@ function QuestionForm({ defaultValues, onSave }: Props) {
   const [instruction, setInstruction] = useState(defaultValues.instruction || '')
   const [guidelines, setGuidelines] = useState(defaultValues.guidelines || '')
 
-  const buttonText = 'id' in defaultValues ? 'Update' : 'Create'
+  const buttonText = defaultValues.id ? 'Update' : 'Create'
 
   const onCodeUpdate = ({ currentValue, language }: OnChangeParams) => {
     setStarterCode(currentValue)
@@ -91,14 +91,14 @@ function QuestionForm({ defaultValues, onSave }: Props) {
           placeholder="Author instructions about this interview"
           helperText="This will be visible to both candidate and interviewers during an interview"
           defaultValue={instruction}
-          onChange={(change) => setInstruction(change)}
+          onChange={setInstruction}
         />
         <RichTextInput
           label="Guidelines"
           placeholder="Author guidelines on how to take this interview"
           helperText="This will be visible only to the interviewers during an interview"
           defaultValue={guidelines}
-          onChange={(change) => setGuidelines(change)}
+          onChange={setGuidelines}
         />
         <CodeInput
           defaultValue={starterCode}
@@ -112,7 +112,7 @@ function QuestionForm({ defaultValues, onSave }: Props) {
             {buttonText}
           </Button>
           <Link to="/questions" className="mx-2">
-            <Button>Cancel</Button>
+            <Button color="error">Cancel</Button>
           </Link>
         </Box>
       </Box>

@@ -7,14 +7,9 @@ import loginImage from 'src/assets/svg/loginScreen.svg'
 import PasswordField from 'src/components/app/account/Password'
 import { useAuth } from 'src/contexts/AuthContext'
 import useToast from 'src/hooks/useToast'
+import { LocationState } from 'src/types/routerLocation'
 
-type LocationState = {
-  from?: {
-    pathname: string
-  }
-}
-
-function LoginPage() {
+const LoginPage = () => {
   const navigate = useNavigate()
   const { state: locationState = {} } = useLocation()
   const { logIn } = useAuth()

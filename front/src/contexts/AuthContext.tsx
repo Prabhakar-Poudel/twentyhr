@@ -22,7 +22,7 @@ interface AuthProviderProps {
 
 const AuthContext = createContext<AuthContextType>(null!)
 
-export function AuthProvider({ children }: AuthProviderProps) {
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const queryClient = useQueryClient()

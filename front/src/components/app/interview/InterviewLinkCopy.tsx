@@ -1,5 +1,6 @@
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { IconButton, Tooltip } from '@mui/material'
+import { MouseEvent } from 'react'
 import useToast from 'src/hooks/useToast'
 
 interface Props {
@@ -9,7 +10,8 @@ interface Props {
 const InterviewLinkCopy = ({ link }: Props) => {
   const toast = useToast()
 
-  const onCopy = () => {
+  const onCopy = (event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation()
     navigator.clipboard.writeText(link).then(() => {
       toast({ message: 'Link copied', type: 'success', duration: 1000 })
     })

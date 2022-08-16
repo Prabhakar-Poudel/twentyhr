@@ -6,14 +6,15 @@ Rails.application.routes.draw do
   # root "articles#index"
 
 
-  devise_for :users, module: 'users', only: %i[sessions passwords registrations confirmations], skip_helpers: true, defaults: { format: :json }
+  devise_for :users, module: :users, only: %i[sessions passwords registrations confirmations], skip_helpers: true, defaults: { format: :json }
 
   resources :organizations, only: %i[index show create update]
   resources :users, only: %i[index show create update]
-  get 'profile', to: 'users#profile'
+  get :profile, to: 'users#profile'
   resources :questions, only: %i[index show create update]
   resources :interviews, only: %i[index show create update] do
-    get 'note', to: 'notes#interview_note'
+    get :note, to: 'notes#interview_note'
+    get :ping, on: :member
   end
   resources :notes, only: %i[index show create update]
 end

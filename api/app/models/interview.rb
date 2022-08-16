@@ -17,7 +17,7 @@ class Interview < ApplicationRecord
 
   def update_interview!(attributes)
     if self.ended?
-      raise ActiveModel::UnknownAttributeError, message: 'interview is read only'
+      raise ActiveModel::UnknownAttributeError, message: 'This interview has ended'
     else
       self.update!(**attributes)
     end

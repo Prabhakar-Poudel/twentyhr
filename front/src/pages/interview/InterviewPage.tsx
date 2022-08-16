@@ -30,9 +30,9 @@ import RightDrawerToggle from 'src/components/app/interview/interviewBody/RightD
 import { connectToInterview } from 'src/websockets/channels/interviewChannel'
 import { CONSUMER } from 'src/websockets/consumer'
 
-function InterviewPage() {
+const InterviewPage = () => {
   const { id } = useParams()
-  const { data: interview, isLoading, invalidateInterview } = useInterviewShow(id!)
+  const { data: interview, isLoading, invalidateInterview, refetch } = useInterviewShow(id!)
   const [language, setLanguage] = useState('')
   const [code, setCode] = useState('')
   const [drawingElements, setDrawingElements] = useState<ExcalidrawElement[]>([])
@@ -57,8 +57,9 @@ function InterviewPage() {
     setSubscription(connectToInterview(interview.id, onChannelData))
   }
 
-  const onBeginInterview = () => {
-    updateInterview(id!, { status: InterviewStatuses.started })
+  const onBeginInterview = async () => {
+    await updateInterview(id!, { status: InterviewStatuses.started })
+    await refetch()
   }
 
   useEffect(() => {
@@ -193,7 +194,7 @@ function InterviewPage() {
   }
 
   const onDrawerToggle = () => setShowDrawer(!showDrawer)
-  const terminalContent = 'www.google.com'.repeat(100)
+  const terminalContent = 'www.twentyhr.com \n This feature is not ready yet'
 
   const onCodeExecute = useCallback(() => {
     setShowDrawer(true)
@@ -201,8 +202,8 @@ function InterviewPage() {
     setTimeout(() => setFocusTerminal(false), 1000)
   }, [])
 
-  if (isLoading || (!subscription && interview.status === InterviewStatuses.started)) return <LinearProgress />
   if (!isLoading && !interview) return <NotFoundPage />
+  if (isLoading || (!subscription && interview.status === InterviewStatuses.started)) return <LinearProgress />
 
   return (
     <Box className="flex flex-col h-screen w-screen">

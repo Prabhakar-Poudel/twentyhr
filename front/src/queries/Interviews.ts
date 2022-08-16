@@ -38,3 +38,12 @@ export const createInterview = (data?: InterviewNew) =>
 
 export const updateInterview = (id: string, data: InterviewUpdate) =>
   axios.put<InterviewShow>(`/interviews/${id}`, { interview: data }).then((res) => res.data)
+
+export const usePingInterview = (id?: string) => {
+  const queryKey = ['interviews', id, 'ping']
+  return useQuery(queryKey, ({ queryKey }) => axios.get(`/interviews/${id}/ping`).then(({ data }) => data), {
+    cacheTime: 5 * 1000,
+    enabled: !!id,
+    retry: false,
+  })
+}
