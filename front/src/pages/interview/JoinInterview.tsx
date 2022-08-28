@@ -2,7 +2,6 @@ import { Box, Button, LinearProgress, Link, Paper, TextField, Typography } from 
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import HomeLogo from 'src/components/app/appHeader/HomeLogo'
-import { axios } from 'src/lib/axios/axios'
 import { usePingInterview } from 'src/queries/Interviews'
 import { InterviewStatuses } from 'src/types/interview'
 import { LocationState } from 'src/types/routerLocation'
