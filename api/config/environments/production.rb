@@ -63,7 +63,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Devise
-  config.action_mailer.default_url_options = { host: 'https://www.twentyhr.com' }
+  config.action_mailer.default_url_options = { host: 'https://app.twentyhr.com' }
 
   # SMTP
   config.action_mailer.delivery_method = :smtp
