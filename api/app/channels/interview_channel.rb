@@ -12,6 +12,7 @@ class InterviewChannel < ApplicationCable::Channel
   end
 
   def receive(payload)
+    puts "Now this is called ------------>>>>>>>>>> #{payload['type']}"
     case payload['type']
     when 'interview_ended'
       return unless can_update_interview?
@@ -31,6 +32,8 @@ class InterviewChannel < ApplicationCable::Channel
     when 'question_changed'
       return unless can_update_interview?
       interview.update_interview!(question_id: payload['data']['question'])
+      InterviewChannel.broadcast_to(interview, payload)
+    else
       InterviewChannel.broadcast_to(interview, payload)
     end
   end
