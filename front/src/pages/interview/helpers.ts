@@ -4,7 +4,10 @@ import { BG_COLORS, ColorKey } from 'src/constants/colors'
 import { User } from 'src/types/user'
 
 export interface TerminalSelection {
-  start: number
+  start: {
+    x: number
+    y: number
+  }
   length: number
 }
 
@@ -20,7 +23,7 @@ export interface ActiveUser {
     pointer?: Pointer
     button?: 'down' | 'up'
     selectedElementIds?: SelectedElements
-  },
+  }
   terminal: {
     selection?: TerminalSelection
   }
@@ -55,7 +58,7 @@ interface PointerData {
   selectedElementIds: SelectedElements
 }
 
-const blankDecoration = () => ({ range: new monaco.Range(0,0,0,0), options: {} })
+const blankDecoration = () => ({ range: new monaco.Range(0, 0, 0, 0), options: {} })
 
 const defaultEditorHighlights = () => ({
   selection: blankDecoration(),
@@ -71,10 +74,9 @@ export const formatActiveUsers = (existingUsers: ActiveUser[], newUsers: ActiveU
       editorHighlights: defaultEditorHighlights(),
       drawing: {},
       terminal: {},
-      bgColor: BG_COLORS[idx]
+      bgColor: BG_COLORS[idx],
     }
   })
-
 
 export const getSelectionData = (selection: monaco.Selection, user: User): SelectionData => {
   const { startLineNumber, endLineNumber, startColumn, endColumn } = selection
@@ -89,7 +91,7 @@ export const setSelection = (activeUsers: ActiveUser[], data: SelectionData): Ac
   if (!activeUser) return activeUsers
   activeUser.editorHighlights.selection = {
     range: new monaco.Range(startLineNumber, startColumn, endLineNumber, endColumn),
-    options: { className: `${activeUser.bgColor} opacity-30` }
+    options: { className: `${activeUser.bgColor} opacity-30` },
   }
   return _activeUsers
 }
@@ -102,7 +104,7 @@ export const setCursor = (activeUsers: ActiveUser[], data: CursorData): ActiveUs
   if (!activeUser) return activeUsers
   activeUser.editorHighlights.cursor = {
     range: new monaco.Range(lineNumber, column, lineNumber, column + 1),
-    options: { className: `${activeUser.bgColor} remote-cursor animate-pulse` }
+    options: { className: `${activeUser.bgColor} remote-cursor animate-pulse` },
   }
   return _activeUsers
 }
@@ -119,7 +121,6 @@ export const setPointer = (activeUsers: ActiveUser[], data: PointerData): Active
   activeUser.drawing.selectedElementIds = selectedElementIds
   return _activeUsers
 }
-
 
 export const setTerminalSelection = (activeUsers: ActiveUser[], data: TerminalSelectionData): ActiveUser[] => {
   const _activeUsers = [...activeUsers]

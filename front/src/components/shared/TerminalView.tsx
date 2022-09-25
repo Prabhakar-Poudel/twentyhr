@@ -11,7 +11,7 @@ const terminal = new Terminal({
   cursorWidth: 2,
   fontSize: 16,
   macOptionIsMeta: true,
-  theme: { background: '#1F1E1E', selection: '#1944f8' },
+  theme: { background: '#1F1E1E', selectionForeground: '#1944f8' },
 })
 
 const fitAddon = new FitAddon()
@@ -28,23 +28,19 @@ function TerminalView({ value = '', onSelect, activeUsers }: Props) {
 
   const handleSelect = () => {
     const selection = terminal.getSelectionPosition()
-    if (!selection?.startRow) return
+    if (!selection?.start) return
 
-    const numberOfColumns = terminal.cols
-    const start = selection.startRow * numberOfColumns + selection.startColumn
+    const start = selection.start
     const length = terminal.getSelection().length
     onSelect({ start, length })
   }
 
   const applySelection = () => {
-    activeUsers.forEach(user => {
+    activeUsers.forEach((user) => {
       const selection = user.terminal.selection
-      if(!selection) return
+      if (!selection) return
 
-      const numberOfColumns = terminal.cols
-      const row = Math.floor(selection.start / numberOfColumns)
-      const col = selection.start % numberOfColumns
-      terminal.select(col, row, selection.length )
+      terminal.select(selection.start.x, selection.start.y, selection.length)
     })
   }
 
