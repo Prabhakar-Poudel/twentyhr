@@ -1,60 +1,77 @@
 import { Box } from '@mui/material'
 import { useEffect, useRef } from 'react'
-import { ActiveUser, TerminalSelection } from 'src/pages/interview/helpers'
-import { Terminal } from 'xterm'
+import { COLOR_VALUE } from 'src/constants/colors'
+import { ActiveUser } from 'src/pages/interview/helpers'
+import { IBufferRange, Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import 'xterm/css/xterm.css'
 
-const terminal = new Terminal({
-  cursorBlink: true,
-  cursorStyle: 'bar',
-  cursorWidth: 2,
-  fontSize: 16,
-  macOptionIsMeta: true,
-  theme: { background: '#1F1E1E', selectionForeground: '#1944f8' },
-})
-
-const fitAddon = new FitAddon()
-terminal.loadAddon(fitAddon)
-
 interface Props {
   activeUsers: ActiveUser[]
-  onSelect: (value?: TerminalSelection) => void
+  onSelect: (value?: IBufferRange) => void
   value?: string
 }
 
 function TerminalView({ value = '', onSelect, activeUsers }: Props) {
   const resizeObserver = useRef<ResizeObserver>()
+  const terminal = useRef<InstanceType<typeof Terminal>>()
+  const fitAddon = useRef<InstanceType<typeof FitAddon>>()
+
+  useEffect(() => {
+    if (terminal.current) return
+
+    const term = new Terminal({
+      allowProposedApi: true,
+      cursorBlink: true,
+      cursorStyle: 'bar',
+      cursorWidth: 2,
+      fontSize: 16,
+      macOptionIsMeta: true,
+      theme: { background: '#1F1E1E', selectionForeground: '#1F1E1E', selectionBackground: 'white' },
+    })
+    const addon = new FitAddon()
+    term.loadAddon(addon)
+    terminal.current = term
+    fitAddon.current = addon
+  }, [activeUsers])
 
   const handleSelect = () => {
-    const selection = terminal.getSelectionPosition()
-    if (!selection?.start) return
-
-    const start = selection.start
-    const length = terminal.getSelection().length
-    onSelect({ start, length })
+    if (!terminal.current) return
+    onSelect(terminal.current.getSelectionPosition())
   }
 
   const applySelection = () => {
+    terminal.current?.markers.forEach((marker) => marker.dispose())
+
+    const cursorY = terminal.current?.buffer.active.cursorY
     activeUsers.forEach((user) => {
       const selection = user.terminal.selection
       if (!selection) return
+      const marker = terminal.current?.registerMarker(selection.start.y - cursorY!)
+      if (!marker) return
 
-      terminal.select(selection.start.x, selection.start.y, selection.length)
+      terminal.current?.registerDecoration({
+        marker,
+        x: selection.start.x,
+        width: selection.end.x - selection.start.x,
+        height: selection.end.y - selection.start.y,
+        backgroundColor: COLOR_VALUE[user.bgColor],
+        foregroundColor: '#FFFFFF',
+      })
     })
   }
 
-  const reFit = () => setTimeout(() => fitAddon.fit(), 100)
+  const reFit = () => setTimeout(() => fitAddon.current?.fit(), 100)
 
   useEffect(() => {
     const container = document.getElementById('terminal-container')
-    if (!container) return
+    if (!container || !terminal.current) return
 
-    terminal.open(container)
+    terminal.current.open(container)
     reFit()
-    terminal.focus()
+    terminal.current.focus()
     applySelection()
-    terminal.onSelectionChange(handleSelect)
+    terminal.current.onSelectionChange(handleSelect)
 
     resizeObserver.current = new ResizeObserver(() => {
       reFit()
@@ -64,18 +81,19 @@ function TerminalView({ value = '', onSelect, activeUsers }: Props) {
 
     return () => {
       resizeObserver.current?.disconnect()
-      terminal.dispose()
+      terminal.current?.dispose()
     }
-  }, [])
+  }, [terminal.current])
 
   useEffect(() => {
     applySelection()
   }, [activeUsers])
 
   useEffect(() => {
-    terminal.writeln(value)
+    terminal.current?.writeln(value)
   }, [value])
 
+  if (!terminal.current) return null
   return <Box id="terminal-container" className="h-full w-full" />
 }
 

@@ -18,7 +18,6 @@ import {
   setPointer,
   setSelection,
   setTerminalSelection,
-  TerminalSelection,
 } from 'src/pages/interview/helpers'
 import { PAYLOAD_TYPES } from 'src/pages/interview/payloads'
 import NotFoundPage from 'src/pages/NotFoundPage'
@@ -29,6 +28,7 @@ import InterviewRightDrawer from 'src/components/app/interview/interviewBody/Int
 import RightDrawerToggle from 'src/components/app/interview/interviewBody/RightDrawerToggle'
 import { connectToInterview } from 'src/websockets/channels/interviewChannel'
 import { CONSUMER } from 'src/websockets/consumer'
+import { IBufferRange } from 'xterm'
 
 const InterviewPage = () => {
   const { id } = useParams()
@@ -117,7 +117,7 @@ const InterviewPage = () => {
     subscription?.send({ type: PAYLOAD_TYPES.CODE_UPDATED, data: { code: newCode, user: user!.id } })
   }
 
-  const onTerminalSelectionChange = (selection?: TerminalSelection) => {
+  const onTerminalSelectionChange = (selection?: IBufferRange) => {
     subscription?.send({ type: PAYLOAD_TYPES.TERMINAL_SELECTION_CHANGED, data: { selection, user: user!.id } })
   }
 

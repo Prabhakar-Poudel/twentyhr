@@ -2,14 +2,7 @@ import * as monaco from 'monaco-editor'
 import { Pointer, SelectedElements } from 'src/components/shared/DrawInput'
 import { BG_COLORS, ColorKey } from 'src/constants/colors'
 import { User } from 'src/types/user'
-
-export interface TerminalSelection {
-  start: {
-    x: number
-    y: number
-  }
-  length: number
-}
+import { IBufferRange, IMarker } from 'xterm'
 
 export interface ActiveUser {
   id: string
@@ -25,7 +18,7 @@ export interface ActiveUser {
     selectedElementIds?: SelectedElements
   }
   terminal: {
-    selection?: TerminalSelection
+    selection?: IBufferRange
   }
 }
 
@@ -42,7 +35,7 @@ interface SelectionData {
 }
 
 interface TerminalSelectionData {
-  selection: TerminalSelection
+  selection: IBufferRange
   user: string
 }
 

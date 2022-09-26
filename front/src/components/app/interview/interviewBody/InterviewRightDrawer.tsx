@@ -13,7 +13,8 @@ import DrawInput, { Pointer, SelectedElements } from 'src/components/shared/Draw
 import RichTextView from 'src/components/shared/RichTextView'
 import TabPanel from 'src/components/shared/TabPannel'
 import TerminalView from 'src/components/shared/TerminalView'
-import { ActiveUser, TerminalSelection } from 'src/pages/interview/helpers'
+import { ActiveUser } from 'src/pages/interview/helpers'
+import { IBufferRange } from 'xterm'
 
 const TABS = ['terminal', 'draw', 'instruction', 'guideline']
 
@@ -26,7 +27,7 @@ interface Props {
   interviewStatus: string
   onDrawChange: (elements: readonly ExcalidrawElement[]) => void
   onDrawPointerChange: (pointer: Pointer, button: string, selectedElements: SelectedElements) => void
-  onTerminalSelectionChange: (selection?: TerminalSelection) => void
+  onTerminalSelectionChange: (selection?: IBufferRange) => void
   open: boolean
   terminalContent?: string
 }
