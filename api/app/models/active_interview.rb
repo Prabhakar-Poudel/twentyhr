@@ -1,5 +1,5 @@
 class ActiveInterview < ApplicationRecord
-  PREFIX = 'active_interview'
+  PREFIX = 'active_interview'.freeze
 
   @@redis ||= Redis.new(url: ENV.fetch('REDIS_URL') { 'redis://localhost:6380/1' })
 

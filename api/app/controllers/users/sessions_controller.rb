@@ -19,7 +19,6 @@ class Users::SessionsController < Devise::SessionsController
   # DELETE /users/sign_out
   def destroy
     success = sign_out
-    puts success
     render json: {}, status: :ok
   end
 
