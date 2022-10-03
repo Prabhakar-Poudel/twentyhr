@@ -12,7 +12,7 @@ function RightDrawerToggle({ onClick, open }: Props) {
   const bgColor = open ? 'bg-zinc-800' : 'bg-zinc-900'
 
   return (
-    <Box className={`mt-2 z-[1300] absolute right-0 rounded-l-3xl ${bgColor}`}>
+    <Box className={`mt-2 z-[1300] fixed top-0 right-0 rounded-l-3xl ${bgColor}`}>
       <Tooltip arrow title={tooltip}>
         <IconButton
           aria-label="toggle right panel"

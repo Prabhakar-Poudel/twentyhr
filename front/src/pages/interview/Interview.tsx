@@ -215,35 +215,37 @@ const Interview = ({ id, user }: Params) => {
   if (isLoading || (!subscription && interview.status === InterviewStatuses.started)) return <LinearProgress />
 
   return (
-    <Box className="flex flex-col h-screen w-screen">
-      {isOwner && (
-        <InterviewHeader
-          currentQuestion={question}
+    <Box className="h-screen w-screen">
+      <Box className="h-full flex flex-col">
+        {isOwner && (
+          <InterviewHeader
+            currentQuestion={question}
+            interviewStatus={status}
+            onBeginInterview={onBeginInterview}
+            onQuestionChanged={onQuestionChanged}
+            onTitleChanged={onTitleChanged}
+            title={title}
+          />
+        )}
+        <CodeEditor
+          activeUsers={activeUsers}
+          code={code}
           interviewStatus={status}
-          onBeginInterview={onBeginInterview}
-          onQuestionChanged={onQuestionChanged}
-          onTitleChanged={onTitleChanged}
-          title={title}
+          language={language}
+          onCodeChange={onCodeChange}
+          onCodeExecute={onCodeExecute}
+          onCursorChange={onCursorChange}
+          onSelectionChange={onSelectionChange}
+          setLanguage={onLanguageChange}
         />
-      )}
-      <CodeEditor
-        activeUsers={activeUsers}
-        code={code}
-        interviewStatus={status}
-        language={language}
-        onCodeChange={onCodeChange}
-        onCodeExecute={onCodeExecute}
-        onCursorChange={onCursorChange}
-        onSelectionChange={onSelectionChange}
-        setLanguage={onLanguageChange}
-      />
-      <InterviewFooter
-        activeUsers={activeUsers}
-        interview={id}
-        interviewStatus={status}
-        canEdit={isOwner}
-        onEndInterview={onEndInterview}
-      />
+        <InterviewFooter
+          activeUsers={activeUsers}
+          interview={id}
+          interviewStatus={status}
+          canEdit={isOwner}
+          onEndInterview={onEndInterview}
+        />
+      </Box>
       <RightDrawerToggle open={showDrawer} onClick={onDrawerToggle} />
       <InterviewRightDrawer
         activeUsers={activeUsers}

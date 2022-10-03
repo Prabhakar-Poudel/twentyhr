@@ -18,24 +18,22 @@ const InterviewFooter = ({ activeUsers, canEdit, interview, interviewStatus, onE
   const interviewStarted = interviewStatus === InterviewStatuses.started
 
   return (
-    <AppBar position="fixed" component="footer" className="!z-[1300] px-4 py-1 !top-auto !bottom-0">
-      <Box className="flex items-center">
-        <Box className="grow flex gap-4">
-          {canEdit && <InterviewNotes interview={interview} />}
-          {interviewStarted && (
-            <>
-              {activeUsers.length > 1 && <ActiveUsersList activeUsers={activeUsers} />}
-              {canEdit && <InterviewLinkCopy link={location.href} />}
-            </>
-          )}
-        </Box>
-        {canEdit && interviewStarted && (
+    <AppBar position="relative" component="footer" className="h-12 z-[1300] px-4 !flex-row">
+      <Box className="grow flex gap-4 items-center">
+        {canEdit && <InterviewNotes interview={interview} />}
+        {interviewStarted && (
           <>
-            <EndInterviewButton onEndInterview={onEndInterview} />
-            <MoreActions />
+            {activeUsers.length > 1 && <ActiveUsersList activeUsers={activeUsers} />}
+            {canEdit && <InterviewLinkCopy link={location.href} />}
           </>
         )}
       </Box>
+      {canEdit && interviewStarted && (
+        <Box className="flex items-center">
+          <EndInterviewButton onEndInterview={onEndInterview} />
+          <MoreActions />
+        </Box>
+      )}
     </AppBar>
   )
 }

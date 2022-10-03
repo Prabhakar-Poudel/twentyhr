@@ -23,7 +23,17 @@ function LoadingEditor() {
   return <Skeleton animation="wave" width="100%" height="100%" variant="rectangular" sx={{ bgcolor: 'grey.900' }} />
 }
 
-function CodeEditor({ activeUsers, code, interviewStatus, language, onCodeChange, onCodeExecute, onCursorChange, onSelectionChange, setLanguage }: InterviewBodyProps) {
+function CodeEditor({
+  activeUsers,
+  code,
+  interviewStatus,
+  language,
+  onCodeChange,
+  onCodeExecute,
+  onCursorChange,
+  onSelectionChange,
+  setLanguage,
+}: InterviewBodyProps) {
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null)
   const [monaco, setMonaco] = useState<Monaco | null>(null)
   const [rendered, setRendered] = useState(false)
@@ -50,7 +60,10 @@ function CodeEditor({ activeUsers, code, interviewStatus, language, onCodeChange
   const applyHighlight = () => {
     if (!editor) return
 
-    const highlightsToApply = activeUsers.flatMap(({ editorHighlights }) => [editorHighlights.cursor, editorHighlights.selection])
+    const highlightsToApply = activeUsers.flatMap(({ editorHighlights }) => [
+      editorHighlights.cursor,
+      editorHighlights.selection,
+    ])
 
     const newDecorations = editor.deltaDecorations(decorations, highlightsToApply)
     setDecorations(newDecorations)
@@ -71,11 +84,9 @@ function CodeEditor({ activeUsers, code, interviewStatus, language, onCodeChange
     }
   }, [code, editor])
 
-
   useEffect(() => {
     applyHighlight()
   }, [editor, activeUsers])
-
 
   const onMount: OnMount = (editor, monaco) => {
     editor.focus()
@@ -92,7 +103,7 @@ function CodeEditor({ activeUsers, code, interviewStatus, language, onCodeChange
 
   // @ts-expect-error
   const onChange = (value?: string, event: monaco.editor.IModelContentChangedEvent) => {
-    if(event.isFlush) return
+    if (event.isFlush) return
     onCodeChange(value || '')
   }
 
@@ -116,16 +127,14 @@ function CodeEditor({ activeUsers, code, interviewStatus, language, onCodeChange
         setTheme={onThemeChange}
         theme={theme}
       />
-      <Box className="grow">
-        <MonacoEditor
-          language={language}
-          loading={<LoadingEditor />}
-          onChange={onChange}
-          onMount={onMount}
-          options={{ ...defaultEditorOptions, fontSize, readOnly: interviewEnded }}
-          theme={theme}
-        />
-      </Box>
+      <MonacoEditor
+        language={language}
+        loading={<LoadingEditor />}
+        onChange={onChange}
+        onMount={onMount}
+        options={{ ...defaultEditorOptions, fontSize, readOnly: interviewEnded }}
+        theme={theme}
+      />
     </Box>
   )
 }

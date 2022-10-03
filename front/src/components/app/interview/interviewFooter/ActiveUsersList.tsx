@@ -11,7 +11,7 @@ interface Props {
 }
 
 const ActiveUsersList = ({ activeUsers }: Props) => (
-  <Box className="flex gap-4 py-2">
+  <Box className="flex gap-4">
     {activeUsers.map((user, index) => (
       <ActiveUserIndicator userName={user.name} index={index} key={user.id} />
     ))}
