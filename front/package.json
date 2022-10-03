@@ -9,9 +9,9 @@
     "@excalidraw/excalidraw": "^0.12.0",
     "@monaco-editor/react": "^4.4.6",
     "@mui/icons-material": "^5.10.6",
-    "@mui/material": "^5.10.6",
+    "@mui/material": "^5.10.7",
     "@mui/x-data-grid": "^5.17.4",
-    "@tanstack/react-query": "^4.6.0",
+    "@tanstack/react-query": "^4.7.1",
     "actioncable": "^5.2.8-1",
     "axios": "^0.27.2",
     "dayjs": "^1.11.5",
@@ -63,13 +63,13 @@
     "@types/actioncable": "^5.2.7",
     "@types/jest": "^29.0.3",
     "@types/lodash": "^4.14.185",
-    "@types/node": "^18.7.21",
+    "@types/node": "^18.8.0",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@types/react-router": "^5.1.19",
     "@types/react-router-dom": "^5.3.3",
-    "@typescript-eslint/eslint-plugin": "^5.38.0",
-    "@typescript-eslint/parser": "^5.38.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
     "autoprefixer": "^10.4.12",
     "eslint": "^8.24.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -82,6 +82,6 @@
     "postcss": "^8.4.16",
     "prettier": "^2.7.1",
     "tailwindcss": "^3.1.8",
-    "typescript": "^4.8.3"
+    "typescript": "^4.8.4"
   }
 }
