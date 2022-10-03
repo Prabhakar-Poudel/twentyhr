@@ -9,7 +9,7 @@
     "@excalidraw/excalidraw": "^0.12.0",
     "@monaco-editor/react": "^4.4.6",
     "@mui/icons-material": "^5.10.6",
-    "@mui/material": "^5.10.7",
+    "@mui/material": "^5.10.8",
     "@mui/x-data-grid": "^5.17.4",
     "@tanstack/react-query": "^4.7.1",
     "actioncable": "^5.2.8-1",
