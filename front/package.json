@@ -11,7 +11,7 @@
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.7",
     "@mui/x-data-grid": "^5.17.4",
-    "@tanstack/react-query": "^4.7.1",
+    "@tanstack/react-query": "^4.9.0",
     "actioncable": "^5.2.8-1",
     "axios": "^0.27.2",
     "dayjs": "^1.11.5",
