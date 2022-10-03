@@ -7,17 +7,16 @@ import loginImage from 'src/assets/svg/loginScreen.svg'
 import PasswordField from 'src/components/app/account/Password'
 import { useAuth } from 'src/contexts/AuthContext'
 import useToast from 'src/hooks/useToast'
-import { LocationState } from 'src/types/routerLocation'
 
 const LoginPage = () => {
   const navigate = useNavigate()
-  const { state: locationState = {} } = useLocation()
+  const location = useLocation()
   const { logIn } = useAuth()
   const toast = useToast()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const redirectTo = (locationState as LocationState)?.from?.pathname || '/'
+  const redirectTo = location.state?.from?.pathname || '/'
 
   const onLogin: FormEventHandler<HTMLDivElement> = async (e) => {
     e.preventDefault()

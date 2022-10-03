@@ -1,36 +1,34 @@
 import { Box, Button, LinearProgress, Link, Paper, TextField, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import HomeLogo from 'src/components/app/appHeader/HomeLogo'
+import { useAuth } from 'src/contexts/AuthContext'
 import { usePingInterview } from 'src/queries/Interviews'
 import { InterviewStatuses } from 'src/types/interview'
-import { LocationState } from 'src/types/routerLocation'
 
-const JoinInterview = () => {
-  const { state } = useLocation()
-  const locationState = state as LocationState
+interface Props {
+  interviewId: string
+}
+
+const JoinInterview = ({ interviewId }: Props) => {
+  const { guestLogIn } = useAuth()
+  const location = useLocation()
   const navigate = useNavigate()
   const [name, setName] = useState('')
-  const redirectTo = locationState?.from
 
-  const interviewId = redirectTo?.pathname?.replace('/interviews/', '')
   const { data: interview, isLoading } = usePingInterview(interviewId)
 
-  const redirectToLogin = () => navigate('/login', { replace: true, state: { from: redirectTo } })
-  const redirectToInterview = () => navigate(redirectTo!, { replace: true })
+  const redirectToLogin = () => navigate('/login', { replace: true, state: { from: location } })
 
-  const guestLogin = () => {
-    if (!name.trim()) return
-    redirectToInterview()
+  const joinAsGuest = () => {
+    const cleanName = name.trim()
+    if (!cleanName) return
+    guestLogIn(cleanName, interviewId)
   }
-
-  useEffect(() => {
-    if (!redirectTo) redirectToLogin()
-  }, [])
 
   if (isLoading) return <LinearProgress />
 
-  if (!(interview?.status === InterviewStatuses.started || interview?.status === InterviewStatuses.created)) {
+  if (interview?.status !== InterviewStatuses.started) {
     setTimeout(() => navigate('/not-found', { replace: true }), 1000)
     return null
   }
@@ -52,7 +50,7 @@ const JoinInterview = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <Button variant="contained" size="large" className="h-14" onClick={guestLogin}>
+            <Button variant="contained" size="large" className="h-14" onClick={joinAsGuest}>
               Start
             </Button>
           </Box>

@@ -33,7 +33,7 @@ class InterviewChannel < ApplicationCable::Channel
       interview.update_interview!(question_id: payload['data']['question'])
       InterviewChannel.broadcast_to(interview, payload)
     when 'language_changed'
-      interview.update_interview!(question_id: payload['data']['question'])
+      interview.update_interview!(language: payload['data']['language'])
       InterviewChannel.broadcast_to(interview, payload)
     when 'cursor_changed', 'draw_pointer_changed', 'selection_changed', 'terminal_selection_changed'
       InterviewChannel.broadcast_to(interview, payload)
@@ -47,6 +47,7 @@ class InterviewChannel < ApplicationCable::Channel
   end
 
   def can_update_interview?
+    return false unless current_user.id
     Ability.new(current_user).can?(:update, interview)
   end
 

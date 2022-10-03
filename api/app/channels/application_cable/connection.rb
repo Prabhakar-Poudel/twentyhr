@@ -7,12 +7,14 @@ module ApplicationCable
     end
 
     private
+
     def find_verified_user
-      if current_user = env['warden'].user
-        current_user
-      else
-        reject_unauthorized_connection
-      end
+      current_user = env['warden'].user
+      return current_user if current_user.present?
+      guest_user = cookies['guest_user']
+      return User.new(JSON.parse(guest_user)) if guest_user
+
+      reject_unauthorized_connection
     end
   end
 end

@@ -37,7 +37,7 @@ function LanguageSelector({ availableLanguages, currentLanguage, setLanguage }: 
       options={availableLanguages}
       renderInput={InputField}
       renderOption={OptionItem}
-      // @ts-ignore
+      // @ts-expect-error
       value={selectedLanguage}
     />
   )

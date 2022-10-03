@@ -11,9 +11,10 @@ interface UserLoginProps {
 interface AuthContextType {
   loading: boolean
   user: User | null
-  logIn: (user: UserLoginProps) => void
-  logOut: () => void
-  fetchCurrentUser: () => void
+  fetchCurrentUser(): void
+  guestLogIn(name: string, interview: string): Promise<void>
+  logIn(user: UserLoginProps): Promise<void>
+  logOut(): void
 }
 
 interface AuthProviderProps {
@@ -43,7 +44,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const logIn = (newUser: UserLoginProps) => {
     const { email, password } = newUser
-    if (!(email && password)) return
+    if (!(email && password)) return Promise.reject()
     return axios
       .post('/users/sign_in', { user: { email, password } })
       .then((response) => setUser(response.data))
@@ -55,7 +56,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return axios.delete('/users/sign_out').finally(() => setUser(null))
   }
 
-  const value = { loading, user, fetchCurrentUser, logIn, logOut }
+  const guestLogIn = async (name: string, interview: string) =>
+    axios
+      .post('/guest_sign_in', { guest_name: name, interview_id: interview })
+      .then((response) => setUser(response.data))
+      .finally(() => setLoading(false))
+
+  const value = { loading, user, fetchCurrentUser, logIn, logOut, guestLogIn }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

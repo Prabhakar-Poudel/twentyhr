@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
 
   devise_for :users, module: :users, only: %i[sessions passwords registrations confirmations], skip_helpers: true, defaults: { format: :json }
+  post :guest_sign_in, to: 'users/guest_sessions#create'
 
   resources :organizations, only: %i[index show create update]
   resources :users, only: %i[index show create update]

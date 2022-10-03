@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  load_and_authorize_resource :except => [:profile]
+  load_and_authorize_resource except: [:profile]
 
   def show
     render json: { data: @user }

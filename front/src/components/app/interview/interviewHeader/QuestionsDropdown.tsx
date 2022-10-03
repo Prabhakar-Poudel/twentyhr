@@ -55,7 +55,7 @@ function QuestionsDropdown({ currentQuestion, onChange }: Props) {
       renderInput={InputField}
       renderOption={OptionItem}
       size="small"
-      // @ts-ignore
+      // @ts-expect-error
       value={currentQuestion || null}
     />
   )

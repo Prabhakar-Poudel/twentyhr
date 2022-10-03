@@ -1,7 +1,6 @@
 class InterviewsController < ApplicationController
-  skip_before_action :authenticate_user!, only:  %i[ping]
+  skip_before_action :authenticate_user!, only:  %i[ping show]
   load_and_authorize_resource except:  %i[ping]
-  skip_authorization_check only:  %i[ping]
 
   def index
     interviews =
@@ -9,12 +8,38 @@ class InterviewsController < ApplicationController
         .includes(:creator, :question)
         .select(:id, :title, :status, :created_at, :creator_id, :question_id)
         .order(created_at: :desc)
-    render json: interviews.as_json(except: [:creator_id, :question_id], include: { creator: { only: [:name, :email, :id] }, question: { only: [:title, :id] }}), status: :ok
+    render(
+      json: interviews.as_json(
+        except: %i[creator_id question_id],
+        include: {
+          creator: {
+            only: %i[name email id]
+          },
+          question: {
+            only: %i[title id]
+          }
+        }
+      ),
+      status: :ok
+    )
   end
 
   def show
     if @interview
-      render json: @interview.as_json(except: [:question_id], include: { question: { only: [:id, :title, :description, :instruction, :guidelines, :initial_code, :language] }}), status: :ok
+      question_fields =
+        if can?(:edit, @interview)
+          %i[id title description instruction guidelines initial_code language]
+        else
+          %i[id description instruction initial_code language]
+        end
+
+      render(
+        json: @interview.as_json(
+          except: [:question_id],
+          include: { question: { only: question_fields }}
+        ),
+        status: :ok
+      )
     else
       render json: { }, status: :not_found
     end
@@ -41,6 +66,7 @@ class InterviewsController < ApplicationController
 
   def ping
     interview = Interview.includes(:organization).find(params[:id])
+    authorize! :read, interview
     render json: interview.as_json(only: [:status], include: { organization: { only: [:name] }}), status: :ok
   end
 

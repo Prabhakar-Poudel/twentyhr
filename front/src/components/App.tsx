@@ -61,11 +61,11 @@ function App() {
                 <Route path="questions/new" element={<NewQuestion />} />
                 <Route path="questions/:id/edit" element={<EditQuestion />} />
                 <Route path="interviews" element={<InterviewsHome />} />
-                <Route path="interviews/:id" element={<InterviewPage />} />
                 <Route path="account" element={<AccountSettingsPage />} />
                 <Route path="admin/*" element={<AdminHome />} />
                 <Route path="/" element={<DashboardPage />} />
               </Route>
+              <Route path="interviews/:id" element={<InterviewPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </AuthProvider>

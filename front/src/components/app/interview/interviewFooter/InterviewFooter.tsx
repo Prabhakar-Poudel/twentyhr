@@ -8,27 +8,28 @@ import { InterviewStatuses } from 'src/types/interview'
 
 interface Props {
   activeUsers: ActiveUser[]
+  canEdit: boolean
   interview: string
   interviewStatus: string
   onEndInterview: () => void
 }
 
-const InterviewFooter = ({ activeUsers, interview, interviewStatus, onEndInterview }: Props) => {
+const InterviewFooter = ({ activeUsers, canEdit, interview, interviewStatus, onEndInterview }: Props) => {
   const interviewStarted = interviewStatus === InterviewStatuses.started
 
   return (
-    <AppBar position="relative" component="footer" className="z-[1300] px-4 py-1">
+    <AppBar position="fixed" component="footer" className="!z-[1300] px-4 py-1 !top-auto !bottom-0">
       <Box className="flex items-center">
         <Box className="grow flex gap-4">
-          <InterviewNotes interview={interview} />
+          {canEdit && <InterviewNotes interview={interview} />}
           {interviewStarted && (
             <>
               {activeUsers.length > 1 && <ActiveUsersList activeUsers={activeUsers} />}
-              <InterviewLinkCopy link={location.href} />
+              {canEdit && <InterviewLinkCopy link={location.href} />}
             </>
           )}
         </Box>
-        {interviewStarted && (
+        {canEdit && interviewStarted && (
           <>
             <EndInterviewButton onEndInterview={onEndInterview} />
             <MoreActions />

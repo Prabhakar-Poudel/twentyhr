@@ -32,7 +32,7 @@ function InterviewHeader({
   }
 
   return (
-    <AppBar position="relative">
+    <AppBar position="fixed">
       <Toolbar variant="dense">
         <Box className="grow flex items-center gap-4 mb-0.5">
           <InterviewTitle onChange={onTitleChange} value={title} />
