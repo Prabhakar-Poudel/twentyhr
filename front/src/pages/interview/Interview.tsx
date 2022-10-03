@@ -32,9 +32,10 @@ import { User } from 'src/types/user'
 interface Params {
   id: string
   user: User
+  onEndInterview(): void
 }
 
-const Interview = ({ id, user }: Params) => {
+const Interview = ({ id, user, onEndInterview }: Params) => {
   const { data: interview, isLoading, invalidateInterview, refetch } = useInterviewShow(id)
   const [language, setLanguage] = useState('')
   const [code, setCode] = useState('')
@@ -143,7 +144,7 @@ const Interview = ({ id, user }: Params) => {
     subscription?.send({ type: PAYLOAD_TYPES.DRAW_UPDATED, data: { elements, user: user.id } })
   }
 
-  const onEndInterview = () => {
+  const endInterview = () => {
     subscription?.send({ type: PAYLOAD_TYPES.INTERVIEW_ENDED, data: { user: user.id } })
   }
 
@@ -197,6 +198,7 @@ const Interview = ({ id, user }: Params) => {
         closeSocket()
         invalidateInterview()
         setStatus(InterviewStatuses.ended)
+        onEndInterview()
         break
       }
     }
@@ -243,7 +245,7 @@ const Interview = ({ id, user }: Params) => {
           interview={id}
           interviewStatus={status}
           canEdit={isOwner}
-          onEndInterview={onEndInterview}
+          onEndInterview={endInterview}
         />
       </Box>
       <RightDrawerToggle open={showDrawer} onClick={onDrawerToggle} />
