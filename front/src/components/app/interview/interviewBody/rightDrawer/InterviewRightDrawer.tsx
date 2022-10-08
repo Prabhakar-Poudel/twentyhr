@@ -1,22 +1,17 @@
 import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types'
 import { AppState } from '@excalidraw/excalidraw/types/types'
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen'
-import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects'
 import OpenInFullIcon from '@mui/icons-material/OpenInFull'
-import PolylineIcon from '@mui/icons-material/Polyline'
-import QuizIcon from '@mui/icons-material/Quiz'
-import TerminalIcon from '@mui/icons-material/Terminal'
-import { Box, Divider, IconButton, Tab, Tabs, Tooltip } from '@mui/material'
+import { Box, Divider, IconButton, Tooltip } from '@mui/material'
 import Drawer from '@mui/material/Drawer'
-import { SyntheticEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import DrawInput, { Pointer, SelectedElements } from 'src/components/shared/DrawInput'
 import RichTextView from 'src/components/shared/RichTextView'
 import TabPanel from 'src/components/shared/TabPannel'
 import TerminalView from 'src/components/shared/TerminalView'
 import { ActiveUser } from 'src/pages/interview/helpers'
 import { IBufferRange } from 'xterm'
-
-const TABS = ['terminal', 'draw', 'instruction', 'guideline']
+import DrawerTabs, { TABS } from './DrawerTabs'
 
 interface Props {
   activeUsers: ActiveUser[]
@@ -32,7 +27,7 @@ interface Props {
   terminalContent?: string
 }
 
-function InterviewRightDrawer({
+const InterviewRightDrawer = ({
   activeUsers,
   drawingElements,
   focusTerminal,
@@ -44,14 +39,10 @@ function InterviewRightDrawer({
   onTerminalSelectionChange,
   open,
   terminalContent = '',
-}: Props) {
+}: Props) => {
   const [activeTab, setActiveTab] = useState(TABS[0])
   const [expanded, setExpanded] = useState(false)
   const [drawState, setDrawState] = useState<AppState | null>(null)
-
-  const handleChange = (event: SyntheticEvent, newValue: string) => {
-    setActiveTab(newValue)
-  }
 
   const onExpandButtonClick = () => {
     setExpanded(!expanded)
@@ -63,7 +54,6 @@ function InterviewRightDrawer({
 
   const size = expanded ? 'w-screen' : 'w-192'
   const tooltip = expanded ? 'Close fullscreen' : 'Open fullscreen'
-  const className = 'hover:text-white !font-bold !min-h-fit hover:scale-110'
 
   return (
     <Drawer variant="persistent" anchor="right" open={open}>
@@ -74,44 +64,7 @@ function InterviewRightDrawer({
               {expanded ? <CloseFullscreenIcon /> : <OpenInFullIcon />}
             </IconButton>
           </Tooltip>
-          <Tabs value={activeTab} onChange={handleChange} className="grow">
-            <Tab
-              disableRipple
-              wrapped
-              value={TABS[0]}
-              label="IO"
-              icon={<TerminalIcon />}
-              iconPosition="start"
-              className={className}
-            />
-            <Tab
-              disableRipple
-              wrapped
-              value={TABS[1]}
-              label="Draw"
-              icon={<PolylineIcon />}
-              iconPosition="start"
-              className={className}
-            />
-            <Tab
-              disableRipple
-              wrapped
-              value={TABS[2]}
-              label="What"
-              icon={<QuizIcon />}
-              iconPosition="start"
-              className={className}
-            />
-            <Tab
-              disableRipple
-              wrapped
-              value={TABS[3]}
-              label="How"
-              icon={<EmojiObjectsIcon />}
-              iconPosition="start"
-              className={className}
-            />
-          </Tabs>
+          <DrawerTabs activeTab={activeTab} setActiveTab={setActiveTab} />
         </Box>
         <Divider />
         <Box className="grow basis-32 overflow-hidden pb-12">

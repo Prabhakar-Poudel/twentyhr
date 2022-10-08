@@ -21,7 +21,7 @@ interface InterviewFooterProps {
   theme: string
 }
 
-function EditorHeader({
+const EditorHeader = ({
   activeUsers,
   availableLanguages,
   currentLanguage,
@@ -33,7 +33,7 @@ function EditorHeader({
   setLanguage,
   setTheme,
   theme,
-}: InterviewFooterProps) {
+}: InterviewFooterProps) => {
   const KeyPress = useCallback(
     (event: KeyboardEvent): any => {
       if ((event.ctrlKey || event.metaKey) && event.code === 'Enter') onCodeExecute()

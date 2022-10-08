@@ -23,7 +23,7 @@ function LoadingEditor() {
   return <Skeleton animation="wave" width="100%" height="100%" variant="rectangular" sx={{ bgcolor: 'grey.900' }} />
 }
 
-function CodeEditor({
+const CodeEditor = ({
   activeUsers,
   code,
   interviewStatus,
@@ -33,7 +33,7 @@ function CodeEditor({
   onCursorChange,
   onSelectionChange,
   setLanguage,
-}: InterviewBodyProps) {
+}: InterviewBodyProps) => {
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null)
   const [monaco, setMonaco] = useState<Monaco | null>(null)
   const [rendered, setRendered] = useState(false)

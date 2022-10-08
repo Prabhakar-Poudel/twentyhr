@@ -5,7 +5,7 @@ import LanguageSelector, {
   LanguageSelectorProps,
 } from 'src/components/app/interview/interviewBody/ide/LanguageSelector'
 
-function Language(props: LanguageSelectorProps) {
+const Language = (props: LanguageSelectorProps) => {
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => setOpen(true)
