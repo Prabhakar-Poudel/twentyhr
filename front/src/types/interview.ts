@@ -31,6 +31,7 @@ interface InterviewBase {
   question: QuestionShow
   code: string
   drawing: ExcalidrawElement[]
+  language: string
 }
 
 export interface InterviewShow extends InterviewBase {

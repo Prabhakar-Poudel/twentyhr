@@ -9,5 +9,6 @@ export const PAYLOAD_TYPES = {
   QUESTION_CHANGED: 'question_changed',
   SELECTION_CHANGED: 'selection_changed',
   TERMINAL_SELECTION_CHANGED: 'terminal_selection_changed',
+  TERMINAL_UPDATE: 'terminal_update',
   TITLE_CHANGED: 'title_changed',
 }

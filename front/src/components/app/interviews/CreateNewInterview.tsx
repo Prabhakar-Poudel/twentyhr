@@ -3,7 +3,7 @@ import { Fab } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { createInterview } from 'src/queries/Interviews'
 
-function CreateNewInterview() {
+const CreateNewInterview = () => {
   const navigate = useNavigate()
   const onCreateNewInterview = async () => {
     const interview = await createInterview()

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_17_143634) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_08_145827) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -30,9 +30,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_17_143634) do
     t.datetime "updated_at", null: false
     t.string "code"
     t.jsonb "drawing"
+    t.string "language"
     t.index ["creator_id"], name: "index_interviews_on_creator_id"
     t.index ["organization_id"], name: "index_interviews_on_organization_id"
     t.index ["question_id"], name: "index_interviews_on_question_id"
+  end
+
+  create_table "notes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "author_id", null: false
+    t.uuid "interview_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_notes_on_author_id"
+    t.index ["interview_id"], name: "index_notes_on_interview_id"
   end
 
   create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -95,6 +106,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_17_143634) do
   add_foreign_key "interviews", "organizations"
   add_foreign_key "interviews", "questions"
   add_foreign_key "interviews", "users", column: "creator_id"
+  add_foreign_key "notes", "interviews"
+  add_foreign_key "notes", "users", column: "author_id"
   add_foreign_key "questions", "organizations"
   add_foreign_key "questions", "users", column: "creator_id"
   add_foreign_key "users", "organizations"

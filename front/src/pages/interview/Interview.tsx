@@ -1,6 +1,6 @@
 import { ExcalidrawElement } from '@excalidraw/excalidraw/types/element/types'
 import { Box, LinearProgress } from '@mui/material'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as monaco from 'monaco-editor'
 import { loader } from '@monaco-editor/react'
 import InterviewHeader from 'src/components/app/interview/interviewHeader/InterviewHeader'
@@ -8,16 +8,6 @@ import CodeEditor from 'src/components/app/interview/interviewBody/CodeEditor'
 import InterviewFooter from 'src/components/app/interview/interviewFooter/InterviewFooter'
 import { Pointer, SelectedElements } from 'src/components/shared/DrawInput'
 import { axios } from 'src/lib/axios/axios'
-import {
-  ActiveUser,
-  formatActiveUsers,
-  getSelectionData,
-  setCursor,
-  setPointer,
-  setSelection,
-  setTerminalSelection,
-} from 'src/pages/interview/helpers'
-import { PAYLOAD_TYPES } from 'src/pages/interview/payloads'
 import NotFoundPage from 'src/pages/NotFoundPage'
 import { updateInterview, useInterviewShow } from 'src/queries/Interviews'
 import { InterviewStatuses } from 'src/types/interview'
@@ -28,6 +18,17 @@ import { connectToInterview } from 'src/websockets/channels/interviewChannel'
 import { CONSUMER } from 'src/websockets/consumer'
 import { IBufferRange } from 'xterm'
 import { User } from 'src/types/user'
+import { runCode } from './codeRunner'
+import {
+  ActiveUser,
+  formatActiveUsers,
+  getSelectionData,
+  setCursor,
+  setPointer,
+  setSelection,
+  setTerminalSelection,
+} from './helpers'
+import { PAYLOAD_TYPES } from './payloads'
 
 interface Params {
   id: string
@@ -47,6 +48,7 @@ const Interview = ({ id, user, onEndInterview }: Params) => {
   const [subscription, setSubscription] = useState<ActionCable.Channel>()
   const [title, setTitle] = useState('')
   const [status, setStatus] = useState('')
+  const [terminalContent, setTerminalContent] = useState('\x1b[1;33m Your program output will appear here.\x1b[0m\n')
   const isOwner = !!user.email
 
   const closeSocket = () => {
@@ -76,13 +78,10 @@ const Interview = ({ id, user, onEndInterview }: Params) => {
     beginInterview()
     setTitle(interview.title)
     setStatus(interview.status)
-
-    if (interview.question) {
-      setQuestion(interview.question)
-      setLanguage(interview.question.language!)
-      setCode(interview.code)
-      if (interview.drawing) setDrawingElements(interview.drawing)
-    }
+    setLanguage(interview.language ?? interview.question?.language ?? '')
+    setQuestion(interview.question)
+    setCode(interview.code)
+    setDrawingElements(interview.drawing ?? [])
 
     return closeSocket
   }, [interview])
@@ -144,14 +143,30 @@ const Interview = ({ id, user, onEndInterview }: Params) => {
     subscription?.send({ type: PAYLOAD_TYPES.DRAW_UPDATED, data: { elements, user: user.id } })
   }
 
+  const sendTerminalUpdate = (message: string) => {
+    setTerminalContent(message)
+    subscription?.send({ type: PAYLOAD_TYPES.TERMINAL_UPDATE, data: { message, user: user.id } })
+  }
+
+  const handleEndInterview = () => {
+    closeSocket()
+    invalidateInterview()
+    setStatus(InterviewStatuses.ended)
+    onEndInterview()
+  }
+
   const endInterview = () => {
     subscription?.send({ type: PAYLOAD_TYPES.INTERVIEW_ENDED, data: { user: user.id } })
   }
 
   const onChannelData = (payload: any) => {
+    if (payload.type === PAYLOAD_TYPES.INTERVIEW_ENDED) {
+      handleEndInterview()
+      return
+    }
+
     const senderIsRecipient = user.id === payload.data?.user
-    const forceApply = [PAYLOAD_TYPES.DRAW_UPDATED, PAYLOAD_TYPES.INTERVIEW_ENDED].includes(payload.type)
-    if (senderIsRecipient && !forceApply) return
+    if (senderIsRecipient) return
 
     switch (payload.type) {
       case PAYLOAD_TYPES.CURSOR_CHANGED: {
@@ -174,6 +189,10 @@ const Interview = ({ id, user, onEndInterview }: Params) => {
         setDrawingElements(payload.data.elements)
         break
       }
+      case PAYLOAD_TYPES.TERMINAL_UPDATE: {
+        setTerminalContent(payload.data.message)
+        break
+      }
       case PAYLOAD_TYPES.TERMINAL_SELECTION_CHANGED: {
         setActiveUsers((activeUsers) => setTerminalSelection(activeUsers, payload.data))
         break
@@ -194,24 +213,26 @@ const Interview = ({ id, user, onEndInterview }: Params) => {
         setLanguage(payload.data.language)
         break
       }
-      case PAYLOAD_TYPES.INTERVIEW_ENDED: {
-        closeSocket()
-        invalidateInterview()
-        setStatus(InterviewStatuses.ended)
-        onEndInterview()
-        break
-      }
     }
   }
 
   const onDrawerToggle = () => setShowDrawer(!showDrawer)
-  const terminalContent = 'www.twentyhr.com \n This feature is not ready yet'
 
-  const onCodeExecute = useCallback(() => {
+  const reFocusTerminal = () => {
     setShowDrawer(true)
     setFocusTerminal(true)
     setTimeout(() => setFocusTerminal(false), 1000)
-  }, [])
+  }
+
+  const executeCodeAndSetResult = async (codeToRun: string) => {
+    sendTerminalUpdate(`\x1b[1;32m${user.name} is running the code\x1b[0m\n`)
+    sendTerminalUpdate(await runCode(codeToRun, language))
+  }
+
+  const onCodeExecute = (codeToRun: string) => {
+    reFocusTerminal()
+    executeCodeAndSetResult(codeToRun)
+  }
 
   if (!isLoading && !interview) return <NotFoundPage />
   if (isLoading || (!subscription && interview.status === InterviewStatuses.started)) return <LinearProgress />

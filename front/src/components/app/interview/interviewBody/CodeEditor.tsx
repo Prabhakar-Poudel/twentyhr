@@ -1,7 +1,7 @@
 import MonacoEditor, { Monaco, OnMount } from '@monaco-editor/react'
 import { Box, SelectChangeEvent, Skeleton } from '@mui/material'
 import * as monaco from 'monaco-editor'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import EditorHeader from 'src/components/app/interview/interviewBody/ide/EditorHeader'
 import defaultEditorOptions, { SUPPORTED_LANGUAGES } from 'src/config/editorConfig'
 import { ActiveUser } from 'src/pages/interview/helpers'
@@ -13,7 +13,7 @@ interface InterviewBodyProps {
   interviewStatus: string
   language: string
   onCodeChange: (code: string) => void
-  onCodeExecute: () => void
+  onCodeExecute: (code: string) => void
   onCursorChange: (event: monaco.editor.ICursorPositionChangedEvent) => void
   onSelectionChange: (event: monaco.editor.ICursorSelectionChangedEvent) => void
   setLanguage: (language: string) => void
@@ -34,8 +34,8 @@ const CodeEditor = ({
   onSelectionChange,
   setLanguage,
 }: InterviewBodyProps) => {
-  const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null)
-  const [monaco, setMonaco] = useState<Monaco | null>(null)
+  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>()
+  const monacoRef = useRef<Monaco>()
   const [rendered, setRendered] = useState(false)
   const [fontSize, setFontSize] = useState(defaultEditorOptions.fontSize)
   const [theme, setTheme] = useState('vs-dark')
@@ -48,7 +48,7 @@ const CodeEditor = ({
   const onFontSizeChange = (event: Event, value: number) => setFontSize(value)
   const onThemeChange = (event: SelectChangeEvent) => setTheme(event.target.value)
 
-  const resizeHandler = useCallback(() => editor!.layout({ width: 95, height: 90 }), [editor])
+  const resizeHandler = useCallback(() => editorRef.current!.layout({ width: 95, height: 90 }), [editorRef.current])
 
   const updateAvailableLanguages = (monacoLanguages: monaco.languages.ILanguageExtensionPoint[]) => {
     const languages = monacoLanguages
@@ -58,47 +58,53 @@ const CodeEditor = ({
   }
 
   const applyHighlight = () => {
-    if (!editor) return
+    if (!editorRef.current) return
 
     const highlightsToApply = activeUsers.flatMap(({ editorHighlights }) => [
       editorHighlights.cursor,
       editorHighlights.selection,
     ])
 
-    const newDecorations = editor.deltaDecorations(decorations, highlightsToApply)
+    const newDecorations = editorRef.current.deltaDecorations(decorations, highlightsToApply)
     setDecorations(newDecorations)
   }
 
   useEffect(() => {
-    if (!editor || rendered) return
+    if (!editorRef.current || rendered) return
     window.addEventListener('resize', resizeHandler)
-    updateAvailableLanguages(monaco!.languages.getLanguages())
+    updateAvailableLanguages(monacoRef.current!.languages.getLanguages())
     setRendered(true)
     return () => window.removeEventListener('resize', resizeHandler)
-  }, [editor, monaco, rendered, resizeHandler])
+  }, [editorRef.current, monacoRef.current, rendered, resizeHandler])
 
   useEffect(() => {
-    if (editor) {
-      editor.setValue(code)
-      applyHighlight()
-    }
-  }, [code, editor])
+    if (!editorRef.current) return
+
+    editorRef.current.setValue(code)
+    applyHighlight()
+  }, [code, editorRef.current])
 
   useEffect(() => {
     applyHighlight()
-  }, [editor, activeUsers])
+  }, [editorRef.current, activeUsers])
 
   const onMount: OnMount = (editor, monaco) => {
     editor.focus()
-    editor.onDidChangeCursorPosition(onCursorChange)
-    editor.onDidChangeCursorSelection(onSelectionChange)
+    editor.onDidChangeCursorPosition((event) => {
+      if (event.reason === 1) return // setValue was called
+      onCursorChange(event)
+    })
+    editor.onDidChangeCursorSelection((event) => {
+      if (event.reason === 1) return // setValue was called
+      onSelectionChange(event)
+    })
     editor.onDidAttemptReadOnlyEdit(() => {
       const messageContribution = editor.getContribution('editor.contrib.messageController')
       // @ts-expect-error
       messageContribution.showMessage('This interview has ended', editor.getPosition())
     })
-    setEditor(editor)
-    setMonaco(monaco)
+    editorRef.current = editor
+    monacoRef.current = monaco
   }
 
   // @ts-expect-error
@@ -109,7 +115,11 @@ const CodeEditor = ({
 
   const jumpToUser = (user: ActiveUser) => {
     const lineNumber = user.editorHighlights.cursor.range.endLineNumber
-    editor!.revealLineInCenter(lineNumber)
+    editorRef.current!.revealLineInCenter(lineNumber)
+  }
+
+  const executeCode = () => {
+    if (editorRef.current) onCodeExecute(editorRef.current.getValue())
   }
 
   return (
@@ -120,7 +130,7 @@ const CodeEditor = ({
         currentLanguage={language}
         fontSize={fontSize}
         interviewStatus={interviewStatus}
-        onCodeExecute={onCodeExecute}
+        onCodeExecute={executeCode}
         onJumpToUser={jumpToUser}
         setFontSize={onFontSizeChange}
         setLanguage={setLanguage}

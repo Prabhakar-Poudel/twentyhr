@@ -35,7 +35,7 @@ class InterviewChannel < ApplicationCable::Channel
     when 'language_changed'
       interview.update_interview!(language: payload['data']['language'])
       InterviewChannel.broadcast_to(interview, payload)
-    when 'cursor_changed', 'draw_pointer_changed', 'selection_changed', 'terminal_selection_changed'
+    when 'cursor_changed', 'draw_pointer_changed', 'selection_changed', 'terminal_selection_changed', 'terminal_update'
       InterviewChannel.broadcast_to(interview, payload)
     end
   end

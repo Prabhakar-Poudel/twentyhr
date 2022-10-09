@@ -49,6 +49,7 @@ class InterviewsController < ApplicationController
     @interview.creator_id = current_user.id
     @interview.organization_id = current_organization.id
     @interview.title = "Interview #{SecureRandom.base36(8)}" if @interview.title.blank?
+    @interview.language = @interview.question&.language if @interview.language.blank?
     if @interview.save
       render json: @interview, status: :created
     else
@@ -73,6 +74,6 @@ class InterviewsController < ApplicationController
   private
 
   def interview_params
-    params.require(:interview).permit(:title, :status, :question_id)
+    params.require(:interview).permit(:title, :status, :question_id, :language)
   end
 end

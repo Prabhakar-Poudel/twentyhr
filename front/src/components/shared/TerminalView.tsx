@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { useEffect, useRef } from 'react'
 import { COLOR_VALUE } from 'src/constants/colors'
 import { ActiveUser } from 'src/pages/interview/helpers'
@@ -22,9 +22,10 @@ function TerminalView({ value = '', onSelect, activeUsers }: Props) {
 
     const term = new Terminal({
       allowProposedApi: true,
+      convertEol: true,
       cursorBlink: true,
       cursorStyle: 'bar',
-      cursorWidth: 2,
+      disableStdin: true,
       fontSize: 16,
       macOptionIsMeta: true,
       theme: { background: '#1F1E1E', selectionForeground: '#1F1E1E', selectionBackground: 'white' },
@@ -40,8 +41,10 @@ function TerminalView({ value = '', onSelect, activeUsers }: Props) {
     onSelect(terminal.current.getSelectionPosition())
   }
 
+  const clearMarkers = () => terminal.current?.markers.forEach((marker) => marker.dispose())
+
   const applySelection = () => {
-    terminal.current?.markers.forEach((marker) => marker.dispose())
+    clearMarkers()
 
     const cursorY = terminal.current?.buffer.active.cursorY
     activeUsers.forEach((user) => {
@@ -93,8 +96,16 @@ function TerminalView({ value = '', onSelect, activeUsers }: Props) {
     terminal.current?.writeln(value)
   }, [value])
 
+  const clearTerminal = () => terminal.current?.clear()
+
   if (!terminal.current) return null
-  return <Box id="terminal-container" className="h-full w-full" />
+  return (
+    <Box id="terminal-container" className="h-full w-full">
+      <Button color="warning" size="small" className="!absolute right-1.5 z-10" onClick={clearTerminal}>
+        Clear
+      </Button>
+    </Box>
+  )
 }
 
 export default TerminalView
