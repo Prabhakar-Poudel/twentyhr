@@ -94,6 +94,7 @@ function TerminalView({ value = '', onSelect, activeUsers }: Props) {
 
   useEffect(() => {
     terminal.current?.writeln(value)
+    terminal.current?.scrollToBottom()
   }, [value])
 
   const clearTerminal = () => terminal.current?.clear()

@@ -225,7 +225,7 @@ const Interview = ({ id, user, onEndInterview }: Params) => {
   }
 
   const executeCodeAndSetResult = async (codeToRun: string) => {
-    sendTerminalUpdate(`\x1b[1;32m${user.name} is running the code\x1b[0m\n`)
+    sendTerminalUpdate(`\x1b[1;32m${user.name} executed the code\x1b[0m\n`)
     sendTerminalUpdate(await runCode(codeToRun, language))
   }
 
