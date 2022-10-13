@@ -10,7 +10,6 @@ import LoginPage from 'src/pages/account/LoginPage'
 import ResetPasswordPage from 'src/pages/account/ResetPasswordPage'
 import SignUpPage from 'src/pages/account/SignUpPage'
 import VerifyAccountPage from 'src/pages/account/VerifyAccountPage'
-import AdminHome from 'src/pages/admin/AdminHome'
 import DashboardPage from 'src/pages/dashboard/DashboardPage'
 import InterviewPage from 'src/pages/interview/InterviewPage'
 import InterviewsHome from 'src/pages/interview/InterviewsHome'
@@ -62,7 +61,6 @@ function App() {
                 <Route path="questions/:id/edit" element={<EditQuestion />} />
                 <Route path="interviews" element={<InterviewsHome />} />
                 <Route path="account" element={<AccountSettingsPage />} />
-                <Route path="admin/*" element={<AdminHome />} />
                 <Route path="/" element={<DashboardPage />} />
               </Route>
               <Route path="interviews/:id" element={<InterviewPage />} />
