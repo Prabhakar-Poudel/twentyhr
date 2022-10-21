@@ -7,7 +7,7 @@ import Language from 'src/components/app/interview/interviewBody/ide/Language'
 import { ActiveUser } from 'src/pages/interview/helpers'
 import { InterviewStatuses } from 'src/types/interview'
 
-interface InterviewFooterProps {
+interface Props {
   activeUsers: ActiveUser[]
   availableLanguages: string[]
   currentLanguage: string
@@ -33,7 +33,7 @@ const EditorHeader = ({
   setLanguage,
   setTheme,
   theme,
-}: InterviewFooterProps) => {
+}: Props) => {
   const KeyPress = useCallback(
     (event: KeyboardEvent): any => {
       if ((event.ctrlKey || event.metaKey) && event.code === 'Enter') onCodeExecute()

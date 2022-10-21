@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-function NavigationItems() {
+const NavigationItems = () => {
   return (
     <Box className="grow">
       <Link to="/questions">

@@ -1,4 +1,4 @@
-.draw-input .excalidraw {
+.draw-input .excalidraw.theme--dark {
   --color-primary: var(--primary-color-main);
   --select-highlight-color: var(--primary-color-main);
   --color-primary-darker: #009624;

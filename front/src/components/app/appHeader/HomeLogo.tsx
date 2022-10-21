@@ -7,7 +7,7 @@ interface Props {
   withText?: boolean
 }
 
-function HomeLogo({ withText = false }: Props) {
+const HomeLogo = ({ withText = false }: Props) => {
   return (
     <Link to="/" className="bg-transparent	text-primary-color-main flex">
       <img src={logo} alt="twentyhr logo" className="h-7" />

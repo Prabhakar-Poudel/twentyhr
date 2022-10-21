@@ -7,7 +7,7 @@ import ConfigurationPopup, {
   IdeConfigurationProps,
 } from 'src/components/app/interview/interviewBody/ide/ConfigurationPopup'
 
-function IdeConfiguration(props: IdeConfigurationProps) {
+const IdeConfiguration = (props: IdeConfigurationProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   const handleOpen = (event: MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget)

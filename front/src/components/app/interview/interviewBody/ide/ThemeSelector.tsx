@@ -5,7 +5,7 @@ interface Props {
   onChange: (event: SelectChangeEvent) => void
 }
 
-function ThemeSelector({ theme, onChange }: Props) {
+const ThemeSelector = ({ theme, onChange }: Props) => {
   return (
     <FormControl size="small">
       <InputLabel htmlFor="theme-selector">Theme</InputLabel>

@@ -9,7 +9,7 @@ export interface IdeConfigurationProps {
   setFontSize: (event: Event, value: any) => void
 }
 
-function ConfigurationPopup({ fontSize, setFontSize, theme, setTheme }: IdeConfigurationProps) {
+const ConfigurationPopup = ({ fontSize, setFontSize, theme, setTheme }: IdeConfigurationProps) => {
   return (
     <Paper elevation={24} sx={{ minWidth: 275, padding: 2 }}>
       <FontSizeSlider fontSize={fontSize} onChange={setFontSize} />

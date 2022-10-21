@@ -22,7 +22,7 @@ export interface LanguageSelectorProps {
   setLanguage: (language: string) => void
 }
 
-function LanguageSelector({ availableLanguages, currentLanguage, setLanguage }: LanguageSelectorProps) {
+const LanguageSelector = ({ availableLanguages, currentLanguage, setLanguage }: LanguageSelectorProps) => {
   const selectedLanguage = availableLanguages.find((id) => id === currentLanguage) || null
   const onLanguageChange = (event: SyntheticEvent, newValue: string) => setLanguage(newValue || currentLanguage)
 

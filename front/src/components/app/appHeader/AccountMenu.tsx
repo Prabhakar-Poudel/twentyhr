@@ -10,7 +10,7 @@ import { MouseEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from 'src/contexts/AuthContext'
 
-export default function AccountMenu() {
+const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const open = Boolean(anchorEl)
   const { logOut } = useAuth()
@@ -55,3 +55,5 @@ export default function AccountMenu() {
     </Box>
   )
 }
+
+export default AccountMenu
