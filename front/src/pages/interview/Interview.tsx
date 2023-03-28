@@ -225,7 +225,8 @@ const Interview = ({ id, user, onEndInterview }: Params) => {
   }
 
   const executeCodeAndSetResult = async (codeToRun: string) => {
-    sendTerminalUpdate(`\x1b[1;32m${user.name} executed the code\x1b[0m\n`)
+    const lines = codeToRun.split(/\r\n|\r|\n/).length
+    sendTerminalUpdate(`\x1b[1;32m${user.name} executed ${lines} lines of ${language} code\x1b[0m\n`)
     sendTerminalUpdate(await runCode(codeToRun, language))
   }
 
