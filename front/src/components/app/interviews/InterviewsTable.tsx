@@ -33,25 +33,22 @@ const columns: GridColDef[] = [
 
 const InterviewsTable = ({ rows }: Props) => {
   const navigate = useNavigate()
-  const onRowClick = ({ row }: GridRowParams,) => navigate(`/interviews/${row.id}`)
+  const onRowClick = ({ row }: GridRowParams) => navigate(`/interviews/${row.id}`)
 
   return (
     <Paper elevation={12}>
       <DataGrid
-        aria-label="interviews table"
         autoHeight
-        autoPageSize
-        checkboxSelection={false}
-        columns={columns}
-        components={{ Toolbar: GridToolbar }}
-        density="comfortable"
-        disableSelectionOnClick
-        getCellClassName={getCellClassName}
-        hideFooterSelectedRowCount
-        onRowClick={onRowClick}
-        pageSize={10}
+        disableColumnMenu
+        disableRowSelectionOnClick
         rows={rows}
-        rowsPerPageOptions={[5, 10, 20, 40]}
+        columns={columns}
+        aria-label="interviews table"
+        slots={{ toolbar: GridToolbar }}
+        density="comfortable"
+        getCellClassName={getCellClassName}
+        onRowClick={onRowClick}
+        initialState={{ pagination: { paginationModel: { pageSize: 25 } } }}
       />
     </Paper>
   )

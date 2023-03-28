@@ -41,18 +41,15 @@ const QuestionsTable = ({ rows }: Props) => {
     <Paper elevation={12}>
       <DataGrid
         autoHeight
-        autoPageSize
-        hideFooterSelectedRowCount
+        disableColumnMenu
         rows={rows}
         columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[5, 10, 20, 40]}
-        checkboxSelection={false}
         aria-label="questions table"
         density="comfortable"
-        components={{ Toolbar: GridToolbar } }
+        slots={{ toolbar: GridToolbar }}
         getCellClassName={getCellClassName}
         onRowClick={openQuestion}
+        initialState={{ pagination: { paginationModel: { pageSize: 25 } } }}
       />
     </Paper>
   )
