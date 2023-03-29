@@ -1,8 +1,7 @@
 export const uiOptions = {
   canvasActions: {
-    clearCanvas: false,
+    export: false as false, // strange TS issue
     saveAsImage: false,
-    theme: false,
     loadScene: false,
   },
 }

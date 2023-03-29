@@ -90,7 +90,6 @@ function DrawInput({
   return (
     <Box className="draw-input h-full w-full">
       <Excalidraw
-        autoFocus
         initialData={{ appState, elements, scrollToContent: true }}
         isCollaborating={true}
         onChange={onChangeHandler}
