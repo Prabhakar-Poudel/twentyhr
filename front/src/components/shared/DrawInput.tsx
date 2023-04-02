@@ -48,6 +48,9 @@ function DrawInput({
   const [sceneVersion, setSceneVersion] = useState(0)
   const collaborators = new Map()
 
+  // For excalidraw library return url
+  window.name = 'NotRandomString'
+
   // @ts-expect-error
   const interviewEnded = ![InterviewStatuses.created, InterviewStatuses.started].includes(interviewStatus)
 
@@ -98,6 +101,7 @@ function DrawInput({
         theme={THEME.DARK}
         UIOptions={uiOptions}
         viewModeEnabled={interviewEnded}
+        libraryReturnUrl={location.href}
       />
     </Box>
   )
