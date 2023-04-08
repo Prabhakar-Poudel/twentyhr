@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   load_and_authorize_resource except: [:profile]
 
   def show
-    render json: { data: @user }
+    render json: @user
   end
 
   def profile
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
 
   def update
     @user.update!(update_params)
-    render json: { data: @user }
+    render json: @user
   rescue ActiveRecord::ValueTooLong
     render json: { error: 'Value too long' }, status: :bad_request
   end

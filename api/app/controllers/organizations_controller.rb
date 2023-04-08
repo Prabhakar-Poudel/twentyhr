@@ -1,17 +1,17 @@
 class OrganizationsController < ApplicationController
   load_and_authorize_resource
 
-  def show
-    render json: { data: @organization }
-  end
-
   def index
     render json: { data: @organizations, total: @organizations.size }
   end
 
+  def show
+    render json: @organization
+  end
+
   def create
     if @organization.save
-      render json: { data: organization }
+      render json: organization
     else
       render json: { }, status: :unprocessable_entity
     end
@@ -19,7 +19,7 @@ class OrganizationsController < ApplicationController
 
   def update
     if @organization.update(organization_params)
-      render json: { data: @organization }
+      render json: @organization
     else
       render json: { }, status: unprocessable_entity
     end
@@ -28,6 +28,6 @@ class OrganizationsController < ApplicationController
   private
 
   def organization_params
-    params.permit(:name)
+    params.permit(:name, :id)
   end
 end
