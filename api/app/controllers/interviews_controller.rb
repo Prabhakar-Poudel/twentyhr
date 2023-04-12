@@ -1,6 +1,6 @@
 class InterviewsController < ApplicationController
-  skip_before_action :authenticate_user!, only:  %i[ping show]
-  load_and_authorize_resource except:  %i[ping]
+  skip_before_action :authenticate_user!, only: %i[ping show]
+  load_and_authorize_resource except: %i[ping]
 
   def index
     interviews =

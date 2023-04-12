@@ -5,8 +5,8 @@ interface Props {
   placeholder?: string
 }
 
-function RichTextView({ value = '', placeholder = '' }: Props) {
-  return <ReactQuill theme="snow" modules={{ toolbar: false }} readOnly value={value} placeholder={placeholder} />
-}
+const RichTextView = ({ value = '', placeholder = '' }: Props) => (
+  <ReactQuill theme="snow" modules={{ toolbar: false }} readOnly value={value} placeholder={placeholder} />
+)
 
 export default RichTextView

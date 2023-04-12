@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   devise_for :users, module: :users, only: %i[sessions passwords registrations confirmations], skip_helpers: true, defaults: { format: :json }
   post :guest_sign_in, to: 'users/guest_sessions#create'
 
-  resources :organizations, only: %i[index show create update]
+  resources :organizations, only: %i[index show create update] do
+    member { get :overview }
+  end
   resources :users, only: %i[index show create update]
   get :profile, to: 'users#profile'
   resources :questions, only: %i[index show create update]

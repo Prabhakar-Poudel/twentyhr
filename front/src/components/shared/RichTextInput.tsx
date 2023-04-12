@@ -47,20 +47,18 @@ export const RichTextInput = ({
   onChange,
   defaultValue = '',
   margin = 'normal',
-}: Props) => {
-  return (
-    <FormControl fullWidth margin={margin}>
-      <FormLabel>{label}</FormLabel>
-      <ReactQuill
-        className="rich-text-input"
-        theme="snow"
-        placeholder={placeholder}
-        modules={quillModules}
-        formats={quillFormats}
-        onChange={onChange}
-        defaultValue={defaultValue}
-      />
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
-    </FormControl>
-  )
-}
+}: Props) => (
+  <FormControl fullWidth margin={margin}>
+    <FormLabel>{label}</FormLabel>
+    <ReactQuill
+      className="rich-text-input"
+      theme="snow"
+      placeholder={placeholder}
+      modules={quillModules}
+      formats={quillFormats}
+      onChange={onChange}
+      defaultValue={defaultValue}
+    />
+    {helperText && <FormHelperText>{helperText}</FormHelperText>}
+  </FormControl>
+)

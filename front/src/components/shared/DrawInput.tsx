@@ -35,7 +35,7 @@ interface Props {
   setAppState: (state: AppState) => void
 }
 
-function DrawInput({
+const DrawInput = ({
   activeUsers,
   appState,
   elements = [],
@@ -43,7 +43,7 @@ function DrawInput({
   onChange,
   onPointerUpdate,
   setAppState,
-}: Props) {
+}: Props) => {
   const excalidrawRef = useRef<ExcalidrawImperativeAPI>(null)
   const [sceneVersion, setSceneVersion] = useState(0)
   const collaborators = new Map()

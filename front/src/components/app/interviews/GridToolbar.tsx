@@ -1,7 +1,7 @@
 import { GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid'
 import CreateNewInterview from 'src/components/app/interviews/CreateNewInterview'
 
-function GridToolbar() {
+const GridToolbar = () => {
   return (
     <GridToolbarContainer className="justify-between">
       <div>

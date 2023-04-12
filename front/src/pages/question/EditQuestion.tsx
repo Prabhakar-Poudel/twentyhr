@@ -6,7 +6,7 @@ import { axios } from 'src/lib/axios/axios'
 import { useQuestionShow } from 'src/queries/Questions'
 import { QuestionPayload, QuestionShow } from 'src/types/question'
 
-function EditQuestion() {
+const EditQuestion = () => {
   const { id } = useParams()
   const { data, isLoading, invalidateQuestion } = useQuestionShow(id!)
 

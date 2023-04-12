@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   load_and_authorize_resource except: [:profile]
 
+  def index
+    render json: @users
+  end
+
   def show
     render json: @user
   end
@@ -8,10 +12,6 @@ class UsersController < ApplicationController
   def profile
     authorize! :read, current_user
     render json: current_user
-  end
-
-  def index
-    render json: { data: @users, total: @users.size }
   end
 
   def update

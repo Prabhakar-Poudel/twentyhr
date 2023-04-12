@@ -19,7 +19,7 @@ interface Props {
   helperText?: string
 }
 
-export function CodeInput({ label, defaultValue = '', defaultLanguage, helperText, onChange }: Props) {
+export const CodeInput = ({ label, defaultValue = '', defaultLanguage, helperText, onChange }: Props) => {
   const [editor, setEditor] = useState<any>(null)
   const [language, setLanguage] = useState(defaultLanguage)
 

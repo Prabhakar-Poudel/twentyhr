@@ -10,7 +10,7 @@ interface Props {
   interview: string
 }
 
-function InterviewNotes({ interview }: Props) {
+const InterviewNotes = ({ interview }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
   const [note, setNote] = useState<Note | null>(null)
 
@@ -31,7 +31,7 @@ function InterviewNotes({ interview }: Props) {
 
   const onNoteChanged = (content: string) => {
     if (note) {
-      setNote({...note, content})
+      setNote({ ...note, content })
     } else {
       const newNote = { content, interview_id: interview }
       createNote(newNote).then(setNote)

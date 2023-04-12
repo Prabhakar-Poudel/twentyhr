@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_08_145827) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_10_213529) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_08_145827) do
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "interview_status", ["created", "started", "ended", "archived"]
   create_enum "question_status", ["draft", "published", "archived"]
+  create_enum "role_enum", ["admin", "archived", "member", "staff"]
 
   create_table "interviews", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "organization_id", null: false
@@ -86,6 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_08_145827) do
     t.string "unlock_token"
     t.datetime "locked_at"
     t.string "name", limit: 50
+    t.enum "role", default: "member", null: false, enum_type: "role_enum"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"

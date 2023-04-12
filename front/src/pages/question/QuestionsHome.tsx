@@ -4,7 +4,7 @@ import AppHeader from 'src/components/app/appHeader/AppHeader'
 import QuestionsTable from 'src/components/app/questions/QuestionsTable'
 import { useQuestionsIndex } from 'src/queries/Questions'
 
-function QuestionsHome() {
+const QuestionsHome = () => {
   const { data, isLoading } = useQuestionsIndex()
 
   if (isLoading) return null

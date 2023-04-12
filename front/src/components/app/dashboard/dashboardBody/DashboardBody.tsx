@@ -1,7 +1,5 @@
 import { Container } from '@mui/material'
 
-const DashboardBody = () => {
-  return <Container />
-}
+const DashboardBody = () => <Container />
 
 export default DashboardBody

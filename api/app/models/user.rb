@@ -6,4 +6,6 @@ class User < ApplicationRecord
   belongs_to :organization, optional: true
 
   has_paper_trail
+
+  enum role: { admin: 'admin', archived: 'archived', member: 'member', staff: 'staff' }, _default: 'member'
 end

@@ -7,7 +7,7 @@ const colorMap: Record<string, string> = {
   archived: 'grey.600',
 }
 
-export function StatusCell({ value }: GridRenderCellParams) {
+export const StatusCell = ({ value }: GridRenderCellParams) => {
   const color = colorMap[value]
 
   return (
