@@ -5,7 +5,7 @@ import { QuestionDisplay } from 'src/components/app/questions/QuestionDisplay'
 import useToast from 'src/hooks/useToast'
 import { useQuestionShow } from 'src/queries/Questions'
 
-function ViewQuestion() {
+const ViewQuestion = () => {
   const { id } = useParams()
   const { data, isLoading, error } = useQuestionShow(id!)
   const navigate = useNavigate()

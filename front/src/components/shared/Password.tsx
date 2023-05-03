@@ -9,7 +9,12 @@ interface PasswordFieldProps {
   onChange: ChangeEventHandler<HTMLInputElement>
 }
 
-function PasswordField({ value, onChange, label = 'Password', autocomplete = 'current-password' }: PasswordFieldProps) {
+const PasswordField = ({
+  value,
+  onChange,
+  label = 'Password',
+  autocomplete = 'current-password',
+}: PasswordFieldProps) => {
   const [showPassword, setShowPassword] = useState(false)
 
   return (

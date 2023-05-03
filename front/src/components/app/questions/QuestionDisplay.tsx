@@ -9,7 +9,7 @@ interface Props {
   question: QuestionShow
 }
 
-export const QuestionDisplay = ({ id, question }: Props) =>
+export const QuestionDisplay = ({ id, question }: Props) => (
   <Box className="flex flex-col px-10 pt-5 h-full">
     <Box>
       <Box className="flex justify-between">
@@ -23,3 +23,4 @@ export const QuestionDisplay = ({ id, question }: Props) =>
     <QuestionDisplayTab question={question} />
     <QuestionDisplayFooter id={id} />
   </Box>
+)

@@ -15,14 +15,14 @@ interface Props {
   title: string
 }
 
-function InterviewHeader({
+const InterviewHeader = ({
   currentQuestion,
   interviewStatus,
   onBeginInterview,
   onQuestionChanged,
   onTitleChanged,
   title,
-}: Props) {
+}: Props) => {
   const readOnly = interviewStatus !== InterviewStatuses.started
   const newInterview = interviewStatus === InterviewStatuses.created
 

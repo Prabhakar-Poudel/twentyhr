@@ -4,7 +4,7 @@ import { FormEventHandler, useState } from 'react'
 import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom'
 import { Box } from '@mui/system'
 import loginImage from 'src/assets/svg/loginScreen.svg'
-import PasswordField from 'src/components/app/account/Password'
+import PasswordField from 'src/components/shared/Password'
 import { useAuth } from 'src/contexts/AuthContext'
 import useToast from 'src/hooks/useToast'
 

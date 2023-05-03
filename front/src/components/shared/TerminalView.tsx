@@ -12,7 +12,7 @@ interface Props {
   value?: string
 }
 
-function TerminalView({ value = '', onSelect, activeUsers }: Props) {
+const TerminalView = ({ value = '', onSelect, activeUsers }: Props) => {
   const resizeObserver = useRef<ResizeObserver>()
   const terminal = useRef<InstanceType<typeof Terminal>>()
   const fitAddon = useRef<InstanceType<typeof FitAddon>>()

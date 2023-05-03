@@ -3,7 +3,7 @@ import { GridRenderCellParams } from '@mui/x-data-grid'
 import { MouseEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export function TitleCell({ row }: GridRenderCellParams) {
+export const TitleCell = ({ row }: GridRenderCellParams) => {
   const navigate = useNavigate()
 
   const openQuestion = (event: MouseEvent<HTMLElement>) => {

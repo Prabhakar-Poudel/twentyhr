@@ -8,7 +8,7 @@ import { QuestionShow } from 'src/types/question'
 
 const TABS = ['instruction', 'guideline', 'code']
 
-function QuestionDisplayTab({ question }: { question: QuestionShow }) {
+const QuestionDisplayTab = ({ question }: { question: QuestionShow }) => {
   const [activeTab, setActiveTab] = useState(TABS[0])
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setActiveTab(newValue)

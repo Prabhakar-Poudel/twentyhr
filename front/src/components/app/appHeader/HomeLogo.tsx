@@ -7,17 +7,15 @@ interface Props {
   withText?: boolean
 }
 
-const HomeLogo = ({ withText = false }: Props) => {
-  return (
-    <Link to="/" className="bg-transparent	text-primary-color-main flex">
-      <img src={logo} alt="twentyhr logo" className="h-7" />
-      {withText && (
-        <Typography component="span" className="pl-2">
-          twentyhr.com
-        </Typography>
-      )}
-    </Link>
-  )
-}
+const HomeLogo = ({ withText = false }: Props) => (
+  <Link to="/" className="bg-transparent	text-primary-color-main flex">
+    <img src={logo} alt="twentyhr logo" className="h-7" />
+    {withText && (
+      <Typography component="span" className="pl-2">
+        twentyhr.com
+      </Typography>
+    )}
+  </Link>
+)
 
 export default HomeLogo

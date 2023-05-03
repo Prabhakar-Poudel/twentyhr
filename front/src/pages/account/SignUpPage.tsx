@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios'
 import { useState, FormEventHandler } from 'react'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import signUpImage from 'src/assets/svg/signUp.svg'
-import PasswordField from 'src/components/app/account/Password'
+import PasswordField from 'src/components/shared/Password'
 import useToast from 'src/hooks/useToast'
 import { axios } from 'src/lib/axios/axios'
 

@@ -7,7 +7,7 @@ interface Props {
   open: boolean
 }
 
-function RightDrawerToggle({ onClick, open }: Props) {
+const RightDrawerToggle = ({ onClick, open }: Props) => {
   const tooltip = open ? 'Close right panel' : 'Open right panel'
   const bgColor = open ? 'bg-zinc-800' : 'bg-zinc-900'
 

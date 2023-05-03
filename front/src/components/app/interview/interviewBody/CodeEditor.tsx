@@ -19,9 +19,9 @@ interface InterviewBodyProps {
   setLanguage: (language: string) => void
 }
 
-function LoadingEditor() {
-  return <Skeleton animation="wave" width="100%" height="100%" variant="rectangular" sx={{ bgcolor: 'grey.900' }} />
-}
+const LoadingEditor = () => (
+  <Skeleton animation="wave" width="100%" height="100%" variant="rectangular" sx={{ bgcolor: 'grey.900' }} />
+)
 
 const CodeEditor = ({
   activeUsers,

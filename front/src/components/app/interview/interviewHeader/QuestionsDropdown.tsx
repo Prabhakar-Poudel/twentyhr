@@ -4,31 +4,27 @@ import { HTMLAttributes, SyntheticEvent } from 'react'
 import { useQuestionsIndex } from 'src/queries/Questions'
 import { QuestionIndex, QuestionShow } from 'src/types/question'
 
-function OptionItem(props: HTMLAttributes<HTMLLIElement>, question: QuestionIndex) {
-  return (
-    <li {...props} key={question.id}>
-      <Box className="w-full flex flex-col">
-        <Typography variant="body1" className="truncate ...">
-          {question.title}
-        </Typography>
-        <Typography variant="body2" className="truncate ...">
-          {question.description}
-        </Typography>
-      </Box>
-    </li>
-  )
-}
+const OptionItem = (props: HTMLAttributes<HTMLLIElement>, question: QuestionIndex) => (
+  <li {...props} key={question.id}>
+    <Box className="w-full flex flex-col">
+      <Typography variant="body1" className="truncate ...">
+        {question.title}
+      </Typography>
+      <Typography variant="body2" className="truncate ...">
+        {question.description}
+      </Typography>
+    </Box>
+  </li>
+)
 
-function InputField(props: AutocompleteRenderInputParams) {
-  return <TextField {...props} variant="filled" label="Question" />
-}
+const InputField = (props: AutocompleteRenderInputParams) => <TextField {...props} variant="filled" label="Question" />
 
 interface Props {
   currentQuestion?: QuestionShow
   onChange?: (questionId: string) => void
 }
 
-function QuestionsDropdown({ currentQuestion, onChange }: Props) {
+const QuestionsDropdown = ({ currentQuestion, onChange }: Props) => {
   const { data, isLoading } = useQuestionsIndex()
   if (isLoading) return null
 

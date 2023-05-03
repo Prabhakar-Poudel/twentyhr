@@ -2,7 +2,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 import PageLoading from 'src/components/shared/PageLoading'
 import { useAuth } from 'src/contexts/AuthContext'
 
-function LoginRoute() {
+const LoginRoute = () => {
   const { user, loading } = useAuth()
 
   if (loading) return <PageLoading />

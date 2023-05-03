@@ -35,7 +35,7 @@ const AccountMenu = () => {
           className: 'drop-shadow-2xl',
         }}
       >
-        <Link to="/account">
+        <Link to="/settings/account">
           <MenuItem>
             <ListItemIcon>
               <Settings fontSize="small" />

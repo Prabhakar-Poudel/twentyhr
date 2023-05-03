@@ -11,7 +11,7 @@ interface Props {
   onSave: (question: QuestionPayload) => Promise<QuestionShow>
 }
 
-function QuestionForm({ defaultValues, onSave }: Props) {
+const QuestionForm = ({ defaultValues, onSave }: Props) => {
   const navigate = useNavigate()
   const toast = useToast()
   const [starterCode, setStarterCode] = useState(defaultValues.initial_code || '// Hello World')
